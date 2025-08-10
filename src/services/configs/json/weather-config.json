@@ -1,0 +1,39 @@
+{
+    "BASE_STATION_URL": "https://api.ambientweather.net/v1/devices/ELEMENT_0?apiKey=ELEMENT_1&applicationKey=ELEMENT_2",
+    "BASE_SUN_URL": "https://api.sunrise-sunset.org/json?lat=ELEMENT_0&lng=ELEMENT_1&date=today&formatted=0",
+
+    "WEATHER_SUNNY": "Sunny",
+    "WEATHER_CLOUDS": "Cloudy",
+    "WEATHER_PARTLY_CLOUDS": "Partly Cloudy",
+    "WEATHER_STORM": "Storms",
+    "WEATHER_RAIN": "Showers",
+    "WEATHER_SNOW": "Snowy",
+    "WEATHER_CLEAR": "Clear",
+    "WEATHER_WIND": "Windy",
+    "WEATHER_FOG": "Fog",
+    "WEATHER_BREEZE": "Breezy",
+
+    "NORTH": "N",
+    "SOUTH": "S",
+    "EAST": "E",
+    "WEST": "W",
+
+    "LOW_UV_RISK": "Low",
+    "MODERATE_UV_RISK": "Moderate",
+    "HIGH_UV_RISK": "High",
+    "VERY_HIGH_UV_RISK": "Very High",
+    "EXTREME_UV_RISK": "Extreme",
+
+    "WIND_ADVISORY": "Wind Advisory",
+    "HIGH_WIND_WARNING": "High Wind Warning",
+    "HEAT_ADVISORY": "Heat Advisory",
+    "EXCESSIVE_HEAT_WARNING": "Excessive Heat Warning",
+    "WIND_CHILL_WARNING": "Wind Chill Warning",
+    "WIND_CHILL_ADVISORY": "Wind Chill Advisory",
+    "SEVERE_THUNDERSTORM_WARNING": "Severe Thunderstorm Warning",
+    "FLASH_FLOOD_WARNING": "Flash Flood Warning",
+    "BLIZZARD_WARNING": "Blizzard Warning",
+    "NO_ALERTS": "",
+
+    "INCHES_MERCURY_TO_MBAR_CONVERSION": 33.8639
+}
