@@ -1,5 +1,6 @@
 'use client';
 
+import InfoCard from '@/components/personal-website/info-card';
 import { PaddingBar, SmallPaddingBar } from '@/components/personal-website/padding-bar';
 import WeatherCard from '@/components/personal-website/weather-card';
 import { WeatherChart } from '@/components/personal-website/weather-chart';
@@ -68,6 +69,17 @@ export default function WeatherPage() {
             <div className="p-2 text-center text-2xl font-bold">{config.RIGHT_NOW_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
+            {analysisService?.getActiveAlerts() ? (
+                <div className="flex flex-row flex-wrap place-content-around">
+                    <InfoCard
+                        stretch={true}
+                        center={true}
+                        cardTitle={analysisService?.getActiveAlerts()}
+                    ></InfoCard>
+                </div>
+            ) : (
+                <></>
+            )}
             <div className="flex flex-row flex-wrap place-content-around">
                 <WeatherCard
                     day={todayWeatherData?.date ? new Date(todayWeatherData?.date) : new Date()}
