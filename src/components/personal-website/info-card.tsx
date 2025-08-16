@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
 import { SmallPaddingBar } from './padding-bar';
 
@@ -11,7 +12,9 @@ interface InfoCardProps {
     stretch?: boolean;
     scaleTitle?: boolean;
     overhead?: string;
-    icon?: string;
+    scaleDescription?: boolean;
+    icon?: JSX.Element;
+    children?: JSX.Element;
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -21,7 +24,7 @@ export default function InfoCard(props: InfoCardProps) {
             style={{ textAlign: props.center ? 'center' : 'left' }}
         >
             <CardHeader>
-                {props.cardTitle ? (
+                {props.overhead ? (
                     <>
                         <CardTitle>
                             <div className={'text-4xl'}>{props.overhead}</div>
@@ -62,22 +65,34 @@ export default function InfoCard(props: InfoCardProps) {
                     ''
                 )}
             </CardHeader>
-            <CardContent>
-                {props.icon ? (
-                    <>
-                        <CardDescription>{'icon' + props.icon}</CardDescription>
-                    </>
-                ) : (
-                    <></>
-                )}
-                {props.cardDescription ? (
-                    <>
-                        <CardDescription>{props.cardDescription}</CardDescription>
-                    </>
-                ) : (
-                    <></>
-                )}
-            </CardContent>
+            {props.children || props.cardDescription ? (
+                <CardContent>
+                    {props.icon ? (
+                        <>
+                            <CardDescription className="flex-flow flex place-content-around">
+                                {props.icon ?? <></>}
+                            </CardDescription>
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                    {props.cardDescription ? (
+                        <>
+                            <CardDescription
+                                className={`${props.scaleDescription ? 'text-2xl' : ''}`}
+                            >
+                                {props.cardDescription}
+                            </CardDescription>
+                            {props.children ? <br></br> : ''}
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                    {props.children ? <>{props.children}</> : ''}
+                </CardContent>
+            ) : (
+                <></>
+            )}
             <CardFooter className="flex-col gap-2"></CardFooter>
         </Card>
     );

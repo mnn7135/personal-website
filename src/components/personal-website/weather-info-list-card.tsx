@@ -1,7 +1,7 @@
 import { IWeatherData } from '@/types/weather/weather-data.domain';
 import InfoListCard from './info-list-card';
 import { ISunDataResult } from '@/types/weather/sun-data.domain';
-import IWeatherHelperService from '@/services/weather/weather-analysis.service';
+import IWeatherHelperService from '@/services/weather/weather-helper.service';
 
 interface WeatherInfoListCardProps {
     cardTitle?: string;

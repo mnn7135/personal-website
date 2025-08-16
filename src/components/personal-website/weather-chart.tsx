@@ -12,7 +12,7 @@ import {
 } from '../ui/select';
 import { PaddingBar, ThinPaddingBar } from './padding-bar';
 import { useState } from 'react';
-import IWeatherHelperService from '@/services/weather/weather-analysis.service';
+import IWeatherHelperService from '@/services/weather/weather-helper.service';
 
 interface WeatherChartProps {
     chartData?: IWeatherData[];
@@ -54,6 +54,10 @@ const chartConfig = {
     uv: {
         label: 'UV Index',
         color: 'var(--chart-4)'
+    },
+    solarradiation: {
+        label: 'Solar Radiation (W/m^2)',
+        color: 'var(--chart-5)'
     }
 } satisfies ChartConfig;
 
@@ -115,6 +119,7 @@ export function WeatherChart(props: WeatherChartProps) {
                         <SelectGroup>
                             <SelectLabel>Solar</SelectLabel>
                             <SelectItem value="uv">UV Index</SelectItem>
+                            <SelectItem value="solarradiation">Solar Radiation</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>

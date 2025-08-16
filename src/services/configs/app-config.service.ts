@@ -1,7 +1,7 @@
 import appConfig from './json/app-config.json';
 
 export interface IAppConfig {
-    // About Page
+    /** Home/About Me Page */
     ABOUT_TITLE: string;
 
     OBJECTIVE_SECTION: string;
@@ -26,19 +26,28 @@ export interface IAppConfig {
     OTHER_TECH_SKILLS_LIST: string[];
     OTHER_SKILLS_LIST: string[];
 
+    /** Projects/Software Page */
     PROJECT_SECTION: string;
+
     PROJECT_1_TITLE: string;
     PROJECT_1_SKILLS: string;
-    PROJECT_1_DESCRIPTION: string;
+    PROJECT_1_TIMEFRAME: string;
+    PROJECT_1_DESCRIPTION: string[];
+
     PROJECT_2_TITLE: string;
     PROJECT_2_SKILLS: string;
-    PROJECT_2_DESCRIPTION: string;
+    PROJECT_2_TIMEFRAME: string;
+    PROJECT_2_DESCRIPTION: string[];
+
     PROJECT_3_TITLE: string;
     PROJECT_3_SKILLS: string;
-    PROJECT_3_DESCRIPTION: string;
+    PROJECT_3_TIMEFRAME: string;
+    PROJECT_3_DESCRIPTION: string[];
 
-    // Astronony Page
+    /** Projects/Astronomy Page */
     ASTRONOMY_TITLE: string;
+    ASTRONOMY_DESCRIPTION: string;
+
     ASTRONOMY_IMG_1_ALT: string;
     ASTRONOMY_IMG_2_ALT: string;
     ASTRONOMY_IMG_3_ALT: string;
@@ -46,7 +55,7 @@ export interface IAppConfig {
     ASTRONOMY_IMG_2_SRC: string;
     ASTRONOMY_IMG_3_SRC: string;
 
-    // Weather Page
+    /** Projetcs/Weather Page */
     WEATHER_TITLE: string;
     RIGHT_NOW_SECTION: string;
     LATER_SECTION: string;
@@ -72,44 +81,62 @@ export interface IAppConfig {
     LAST_MAINTENANCE: string;
     WEATHER_STATION_DISCLAIMER: string;
 
-    // Home Page
-    BING_IMG_SRC: string;
-    FIRST_IMG_SRC: string;
-    GIT_IMG_SRC: string;
-    LINKEDIN_IMG_SRC: string;
-    GTRI_IMAGE_SRC: string;
-    STACK_OVERFLOW_IMG_SRC: string;
-    GOOGLE_IMG_SRC: string;
-    RIT_IMG_SRC: string;
-    TRELLO_IMG_SRC: string;
-
+    /** Home Page */
     QUCIK_LINKS_SECTION: string;
 
-    BING_ALT: string;
-    FIRST_ALT: string;
-    GIT_ALT: string;
-    LINKEDIN_ALT: string;
-    GTRI_ALT: string;
+    STACK_OVERFLOW_LINK: string;
     STACK_OVERFLOW_ALT: string;
-    GOOGLE_ALT: string;
+    STACK_OVERFLOW_IMG_SRC: string;
+
+    GIT_LINK: string;
+    GIT_ALT: string;
+    GIT_IMG_SRC: string;
+
+    RIT_LINK: string;
     RIT_ALT: string;
-    TRELLO_ALT: string;
+    RIT_IMG_SRC: string;
+
+    LINKEDIN_LINK: string;
+    LINKEDIN_ALT: string;
+    LINKEDIN_IMG_SRC: string;
+
+    AMBIENT_WEATHER_LINK: string;
+    AMBIENT_WEATHER_ALT: string;
+    AMBIENT_WEATHER_IMG_SRC: string;
+
+    NEXT_JS_LINK: string;
+    NEXT_JS_ALT: string;
+    NEXT_JS_IMG_SRC: string;
 
     BING_LINK: string;
-    FIRST_LINK: string;
-    GIT_LINK: string;
-    LINKEDIN_LINK: string;
-    GTRI_LINK: string;
-    STACK_OVERFLOW_LINK: string;
-    GOOGLE_LINK: string;
-    RIT_LINK: string;
-    TRELLO_LINK: string;
+    BING_ALT: string;
+    BING_IMG_SRC: string;
 
-    // Personal Web App
+    GOOGLE_LINK: string;
+    GOOGLE_ALT: string;
+    GOOGLE_IMG_SRC: string;
+
+    FIRST_LINK: string;
+    FIRST_ALT: string;
+    FIRST_IMG_SRC: string;
+
+    MINECRAFT_LINK: string;
+    MINECRAFT_ALT: string;
+    MINECRAFT_IMG_SRC: string;
+
+    MABINOGI_LINK: string;
+    MABINOGI_ALT: string;
+    MABINOGI_IMG_SRC: string;
+
+    NATION_STATES_LINK: string;
+    NATION_STATES_ALT: string;
+    NATION_STATES_IMG_SRC: string;
+
     HOME_PAGE_ROUTE: string;
     ABOUT_PAGE_ROUTE: string;
     WEATHER_PAGE_ROUTE: string;
     ASTRONOMY_PAGE_ROUTE: string;
+    SOFTWARE_PAGE_ROUTE: string;
 
     GITHUB_PROJ_LINK: string;
     ATTRIBUTION: string;

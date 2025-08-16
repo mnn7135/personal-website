@@ -1,93 +1,39 @@
-import { ISunDataResult } from '@/types/weather/sun-data.domain';
 import { IWeatherData } from '@/types/weather/weather-data.domain';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
+import { ISunDataResult } from '@/types/weather/sun-data.domain';
+import IWeatherHelperService from './weather-helper.service';
 
-export default class IWeatherHelperService {
-    private today: Date;
+export default class IWeatherAnalysisService {
     private config: IWeatherConfig = loadWeatherConfig();
+    private helperService: IWeatherHelperService;
+
+    private weatherData: IWeatherData[];
+    private sunData: ISunDataResult;
+
+    private MOST_RECENT_DATA_INDEX: number = 0;
+    private BREEZY_MIN_SPEED: number = 15;
+    private BREEZY_MAX_SPEED: number = 20;
+    private PRESSURE_GRADIENT: number = -0.2;
+    private DEW_POINT_TEMP_DIFF: number = 4.5;
+    private MAXIMUM_HUMIDITY: number = 100;
+    private CLOUDY_SOLAR_RAD: number = 200;
+    private SUNNY_SOLAR_RAD: number = 450;
 
     /**
-     * Constructor for the WeatherHelper service.
-     *
-     * @param sunData the sunrise/sunset and other solar data
-     * @param weatherData today's weather data
-     * @param lastWeekWeatherData last week from today's weather data
+     * The constructor for the WeatherAnalysis service.
      */
-    constructor() {
-        this.today = new Date();
-
-        const tempDate = new Date();
-        tempDate.setTime(this.today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    constructor(weatherData: IWeatherData[], sunData: ISunDataResult) {
+        this.weatherData = weatherData;
+        this.sunData = sunData;
+        this.helperService = new IWeatherHelperService(sunData);
     }
 
     /**
-     * A helper function that determines the direction of the wind from angle.
-     *
-     * @param windAngle The measured angle from which the wind comes from in degrees.
-     * @returns The direction, as a string, from which the comes from.
+     * A setter function for the weather data.
+     * @param weatherData The weather data to set
      */
-    public getWindDirection(windAngle: number): string {
-        let windDirection = '';
-
-        if ((windAngle >= 348.75 && windAngle <= 360) || windAngle < 11.25) {
-            windDirection = `${this.config.NORTH}`;
-        } else if (11.25 <= windAngle && windAngle < 33.75) {
-            windDirection = `${this.config.NORTH}${this.config.NORTH}${this.config.EAST}`;
-        } else if (33.75 <= windAngle && windAngle < 56.25) {
-            windDirection = `${this.config.NORTH}${this.config.EAST}`;
-        } else if (56.25 <= windAngle && windAngle < 78.75) {
-            windDirection = `${this.config.EAST}${this.config.NORTH}${this.config.EAST}`;
-        } else if (78.75 <= windAngle && windAngle < 101.25) {
-            windDirection = `${this.config.EAST}`;
-        } else if (101.25 <= windAngle && windAngle < 123.75) {
-            windDirection = `${this.config.EAST}${this.config.SOUTH}${this.config.EAST}`;
-        } else if (123.75 <= windAngle && windAngle < 146.25) {
-            windDirection = `${this.config.SOUTH}${this.config.EAST}`;
-        } else if (146.25 <= windAngle && windAngle < 168.75) {
-            windDirection = `${this.config.SOUTH}${this.config.SOUTH}${this.config.EAST}`;
-        } else if (168.75 <= windAngle && windAngle < 191.25) {
-            windDirection = `${this.config.SOUTH}`;
-        } else if (191.25 <= windAngle && windAngle < 213.75) {
-            windDirection = `${this.config.SOUTH}${this.config.SOUTH}${this.config.WEST}`;
-        } else if (213.75 <= windAngle && windAngle < 236.25) {
-            windDirection = `${this.config.SOUTH}${this.config.WEST}`;
-        } else if (236.25 <= windAngle && windAngle < 258.75) {
-            windDirection = `${this.config.WEST}${this.config.SOUTH}${this.config.WEST}`;
-        } else if (258.75 <= windAngle && windAngle < 281.25) {
-            windDirection = `${this.config.WEST}`;
-        } else if (281.25 <= windAngle && windAngle < 303.75) {
-            windDirection = `${this.config.WEST}${this.config.NORTH}${this.config.WEST}`;
-        } else if (303.75 <= windAngle && windAngle < 326.25) {
-            windDirection = `${this.config.NORTH}${this.config.WEST}`;
-        } else if (326.25 <= windAngle && windAngle < 348.75) {
-            windDirection = `${this.config.NORTH}${this.config.NORTH}${this.config.WEST}`;
-        }
-
-        return windDirection;
-    }
-
-    /**
-     * Helper function that determines the risk based on the UV index.
-     *
-     * @param uvIndex The current measured UV index.
-     * @returns The risk factor based on the UV index.
-     */
-    public getUVRisk(uvIndex: number): string {
-        let uvRisk = '';
-
-        if (uvIndex <= 2) {
-            uvRisk = this.config.LOW_UV_RISK;
-        } else if (uvIndex <= 5) {
-            uvRisk = this.config.MODERATE_UV_RISK;
-        } else if (uvIndex <= 7) {
-            uvRisk = this.config.HIGH_UV_RISK;
-        } else if (uvIndex <= 10) {
-            uvRisk = this.config.VERY_HIGH_UV_RISK;
-        } else if (uvIndex >= 11) {
-            uvRisk = this.config.EXTREME_UV_RISK;
-        }
-
-        return `${uvIndex} (${uvRisk})`;
+    public setWeatherData(weatherData: IWeatherData[]) {
+        this.weatherData = weatherData;
     }
 
     /**
@@ -97,13 +43,15 @@ export default class IWeatherHelperService {
      */
     public getActiveAlerts(): string {
         let alertMessage = '';
-        const nowIndex = 0;
 
-        const maxGust = 0;
-        const maxWind = 0;
-        const maxTemp = 0;
-        const windChill = 0;
-        const hourlyRain = 0;
+        const maxGust = this.getDataMax(this.weatherData, 'windgustmph');
+        const maxWind = this.getDataMax(this.weatherData, 'windspdmph_avg10m');
+        const maxTemp = this.getDataMax(this.weatherData, 'tempf');
+        const windChill = this.helperService.getWindChill(
+            this.weatherData[this.MOST_RECENT_DATA_INDEX].tempf,
+            this.weatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m
+        );
+        const hourlyRain = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin;
 
         if ((maxGust >= 46 && maxGust <= 57) || (maxWind >= 31 && maxWind >= 39)) {
             alertMessage = this.config.WIND_ADVISORY;
@@ -124,241 +72,129 @@ export default class IWeatherHelperService {
         } else {
             alertMessage = this.config.NO_ALERTS;
         }
-        //TODO: Add Blizzard Warning alert
 
         return alertMessage.toUpperCase();
     }
 
     /**
-     * A helper function that determines the maximum temperature for a list of weather data.
+     * A helper function that determines the maximum value of a given data property of weather data.
      *
-     * @param weatherData the data to find the max temperature of
-     * @returns the maximum temperature of the data list
+     * @param data The weather data to find the maximum value of
+     * @param dataProperty The property of the weather data to find the maximum of
+     * @returns The maximum value of the data property in the given data
      */
-    public getMaxTemp(weatherData: IWeatherData[]): number {
-        let maxTemp = 0;
-        for (const data of weatherData) {
-            if (data.tempf > maxTemp) {
-                maxTemp = data.tempf;
+    public getDataMax(data: IWeatherData[], dataProperty: string): number {
+        let dataKey = dataProperty as keyof (typeof data)[0];
+        let dataMax: any = undefined;
+        for (const row of data) {
+            if (row[dataKey] > dataMax) {
+                dataMax = row[dataKey];
             }
         }
-        return maxTemp;
+        return dataMax;
     }
 
     /**
-     * A helper function that determines the maximum wind gust for a list of weather data.
+     * A helper function that determines the minimum value of a given data property of weather data.
      *
-     * @param weatherData the data to find the max wind gust of
-     * @returns the maximum wind gust of the data list
+     * @param data The weather data to find the minimum value of
+     * @param dataProperty The property of the weather data to find the minimum of
+     * @returns The minimum value of the data property in the given data
      */
-    public getMaxGustSpeed(weatherData: IWeatherData[]): number {
-        let maxGustSpeed = 0;
-        for (const data of weatherData) {
-            if (data.windgustmph > maxGustSpeed) {
-                maxGustSpeed = data.windgustmph;
+    public getDataMin(data: IWeatherData[], dataProperty: string): number {
+        var dataKey = dataProperty as keyof (typeof data)[0];
+        var dataMin: any = undefined;
+        for (const row of data) {
+            if (row[dataKey] > dataMin) {
+                dataMin = row[dataKey];
             }
         }
-        return maxGustSpeed;
+        return dataMin;
     }
 
     /**
-     * A helper function that determines the maximum wind speed for a list of weather data.
+     * A helper function that determines the trend of a given data property of weather data.
      *
-     * @param weatherData the data to find the max wind speed of
-     * @returns the maximum wind speed of the data list
+     * @param data The weather data to find the trend of
+     * @param dataProperty The property of the weather data to find the trend of
+     * @returns
      */
-    public getMaxWindSpeed(weatherData: IWeatherData[]): number {
-        let maxWindSpeed = 0;
-        for (const data of weatherData) {
-            if (data.windgustmph > maxWindSpeed) {
-                maxWindSpeed = data.windspdmph_avg10m;
+    public getDataTrend(data: IWeatherData[], dataProperty: string): number {
+        const dataKey = dataProperty as keyof (typeof data)[0];
+        const dataLength: number = data.length;
+        const dataTrend =
+            ((data[dataLength - 1][dataKey] as number) - (data[0][dataKey] as number)) / dataLength;
+        return dataTrend;
+    }
+
+    /**
+     * A helper function that determines the average value of a given data property of weather data.
+     *
+     * @param data The weather data to find the average value of
+     * @param dataProperty The property of the weather data to find the average of
+     * @returns
+     */
+    public getDataAverage(data: IWeatherData[], dataProperty: string): number {
+        const dataKey = dataProperty as keyof (typeof data)[0];
+        const dataLength: number = data.length;
+        var dataSum = 0;
+        for (const row of data) {
+            dataSum += row[dataKey] as number;
+        }
+        return dataSum / dataLength;
+    }
+
+    /**
+     * A helper function that gets the current weather condition.
+     *
+     * @returns The current weather condition represented as a string.
+     */
+    public getCurrentWeatherCondition(): string {
+        var weatherCondition = '';
+        const isDaytime = this.helperService.isDaytime(this.helperService.getCurrentTime());
+
+        const maxWindSpeed = this.weatherData[0].windspdmph_avg10m;
+        const pressureTrend = this.getDataTrend(this.weatherData, 'baromabsin');
+        const hourlyRainfall = this.weatherData[0].hourlyrainin;
+        const humidity = this.weatherData[0].humidity;
+        const temperature = this.weatherData[0].tempf;
+        const dewPoint = this.weatherData[0].dewPoint;
+        const solarRadiation = this.weatherData[0].solarradiation;
+
+        if (hourlyRainfall > 0) {
+            weatherCondition = this.config.WEATHER_RAIN;
+            if (pressureTrend < this.PRESSURE_GRADIENT) {
+                weatherCondition = this.config.WEATHER_STORM;
+            }
+        } else if (maxWindSpeed >= this.BREEZY_MIN_SPEED && maxWindSpeed < this.BREEZY_MAX_SPEED) {
+            weatherCondition = this.config.WEATHER_BREEZE;
+        } else if (maxWindSpeed >= this.BREEZY_MAX_SPEED) {
+            weatherCondition = this.config.WEATHER_WIND;
+        } else if (
+            humidity >= this.MAXIMUM_HUMIDITY &&
+            temperature - dewPoint <= this.DEW_POINT_TEMP_DIFF
+        ) {
+            weatherCondition = this.config.WEATHER_FOG;
+        } else {
+            if (isDaytime) {
+                if (solarRadiation > this.SUNNY_SOLAR_RAD) {
+                    weatherCondition = this.config.WEATHER_SUNNY;
+                } else if (
+                    solarRadiation <= this.SUNNY_SOLAR_RAD &&
+                    solarRadiation >= this.CLOUDY_SOLAR_RAD
+                ) {
+                    weatherCondition = this.config.WEATHER_PARTLY_CLOUDS;
+                } else {
+                    weatherCondition = this.config.WEATHER_CLOUDS;
+                }
+            } else {
+                if (pressureTrend < this.PRESSURE_GRADIENT) {
+                    weatherCondition = this.config.WEATHER_CLOUDS;
+                } else {
+                    weatherCondition = this.config.WEATHER_CLEAR;
+                }
             }
         }
-        return maxWindSpeed;
-    }
-
-    /**
-     *
-     * @param temperature
-     * @param windSpeed
-     * @returns
-     */
-    public getWindChill(temperature: number, windSpeed: number): number {
-        return (
-            35.74 +
-            0.6215 * windSpeed -
-            Math.pow(35.75 * temperature, 0.16) +
-            Math.pow(0.4275 * temperature * windSpeed, 0.16)
-        );
-    }
-
-    /**
-     * A helper function that converts an inHg pressure value to Mbar and rounds it to the nearest integer.
-     *
-     * @param pressure the inHg (inches Mercury) pressure value to convert
-     * @returns a converted pressure value in Mbar
-     */
-    public getPressureInMbar(pressure: number): number {
-        return Math.round(pressure * this.config.INCHES_MERCURY_TO_MBAR_CONVERSION);
-    }
-
-    /**
-     *
-     * @returns
-     */
-    public getCurrentTime(): Date {
-        return this.today;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getWindSpeedAverage(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        let sum = 0;
-        for (const data of weatherData) {
-            sum += data.windspeedmph;
-        }
-        return sum / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getWindSpeedTrend(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        return (weatherData[size - 1].windspeedmph - weatherData[0].windspeedmph) / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getTemperatureTrend(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        return (weatherData[size - 1].tempf - weatherData[0].tempf) / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getTemperatureAverage(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        let sum = 0;
-        for (const data of weatherData) {
-            sum += data.tempf;
-        }
-        return sum / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getPressureTrend(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        return (weatherData[size - 1].baromrelin - weatherData[0].baromrelin) / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getPressureAverage(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        let sum = 0;
-        for (const data of weatherData) {
-            sum += data.baromrelin;
-        }
-        return sum / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getHumidityTrend(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        return (weatherData[size - 1].humidity - weatherData[0].humidity) / size;
-    }
-
-    /**
-     *
-     * @param weatherData
-     * @returns
-     */
-    public getHumidityAverage(weatherData: IWeatherData[]): number {
-        const size = weatherData.length;
-        let sum = 0;
-        for (const data of weatherData) {
-            sum += data.humidity;
-        }
-        return sum / size;
-    }
-
-    /**
-     * A helper method that determines if the provided date is after sunrise and before sunset (daytime).
-     *
-     * @param date the time to determine if it is day/night
-     * @returns true if the provided date is daytime, false otherwise
-     */
-    private isDaytime(date: Date): boolean {
-        return (
-            new Date(date).getHours() >= new Date().getHours() &&
-            new Date(date).getHours() < new Date().getHours()
-        );
-    }
-
-    /**
-     * A helper method that gets the corresponding icon for the provided weather condition and time.
-     *
-     * @param weatherCondition The weather condition
-     * @param date The time the condition occurs
-     * @returns An icon representing the weather condition and time
-     */
-    public getWeatherIcon(weatherCondition: string, date: Date) {
-        const isDaytime = this.isDaytime(date);
-
-        return '';
-    }
-
-    public getDayStringFromNumber(day: number): string {
-        switch (day) {
-            case 1:
-                return 'Monday';
-            case 2:
-                return 'Tuesday';
-            case 3:
-                return 'Wednesday';
-            case 4:
-                return 'Thursday';
-            case 5:
-                return 'Friday';
-            case 6:
-                return 'Saturday';
-            case 0:
-                return 'Sunday';
-            default:
-                return '';
-        }
-    }
-
-    /**
-     *
-     * @returns
-     */
-    public getWeatherCondition(): string {
-        let weatherCondition = '';
 
         return weatherCondition;
     }

@@ -13,7 +13,11 @@ export default function AstronomyPage() {
             <div className="p-2 text-3xl font-bold">{config.ASTRONOMY_TITLE}</div>
             <PaddingBar></PaddingBar>
             <br></br>
-            <InfoCard stretch={true}></InfoCard>
+            <InfoCard
+                stretch={true}
+                secondaryTitle={config.ASTRONOMY_DESCRIPTION}
+                center={true}
+            ></InfoCard>
             <br></br>
             <div className="flex flex-col flex-wrap place-content-center-safe">
                 <Image

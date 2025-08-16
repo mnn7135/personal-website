@@ -29,7 +29,7 @@ export default function HomePage() {
             <br></br>
             <div className="flex flex-row flex-wrap place-content-around">
                 <Button
-                    onClick={() => redirect(config.STACK_OVERFLOW_LINK)}
+                    onClick={() => window.open(config.STACK_OVERFLOW_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -41,7 +41,7 @@ export default function HomePage() {
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.GIT_LINK)}
+                    onClick={() => window.open(config.GIT_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -54,36 +54,7 @@ export default function HomePage() {
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.TRELLO_LINK)}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.TRELLO_IMG_SRC}
-                        alt={config.TRELLO_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => redirect(config.GOOGLE_LINK)}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.GOOGLE_IMG_SRC}
-                        alt={config.GOOGLE_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-            </div>
-            <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <Button
-                    onClick={() => redirect(config.RIT_LINK)}
+                    onClick={() => window.open(config.RIT_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -96,20 +67,7 @@ export default function HomePage() {
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.GTRI_LINK)}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.GTRI_IMAGE_SRC}
-                        alt={config.GTRI_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => redirect(config.LINKEDIN_LINK)}
+                    onClick={() => window.open(config.LINKEDIN_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -121,8 +79,50 @@ export default function HomePage() {
                         height={imageSize}
                     ></Image>
                 </Button>
+            </div>
+            <br></br>
+            <div className="flex flex-row flex-wrap place-content-around">
                 <Button
-                    onClick={() => redirect(config.GOOGLE_LINK)}
+                    onClick={() => window.open(config.AMBIENT_WEATHER_LINK, '_blank')}
+                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
+                    variant={'outline'}
+                >
+                    {' '}
+                    <Image
+                        src={config.AMBIENT_WEATHER_IMG_SRC}
+                        alt={config.AMBIENT_WEATHER_ALT}
+                        width={imageSize}
+                        height={imageSize}
+                    ></Image>
+                </Button>
+                <Button
+                    onClick={() => window.open(config.NEXT_JS_LINK, '_blank')}
+                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
+                    variant={'outline'}
+                >
+                    {' '}
+                    <Image
+                        src={config.NEXT_JS_IMG_SRC}
+                        alt={config.NEXT_JS_ALT}
+                        width={imageSize}
+                        height={imageSize}
+                    ></Image>
+                </Button>
+                <Button
+                    onClick={() => window.open(config.BING_LINK, '_blank')}
+                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
+                    variant={'outline'}
+                >
+                    {' '}
+                    <Image
+                        src={config.BING_IMG_SRC}
+                        alt={config.BING_ALT}
+                        width={imageSize}
+                        height={imageSize}
+                    ></Image>
+                </Button>
+                <Button
+                    onClick={() => window.open(config.GOOGLE_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -138,7 +138,7 @@ export default function HomePage() {
             <br></br>
             <div className="flex flex-row flex-wrap place-content-around">
                 <Button
-                    onClick={() => redirect(config.FIRST_LINK)}
+                    onClick={() => window.open(config.FIRST_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
@@ -151,40 +151,40 @@ export default function HomePage() {
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.BING_LINK)}
+                    onClick={() => window.open(config.MINECRAFT_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
                     {' '}
                     <Image
-                        src={config.BING_IMG_SRC}
-                        alt={config.BING_ALT}
+                        src={config.MINECRAFT_IMG_SRC}
+                        alt={config.MINECRAFT_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.GOOGLE_LINK)}
+                    onClick={() => window.open(config.MABINOGI_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
                     {' '}
                     <Image
-                        src={config.GOOGLE_IMG_SRC}
-                        alt={config.GOOGLE_ALT}
+                        src={config.MABINOGI_IMG_SRC}
+                        alt={config.MABINOGI_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => redirect(config.GOOGLE_LINK)}
+                    onClick={() => window.open(config.NATION_STATES_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
                     {' '}
                     <Image
-                        src={config.GOOGLE_IMG_SRC}
-                        alt={config.GOOGLE_ALT}
+                        src={config.NATION_STATES_IMG_SRC}
+                        alt={config.NATION_STATES_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>

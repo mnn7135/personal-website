@@ -5,7 +5,7 @@
     "OBJECTIVE_DESCRIPTION": "Seeking a job in the Software Engineering field with excellent programming skills in Java, React, TypeScript, SQL Databases, and HTML. Experience working on database design and with scrum agile-driven teams. Previous work at Georgia Tech Research Institute as a full-stack developer with experience designing and developing new features. Other experience includes migrating from an older technology like AngularJS to React.",
     
     "ABOUT_SECTION": "About",
-    "ABOUT_DESCRIPTION": "lorem ipsum.",
+    "ABOUT_DESCRIPTION": "I am a Software Engineering graduate who is proficient in all parts of the process when it comes to creating a software product. I have great experience working with SQL, Java, and React-based frameworks, and testing is my passion. I am an avid cat lover and there's no place I love more than the Adirondacks of New York.",
 
     "NAME": "Michael Nersinger",
     "MINOR_DEGREE": "History Minor",
@@ -24,20 +24,35 @@
     "OTHER_SKILLS_LIST": ["Scrum/Agile Development", "Software Architecture Design", "CAD Design", "Virtual Machines"],
 
     "PROJECT_SECTION": "Software Projects",
+
     "PROJECT_1_TITLE": "FiTR - Senior Capstone Project",
     "PROJECT_1_SKILLS": "Scrum",
-    "PROJECT_1_DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "PROJECT_1_TIMEFRAME": "Jan 2025 - Aug 2025",
+    "PROJECT_1_DESCRIPTION": ["• Collaborated with a team of 8 seniors to design and implement a full-stack web application",
+        "• Researched and justified design decision to use Supabase and Next.js to satisfy sponsor project",
+        "• Collected metrics as team scrum master to ensure adherence to project and sprint milestones",
+        "• Designed and implemented the login and authentication system to satisfy sponsor priorities"],
+
     "PROJECT_2_TITLE": "Personal Website",
     "PROJECT_2_SKILLS": "TypeScript, React Native",
-    "PROJECT_2_DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "PROJECT_2_TIMEFRAME": "Aug 2025 - [Ongoing]",
+    "PROJECT_2_DESCRIPTION": ["• Designed and implemented a personal website using Next.js and a physical weather station",
+        "• Populated information from the weather station with an API library to get sensor data",
+        "• Implemented automated testing and deployment to streamline new feature rollouts"],
+
     "PROJECT_3_TITLE": "Javelin - GTRI",
     "PROJECT_3_SKILLS": "Java, TypeScript, React Native, SQL, Scrum",
-    "PROJECT_3_DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    
+    "PROJECT_3_TIMEFRAME": "Aug 2023 - Dec 2024",
+    "PROJECT_3_DESCRIPTION": ["• Collaborated with an agile team of 10+ to complete feature-driven sprints to satisfy needs",
+        "• Mentored and peer programmed with other students to assist in project development",
+        "• Spearheaded the design and migration of a metrics feature to the React standard to improve security"],
+
     "ASTRONOMY_TITLE": "Astronomy",
+    "ASTRONOMY_DESCRIPTION": "Here are some various astronomical photos I've taken with my telescope.",
     "ASTRONOMY_IMG_1_ALT": "The Moon through a telescope",
     "ASTRONOMY_IMG_2_ALT": "The Stars through a telescope",
     "ASTRONOMY_IMG_3_ALT": "The Stars through a telescope",
+
     "ASTRONOMY_IMG_1_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_moon.jpg",
     "ASTRONOMY_IMG_2_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_space_1.jpg",
     "ASTRONOMY_IMG_3_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_space_2.jpg",
@@ -69,40 +84,60 @@
 
     "QUCIK_LINKS_SECTION": "Quick Links",
 
-    "BING_ALT": "Bing",
-    "FIRST_ALT": "FIRST Robotics",
-    "GIT_ALT": "Github",
-    "LINKEDIN_ALT": "Linkedin: Michael Nersinger",
-    "GTRI_ALT": "Georgia Tech Research Institute",
+    "STACK_OVERFLOW_LINK": "https://stackoverflow.com",
     "STACK_OVERFLOW_ALT": "Stack Overflow",
-    "GOOGLE_ALT": "Google",
+    "STACK_OVERFLOW_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/stack.749a9928307c77d49b15.jpg",
+
+    "GIT_LINK": "https://github.com",
+    "GIT_ALT": "GitHub",
+    "GIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/git.5c3561a15e2dfa8a1dd7.jpg",
+
+    "RIT_LINK": "https://www.rit.edu",
     "RIT_ALT": "Rochester Institute of Technology",
-    "TRELLO_ALT": "Trello",
+    "RIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/ritp.a39b4e4f182a0fb73cd2.jpg",
+
+    "LINKEDIN_LINK": "https://www.linkedin.com/in/michael-nersinger/",
+    "LINKEDIN_ALT": "Linkedin: Michael Nersinger",
+    "LINKEDIN_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/lin.03aeed1f655554b83738.jpg",
+
+    "AMBIENT_WEATHER_LINK": "https://ambientweather.net/",
+    "AMBIENT_WEATHER_ALT": "Ambient Weather Network",
+    "AMBIENT_WEATHER_IMG_SRC": "https://pbs.twimg.com/profile_images/1623373136308670487/dO8ivD_U_400x400.jpg",
+    
+    "NEXT_JS_LINK": "https://nextjs.org/",
+    "NEXT_JS_ALT": "NextJS Framework",
+    "NEXT_JS_IMG_SRC": "https://images.icon-icons.com/2148/PNG/512/nextjs_icon_132160.png",
 
     "BING_LINK": "https://www.bing.com",
-    "FIRST_LINK": "https://www.firstinspires.org",
-    "GIT_LINK": "https://github.com",
-    "LINKEDIN_LINK": "https://www.linkedin.com/in/michael-nersinger/",
-    "GTRI_LINK": "https://gtri.gatech.edu",
-    "STACK_OVERFLOW_LINK": "https://stackoverflow.com",
-    "GOOGLE_LINK": "https://www.google.com/",
-    "RIT_LINK": "https://www.rit.edu",
-    "TRELLO_LINK": "https://trello.com",
-
-    "STACK_OVERFLOW_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/stack.749a9928307c77d49b15.jpg",
+    "BING_ALT": "Bing",
     "BING_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/bing.e74a90bf6ea9df62508f.jpg",
-    "FIRST_IMG_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/first.jpg",
-    "GIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/git.5c3561a15e2dfa8a1dd7.jpg",
-    "LINKEDIN_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/lin.03aeed1f655554b83738.jpg",
-    "GTRI_IMAGE_SRC": "https://mnn7135.github.io/personalWeb/static/media/gtri.1631fbf2c66b4a5f012f.jpg",
+
+    "GOOGLE_LINK": "https://www.google.com/",
+    "GOOGLE_ALT": "Google",
     "GOOGLE_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/google.a66774b11bfe973fe45f.jpg",
-    "RIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/ritp.a39b4e4f182a0fb73cd2.jpg",
-    "TRELLO_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/trello.ffbeea8a8d593ec568a0.jpg",
+
+    "FIRST_LINK": "https://www.firstinspires.org",
+    "FIRST_ALT": "FIRST Robotics",
+    "FIRST_IMG_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/first.jpg",
+
+    "MINECRAFT_LINK": "https://minecraft.wiki/",
+    "MINECRAFT_ALT": "Minecraft Wiki",
+    "MINECRAFT_IMG_SRC": "https://images.icon-icons.com/2699/PNG/512/minecraft_logo_icon_168974.png",
+
+    "MABINOGI_LINK": "https://wiki.mabinogiworld.com/view/Wiki_Home",
+    "MABINOGI_ALT": "Mabinogi World Wiki",
+    "MABINOGI_IMG_SRC": "https://wiki.mabinogiworld.com/images/4/49/Mabisign.PNG",
+
+    "NATION_STATES_LINK": "https://www.nationstates.net/",
+    "NATION_STATES_ALT": "NationStates - Online Nation Simulator",
+    "NATION_STATES_IMG_SRC": "https://static.wikia.nocookie.net/logopedia/images/7/70/NationStates_Logo_%282002%2C_Badge%29.png/revision/latest?cb=20230218231545",
 
     "HOME_PAGE_ROUTE": "home",
-    "ABOUT_PAGE_ROUTE": "about",
-    "WEATHER_PAGE_ROUTE": "weather",
-    "ASTRONOMY_PAGE_ROUTE": "astronomy",
+    "ABOUT_PAGE_ROUTE": "home/about",
+    "WEATHER_PAGE_ROUTE": "projects/weather",
+    "ASTRONOMY_PAGE_ROUTE": "projects/astronomy",
+    "SOFTWARE_PAGE_ROUTE": "projects/software",
+
     "GITHUB_PROJ_LINK": "https://github.com/mnn7135/personal-website/",
     "ATTRIBUTION": "Programmed by Michael Nersinger |"
 }
