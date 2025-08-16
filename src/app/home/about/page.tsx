@@ -11,7 +11,7 @@ export default function AboutPage() {
         <div>
             <div>
                 <div>
-                    <div className="p-2 text-3xl">{config.ABOUT_TITLE}</div>
+                    <div className="p-2 text-3xl font-bold">{config.ABOUT_TITLE}</div>
                     <PaddingBar></PaddingBar>
                     <div>
                         <div className="place-self-center p-4">

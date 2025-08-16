@@ -17,19 +17,17 @@ const projects: { title: string; href: string; description: string }[] = [
     {
         title: 'Software',
         href: '/projects/software',
-        description:
-            'A modal dialog that interrupts the user with important content and expects a response.'
+        description: "Software projects I've worked on, personal and college."
     },
     {
         title: 'Weather',
         href: '/projects/weather',
-        description: 'For sighted users to preview content available behind a link.'
+        description: 'Real-time weather information for Victor, NY.'
     },
     {
         title: 'Astronomy',
         href: '/projects/astronomy',
-        description:
-            'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.'
+        description: "Astronomy photos I've taken."
     }
 ];
 
@@ -39,7 +37,7 @@ export function WebsiteNavagationMenu() {
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Home</NavigationMenuTrigger>
-                    <NavigationMenuContent>
+                    <NavigationMenuContent className="absolute w-55">
                         <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                             <li className="row-span-3">
                                 <NavigationMenuLink asChild>
@@ -47,30 +45,32 @@ export function WebsiteNavagationMenu() {
                                         className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
                                         href="/home"
                                     >
-                                        <div className="mt-4 mb-2 text-lg font-medium">Home</div>
+                                        <div className="mt-4 mb-2 text-lg font-medium">
+                                            Quick Links
+                                        </div>
                                         <p className="text-muted-foreground text-sm leading-tight">
-                                            Beautifully designed components built with Tailwind CSS.
+                                            Quick access to important links.
                                         </p>
                                     </a>
                                 </NavigationMenuLink>
                             </li>
                             <ListItem href="/home/about" title="About Me">
-                                Re-usable components built using Radix UI and Tailwind CSS.
+                                About me and and a brief digital resume.
                             </ListItem>
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Projects</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <NavigationMenuContent className="absolute w-55">
+                        <ul className="w-50">
                             {projects.map((project) => (
                                 <ListItem
                                     key={project.title}
                                     title={project.title}
                                     href={project.href}
                                 >
-                                    {project.description}
+                                    <div className="flex-wrap">{project.description}</div>
                                 </ListItem>
                             ))}
                         </ul>
@@ -92,9 +92,9 @@ function ListItem({
             <NavigationMenuLink asChild>
                 <Link href={href}>
                     <div className="text-sm leading-none font-medium">{title}</div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                    <div className="text-muted-foreground line-clamp-2 text-sm leading-snug">
                         {children}
-                    </p>
+                    </div>
                 </Link>
             </NavigationMenuLink>
         </li>

@@ -1,6 +1,6 @@
 {
-    "BASE_STATION_URL": "https://api.ambientweather.net/v1/devices/ELEMENT_0?apiKey=ELEMENT_1&applicationKey=ELEMENT_2",
-    "BASE_SUN_URL": "https://api.sunrise-sunset.org/json?lat=ELEMENT_0&lng=ELEMENT_1&date=today&formatted=0",
+    "BASE_STATION_URL": "https://api.ambientweather.net/v1/devices/DEVICE_KEY?apiKey=API_KEY&applicationKey=APP_KEY",
+    "BASE_SUN_URL": "https://api.sunrise-sunset.org/json?lat=LATITUDE&lng=LONGITUDE&date=today&formatted=0",
 
     "WEATHER_SUNNY": "Sunny",
     "WEATHER_CLOUDS": "Cloudy",

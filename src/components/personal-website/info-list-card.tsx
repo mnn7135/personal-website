@@ -35,7 +35,7 @@ export default function InfoListCard(props: InfoListCardProps) {
                                 {props.dataLabels.map((label, index) => {
                                     return (
                                         <div key={`info-card-${label}-${index}`}>
-                                            {label}
+                                            <div className="p-1 font-bold">{label}</div>
                                             <ThinPaddingBar></ThinPaddingBar>
                                         </div>
                                     );
@@ -53,7 +53,7 @@ export default function InfoListCard(props: InfoListCardProps) {
                             ? props.data.map((dataElement, index) => {
                                   return (
                                       <div key={`info-card-data-${index}`}>
-                                          {dataElement}
+                                          <div className="p-1">{dataElement}</div>
                                           <ThinPaddingBar></ThinPaddingBar>
                                       </div>
                                   );

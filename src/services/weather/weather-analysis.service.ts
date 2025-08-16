@@ -1,27 +1,9 @@
 import { ISunDataResult } from '@/types/weather/sun-data.domain';
 import { IWeatherData } from '@/types/weather/weather-data.domain';
-import {
-    faCloud,
-    faCloudMoon,
-    faCloudMoonRain,
-    faCloudRain,
-    faCloudSun,
-    faCloudSunRain,
-    faMoon,
-    faSmog,
-    faSnowflake,
-    faSun,
-    faThunderstorm,
-    faWind
-} from '@fortawesome/free-solid-svg-icons';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
 
 export default class IWeatherHelperService {
-    private sunData: ISunDataResult;
-    private weatherData: IWeatherData[];
-    private lastWeekWeatherData: IWeatherData[];
     private today: Date;
-    private lastWeek: Date;
     private config: IWeatherConfig = loadWeatherConfig();
 
     /**
@@ -31,19 +13,11 @@ export default class IWeatherHelperService {
      * @param weatherData today's weather data
      * @param lastWeekWeatherData last week from today's weather data
      */
-    constructor(
-        sunData: ISunDataResult,
-        weatherData: IWeatherData[],
-        lastWeekWeatherData: IWeatherData[]
-    ) {
-        this.sunData = sunData;
-        this.weatherData = weatherData;
-        this.lastWeekWeatherData = lastWeekWeatherData;
+    constructor() {
         this.today = new Date();
 
         const tempDate = new Date();
         tempDate.setTime(this.today.getTime() - 7 * 24 * 60 * 60 * 1000);
-        this.lastWeek = tempDate;
     }
 
     /**
@@ -113,7 +87,7 @@ export default class IWeatherHelperService {
             uvRisk = this.config.EXTREME_UV_RISK;
         }
 
-        return `(${uvRisk})`;
+        return `${uvIndex} (${uvRisk})`;
     }
 
     /**
@@ -125,14 +99,11 @@ export default class IWeatherHelperService {
         let alertMessage = '';
         const nowIndex = 0;
 
-        const maxGust = this.getMaxGustSpeed(this.weatherData);
-        const maxWind = this.getMaxWindSpeed(this.weatherData);
-        const maxTemp = this.getMaxTemp(this.weatherData);
-        const windChill = this.getWindChill(
-            this.weatherData[nowIndex].tempf,
-            this.weatherData[nowIndex].winddir
-        );
-        const hourlyRain = this.weatherData[nowIndex].hourlyrainin;
+        const maxGust = 0;
+        const maxWind = 0;
+        const maxTemp = 0;
+        const windChill = 0;
+        const hourlyRain = 0;
 
         if ((maxGust >= 46 && maxGust <= 57) || (maxWind >= 31 && maxWind >= 39)) {
             alertMessage = this.config.WIND_ADVISORY;
@@ -222,13 +193,13 @@ export default class IWeatherHelperService {
     }
 
     /**
-     * A helper function that converts an inHg pressure value to Mbar.
+     * A helper function that converts an inHg pressure value to Mbar and rounds it to the nearest integer.
      *
      * @param pressure the inHg (inches Mercury) pressure value to convert
      * @returns a converted pressure value in Mbar
      */
-    public getPressureMbar(pressure: number): number {
-        return pressure * this.config.INCHES_MERCURY_TO_MBAR_CONVERSION;
+    public getPressureInMbar(pressure: number): number {
+        return Math.round(pressure * this.config.INCHES_MERCURY_TO_MBAR_CONVERSION);
     }
 
     /**
@@ -343,8 +314,8 @@ export default class IWeatherHelperService {
      */
     private isDaytime(date: Date): boolean {
         return (
-            new Date(date).getHours() >= new Date(this.sunData.sunrise).getHours() &&
-            new Date(date).getHours() < new Date(this.sunData.sunset).getHours()
+            new Date(date).getHours() >= new Date().getHours() &&
+            new Date(date).getHours() < new Date().getHours()
         );
     }
 
@@ -358,29 +329,7 @@ export default class IWeatherHelperService {
     public getWeatherIcon(weatherCondition: string, date: Date) {
         const isDaytime = this.isDaytime(date);
 
-        switch (weatherCondition) {
-            case 'Showers':
-                return isDaytime ? faCloudSunRain : faCloudMoonRain;
-            case 'Rain':
-                return faCloudRain;
-            case 'Partly Cloudy':
-                return isDaytime ? faCloudSun : faCloudMoon;
-            case 'Cloudy':
-                return faCloud;
-            case 'Sunny':
-                return faSun;
-            case 'Clear':
-                return faMoon;
-            case 'Windy':
-            case 'Breezy':
-                return faWind;
-            case 'Foggy':
-                return faSmog;
-            case 'Stormy':
-                return faThunderstorm;
-            case 'Snowy':
-                return faSnowflake;
-        }
+        return '';
     }
 
     public getDayStringFromNumber(day: number): string {
@@ -410,48 +359,6 @@ export default class IWeatherHelperService {
      */
     public getWeatherCondition(): string {
         let weatherCondition = '';
-
-        const maxWindSpeed = this.weatherData[0].windspdmph_avg10m;
-        const isDaytime =
-            new Date(this.getCurrentTime()).getHours() >=
-                new Date(this.sunData.sunrise).getHours() &&
-            new Date(this.getCurrentTime()).getHours() < new Date(this.sunData.sunset).getHours();
-
-        if (this.weatherData[0].hourlyrainin > 0) {
-            weatherCondition = 'Rain';
-
-            if (this.getPressureTrend(this.weatherData) < -0.2) {
-                weatherCondition = 'Storms';
-            }
-        } else if (maxWindSpeed >= 15 && maxWindSpeed < 20) {
-            weatherCondition = 'Breezy';
-        } else if (maxWindSpeed >= 20) {
-            weatherCondition = 'Windy';
-        } else if (
-            this.weatherData[0].humidity >= 100 &&
-            this.weatherData[0].tempf - this.weatherData[0].dewPoint <= 4.5
-        ) {
-            weatherCondition = 'Foggy';
-        } else {
-            if (isDaytime) {
-                if (this.weatherData[0].solarradiation > 450) {
-                    weatherCondition = 'Sunny';
-                } else if (
-                    this.weatherData[0].solarradiation <= 450 &&
-                    this.weatherData[0].solarradiation >= 200
-                ) {
-                    weatherCondition = 'Partly Cloudy';
-                } else {
-                    weatherCondition = 'Cloudy';
-                }
-            } else {
-                if (this.getPressureTrend(this.weatherData) < -0.2) {
-                    weatherCondition = 'Cloudy';
-                } else {
-                    weatherCondition = 'Clear';
-                }
-            }
-        }
 
         return weatherCondition;
     }

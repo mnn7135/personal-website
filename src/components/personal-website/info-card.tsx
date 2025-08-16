@@ -9,6 +9,9 @@ interface InfoCardProps {
     description?: string;
     center?: boolean;
     stretch?: boolean;
+    scaleTitle?: boolean;
+    overhead?: string;
+    icon?: string;
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -21,7 +24,19 @@ export default function InfoCard(props: InfoCardProps) {
                 {props.cardTitle ? (
                     <>
                         <CardTitle>
-                            <div className="text-2xl">{props.cardTitle}</div>
+                            <div className={'text-4xl'}>{props.overhead}</div>
+                        </CardTitle>
+                        <SmallPaddingBar></SmallPaddingBar>
+                    </>
+                ) : (
+                    <></>
+                )}
+                {props.cardTitle ? (
+                    <>
+                        <CardTitle>
+                            <div className={props.scaleTitle ? 'text-8xl' : 'text-2xl'}>
+                                {props.cardTitle}
+                            </div>
                         </CardTitle>
                         <SmallPaddingBar></SmallPaddingBar>
                     </>
@@ -39,13 +54,22 @@ export default function InfoCard(props: InfoCardProps) {
                 )}
                 {props.secondaryTitle ? (
                     <>
-                        <CardTitle>{props.secondaryTitle}</CardTitle>
+                        <CardTitle className={props.scaleTitle ? 'text-2xl' : ''}>
+                            {props.secondaryTitle}
+                        </CardTitle>
                     </>
                 ) : (
                     ''
                 )}
             </CardHeader>
             <CardContent>
+                {props.icon ? (
+                    <>
+                        <CardDescription>{'icon' + props.icon}</CardDescription>
+                    </>
+                ) : (
+                    <></>
+                )}
                 {props.cardDescription ? (
                     <>
                         <CardDescription>{props.cardDescription}</CardDescription>

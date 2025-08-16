@@ -7,7 +7,7 @@ const config: IAppConfig = loadAppConfig();
 export default function SoftwarePage() {
     return (
         <div>
-            <div className="p-2 text-3xl">{config.PROJECT_SECTION}</div>
+            <div className="p-2 text-3xl font-bold">{config.PROJECT_SECTION}</div>
             <PaddingBar></PaddingBar>
             <br></br>
             <div className="flex flex-row flex-wrap place-content-between">

@@ -2,7 +2,6 @@ import { ISunData } from '@/types/weather/sun-data.domain';
 import { IWeatherData } from '@/types/weather/weather-data.domain';
 import { AxiosServiceHelper } from '../axios/axios-helper.service';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
-import { env } from 'process';
 
 export default class IWeatherDataService {
     private readonly serviceHelper: AxiosServiceHelper;
@@ -14,17 +13,28 @@ export default class IWeatherDataService {
     constructor() {
         this.serviceHelper = new AxiosServiceHelper();
 
+        console.log('env test', process.env.NEXT_PUBLIC_API_KEY);
+
         // Weather Station URL
         this.baseStationUrl = this.config.BASE_STATION_URL.replace(
-            'ELEMENT_0',
-            env.DEVICE_MAC_ADDRESS!
+            'DEVICE_KEY',
+            process.env.NEXT_PUBLIC_DEVICE_MAC_ADDRESS!
         );
-        this.baseStationUrl = this.baseStationUrl.replace('ELEMENT_1', env.API_KEY!);
-        this.baseStationUrl = this.baseStationUrl.replace('ELEMENT_2', env.APPLICATION_KEY!);
+        this.baseStationUrl = this.baseStationUrl.replace(
+            'API_KEY',
+            process.env.NEXT_PUBLIC_API_KEY!
+        );
+        this.baseStationUrl = this.baseStationUrl.replace(
+            'APP_KEY',
+            process.env.NEXT_PUBLIC_APPLICATION_KEY!
+        );
 
         // Sun Data URL
-        this.baseSunUrl = this.config.BASE_SUN_URL.replace('ELEMENT_0', env.LATITUDE ?? '');
-        this.baseSunUrl = this.baseSunUrl.replace('ELEMENT_1', env.LONGITUDE ?? '');
+        this.baseSunUrl = this.config.BASE_SUN_URL.replace(
+            'LATITUDE',
+            process.env.NEXT_PUBLIC_LATITUDE!
+        );
+        this.baseSunUrl = this.baseSunUrl.replace('LONGITUDE', process.env.NEXT_PUBLIC_LONGITUDE!);
     }
 
     /**

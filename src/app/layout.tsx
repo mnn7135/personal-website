@@ -40,7 +40,7 @@ export default function RootLayout({
                         {config.ATTRIBUTION}
                         &nbsp;
                         <a
-                            style={{ color: 'black' }}
+                            style={{ color: 'blue' }}
                             href={config.GITHUB_PROJ_LINK}
                             target="_blank"
                             rel="noreferrer"

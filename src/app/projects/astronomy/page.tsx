@@ -10,7 +10,7 @@ const IMAGE_WIDTH = 1000;
 export default function AstronomyPage() {
     return (
         <div>
-            <div className="p-2 text-3xl">{config.ASTRONOMY_TITLE}</div>
+            <div className="p-2 text-3xl font-bold">{config.ASTRONOMY_TITLE}</div>
             <PaddingBar></PaddingBar>
             <br></br>
             <InfoCard stretch={true}></InfoCard>
