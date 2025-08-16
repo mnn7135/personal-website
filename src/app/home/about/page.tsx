@@ -14,7 +14,7 @@ export default function AboutPage() {
                     <div className="p-2 text-3xl font-bold">{config.ABOUT_TITLE}</div>
                     <PaddingBar></PaddingBar>
                     <div>
-                        <div className="place-self-center p-4">
+                        <div className="flex-flow flex place-content-around p-4">
                             <Avatar className="h-75 w-75">
                                 <AvatarImage
                                     src={
@@ -33,7 +33,7 @@ export default function AboutPage() {
                             stretch={true}
                         ></InfoCard>
                         <br></br>
-                        <div className="flex flex-row flex-wrap place-content-between">
+                        <div className="flex flex-row flex-wrap place-content-around">
                             <InfoCard
                                 cardTitle={config.SMALL_BLURB_SECTION}
                                 cardDescription={config.SMALL_BLURB_DESCRIPTION}
@@ -56,7 +56,7 @@ export default function AboutPage() {
                         <div className="p-2 text-center text-2xl">{config.SKILLS_SECTION}</div>
                         <SmallPaddingBar></SmallPaddingBar>
                         <br></br>
-                        <div className="flex flex-row flex-wrap place-content-between">
+                        <div className="flex flex-row flex-wrap place-content-around">
                             <InfoListCard
                                 cardTitle={config.OTHER_SKILLS_SECTION}
                                 data={config.OTHER_SKILLS_LIST}
