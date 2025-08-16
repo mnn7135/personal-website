@@ -84,11 +84,11 @@ export default class IWeatherAnalysisService {
      * @returns The maximum value of the data property in the given data
      */
     public getDataMax(data: IWeatherData[], dataProperty: string): number {
-        let dataKey = dataProperty as keyof (typeof data)[0];
-        let dataMax: any = undefined;
+        const dataKey = dataProperty as keyof (typeof data)[0];
+        let dataMax: number = 0;
         for (const row of data) {
-            if (row[dataKey] > dataMax) {
-                dataMax = row[dataKey];
+            if ((row[dataKey] as number) > dataMax) {
+                dataMax = row[dataKey] as number;
             }
         }
         return dataMax;
@@ -102,11 +102,11 @@ export default class IWeatherAnalysisService {
      * @returns The minimum value of the data property in the given data
      */
     public getDataMin(data: IWeatherData[], dataProperty: string): number {
-        var dataKey = dataProperty as keyof (typeof data)[0];
-        var dataMin: any = undefined;
+        const dataKey = dataProperty as keyof (typeof data)[0];
+        let dataMin: number = 0;
         for (const row of data) {
-            if (row[dataKey] > dataMin) {
-                dataMin = row[dataKey];
+            if ((row[dataKey] as number) > dataMin) {
+                dataMin = row[dataKey] as number;
             }
         }
         return dataMin;
@@ -137,7 +137,7 @@ export default class IWeatherAnalysisService {
     public getDataAverage(data: IWeatherData[], dataProperty: string): number {
         const dataKey = dataProperty as keyof (typeof data)[0];
         const dataLength: number = data.length;
-        var dataSum = 0;
+        let dataSum = 0;
         for (const row of data) {
             dataSum += row[dataKey] as number;
         }
@@ -150,7 +150,7 @@ export default class IWeatherAnalysisService {
      * @returns The current weather condition represented as a string.
      */
     public getCurrentWeatherCondition(): string {
-        var weatherCondition = '';
+        let weatherCondition = '';
         const isDaytime = this.helperService.isDaytime(this.helperService.getCurrentTime());
 
         const maxWindSpeed = this.weatherData[0].windspdmph_avg10m;

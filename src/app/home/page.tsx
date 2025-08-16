@@ -4,7 +4,6 @@ import { PaddingBar } from '@/components/personal-website/padding-bar';
 import { Button } from '@/components/ui/button';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
@@ -20,7 +19,7 @@ export default function HomePage() {
         }
 
         setLastWindowSize(window.innerWidth);
-    }, []);
+    }, [lastWindowSize]);
 
     return (
         <div>

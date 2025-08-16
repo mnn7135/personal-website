@@ -1,4 +1,3 @@
-import { env } from 'process';
 import weatherConfig from './json/weather-config.json';
 
 export interface IWeatherConfig {

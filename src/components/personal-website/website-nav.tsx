@@ -9,8 +9,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle
+    NavigationMenuTrigger
 } from '@/components/ui/navigation-menu';
 
 const projects: { title: string; href: string; description: string }[] = [

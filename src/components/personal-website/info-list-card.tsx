@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/card';
 import { SmallPaddingBar, ThinPaddingBar } from './padding-bar';
 
 interface InfoListCardProps {

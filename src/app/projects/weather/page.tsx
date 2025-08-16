@@ -33,7 +33,7 @@ export default function WeatherPage() {
         if (!weatherData) {
             fetchWeatherData();
         }
-    }, []);
+    });
 
     useEffect(() => {
         if (weatherData) {
@@ -59,7 +59,7 @@ export default function WeatherPage() {
         if (!sunData) {
             fetchSunData();
         }
-    }, []);
+    });
 
     return (
         <div>

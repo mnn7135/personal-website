@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { WebsiteNavagationMenu } from '@/components/personal-website/website-nav';
-import { PaddingBar, SmallPaddingBar } from '@/components/personal-website/padding-bar';
+import { SmallPaddingBar } from '@/components/personal-website/padding-bar';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
 
 const geistSans = Geist({

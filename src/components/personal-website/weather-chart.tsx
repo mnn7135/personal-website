@@ -10,9 +10,9 @@ import {
     SelectTrigger,
     SelectValue
 } from '../ui/select';
-import { PaddingBar, ThinPaddingBar } from './padding-bar';
 import { useState } from 'react';
 import IWeatherHelperService from '@/services/weather/weather-helper.service';
+import { ThinPaddingBar } from './padding-bar';
 
 interface WeatherChartProps {
     chartData?: IWeatherData[];
@@ -73,7 +73,7 @@ export function WeatherChart(props: WeatherChartProps) {
     const [selectedGraph, setSelectedGraph] = useState<string>('tempf');
     const helperService = new IWeatherHelperService();
     const shortenedData = [];
-    var count = 0;
+    let count = 0;
 
     if (props.chartData) {
         for (const row of props.chartData) {
