@@ -34,7 +34,7 @@
         "• Designed and implemented the login and authentication system to satisfy sponsor priorities"],
 
     "PROJECT_2_TITLE": "Personal Website",
-    "PROJECT_2_SKILLS": "TypeScript, React Native",
+    "PROJECT_2_SKILLS": "TypeScript, NextJS, Jest",
     "PROJECT_2_TIMEFRAME": "Aug 2025 - [Ongoing]",
     "PROJECT_2_DESCRIPTION": ["• Designed and implemented a personal website using Next.js and a physical weather station",
         "• Populated information from the weather station with an API library to get sensor data",
@@ -48,7 +48,8 @@
         "• Spearheaded the design and migration of a metrics feature to the React standard to improve security"],
 
     "ASTRONOMY_TITLE": "Astronomy",
-    "ASTRONOMY_DESCRIPTION": "Here are some various astronomical photos I've taken with my telescope.",
+    "ASTRONOMY_HEADER": "Overview",
+    "ASTRONOMY_DESCRIPTION": "I've always been into astronomy. Here are some various astronomical photos I've taken with my telescope (See below!).",
     "ASTRONOMY_IMG_1_ALT": "The Moon through a telescope",
     "ASTRONOMY_IMG_2_ALT": "The Stars through a telescope",
     "ASTRONOMY_IMG_3_ALT": "The Stars through a telescope",

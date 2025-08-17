@@ -46,6 +46,7 @@ export interface IAppConfig {
 
     /** Projects/Astronomy Page */
     ASTRONOMY_TITLE: string;
+    ASTRONOMY_HEADER: string;
     ASTRONOMY_DESCRIPTION: string;
 
     ASTRONOMY_IMG_1_ALT: string;
@@ -143,6 +144,5 @@ export interface IAppConfig {
 }
 
 export function loadAppConfig(): IAppConfig {
-    console.log('Loaded the App Config.');
     return appConfig as IAppConfig;
 }

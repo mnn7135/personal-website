@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Michael's Personal Website
 
-## Getting Started
+An application that's more or less a digital resume, and a couple of tools for me.
 
-First, run the development server:
+This application was built with the following technologies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- NextJS: [https://nextjs.org/](https://nextjs.org/)
+- Jest: [https://jestjs.io/](https://jestjs.io/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+UI Components provided by the shadcn library: [https://ui.shadcn.com/](https://ui.shadcn.com/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Useful Tips
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Debugging in VSCode
 
-## Learn More
+This project offers a debugging configuration for the NextJS application:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Full Stack Debugging**
+    - Debugs both client and server code simultaneously
+    - Select "Next.js: debug full stack" from the debug dropdown
+    - Best when working with data flow between frontend and backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### How to Debug:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Press `Ctrl+Shift+D` to open the Debug sidebar
+2. Select your debug configuration from the dropdown
+3. Press `F5` or click the green play button to start debugging
+4. Set breakpoints by clicking to the left of line numbers
+5. Use the debug toolbar to step through code
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- For further information see debugging in VSCode https://nextjs.org/docs/app/guides/debugging

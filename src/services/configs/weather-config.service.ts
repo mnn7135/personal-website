@@ -47,7 +47,5 @@ export interface IWeatherConfig {
 }
 
 export function loadWeatherConfig(): IWeatherConfig {
-    console.log('Loaded the Weather Config.');
-
     return weatherConfig as IWeatherConfig;
 }
