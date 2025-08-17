@@ -20,9 +20,9 @@ jobs:
                   cache-dependency-path: ./package-lock.json
 
             - name: Install Node Packages
-              run: pnpm install --frozen-lockfile
+              run: npm install --frozen-lockfile
               working-directory: ./
 
             - name: Run Tests
-              run: pnpm test
+              run: npm test
               working-directory: ./
