@@ -15,7 +15,7 @@ export default class IWeatherPredictionService {
     private MOST_RECENT_DATA_INDEX: number = 0;
     private PRESSURE_GRADIENT: number = -0.2;
     private MINIMUM_WIND_VALUE: number = 10;
-    private DAY_FACTOR_CONSTANT: number = 24;
+    private DAY_FACTOR_CONSTANT: number = 288;
 
     constructor(
         todaysWeatherData: IWeatherData[],

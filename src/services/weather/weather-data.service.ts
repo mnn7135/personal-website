@@ -14,8 +14,6 @@ export default class IWeatherDataService {
     constructor() {
         this.serviceHelper = new AxiosServiceHelper();
 
-        console.log('env test', process.env.NEXT_PUBLIC_API_KEY);
-
         // Weather Station URL
         this.baseStationUrl = this.config.BASE_STATION_URL.replace(
             'DEVICE_KEY',

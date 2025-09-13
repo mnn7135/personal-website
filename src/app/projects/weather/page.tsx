@@ -16,12 +16,12 @@ import { useEffect, useState } from 'react';
 const config: IAppConfig = loadAppConfig();
 const DATA_FETCH_DELAY = 1000;
 const MS_IN_A_DAY = 86400000;
+const weatherDataService = new IWeatherDataService();
 
 export default function WeatherPage() {
     /** Fetch Weather Data */
     const [today, setToday] = useState<Date>();
     const [todayWeatherData, setTodayWeatherData] = useState<IWeatherData>();
-    const weatherDataService = new IWeatherDataService();
 
     const [weatherData, setWeatherData] = useState<IWeatherData[]>();
     const [oneDayAgoWeatherData, setOneDayAgoWeatherData] = useState<IWeatherData[]>();
@@ -51,7 +51,7 @@ export default function WeatherPage() {
                 setOneDayAgoWeatherData(await weatherDataService.getWeatherDataEndDate(oneDayAgo));
             }, DATA_FETCH_DELAY);
         }
-    }, [today, weatherDataService]);
+    }, [today]);
 
     useEffect(() => {
         if (today && oneDayAgoWeatherData) {
@@ -63,7 +63,7 @@ export default function WeatherPage() {
                 );
             }, DATA_FETCH_DELAY);
         }
-    }, [today, oneDayAgoWeatherData, weatherDataService]);
+    }, [today, oneDayAgoWeatherData]);
 
     useEffect(() => {
         if (today && twoDaysAgoWeatherData) {
@@ -75,7 +75,7 @@ export default function WeatherPage() {
                 );
             }, DATA_FETCH_DELAY);
         }
-    }, [today, twoDaysAgoWeatherData, weatherDataService]);
+    }, [today, twoDaysAgoWeatherData]);
 
     /** Fetch Sun Data */
     const [sunData, setSunData] = useState<ISunDataResult>();
