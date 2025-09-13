@@ -2,6 +2,7 @@ import { ISunData } from '@/types/weather/sun-data.domain';
 import { IWeatherData } from '@/types/weather/weather-data.domain';
 import { AxiosServiceHelper } from '../axios/axios-helper.service';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
+import moment from 'moment';
 
 export default class IWeatherDataService {
     private readonly serviceHelper: AxiosServiceHelper;
@@ -12,8 +13,6 @@ export default class IWeatherDataService {
 
     constructor() {
         this.serviceHelper = new AxiosServiceHelper();
-
-        console.log('env test', process.env.NEXT_PUBLIC_API_KEY);
 
         // Weather Station URL
         this.baseStationUrl = this.config.BASE_STATION_URL.replace(
@@ -57,8 +56,9 @@ export default class IWeatherDataService {
      * @returns A list of weather data for today.
      */
     public getWeatherDataEndDate(endDate: Date): Promise<IWeatherData[]> {
+        endDate.setFullYear(new Date().getFullYear());
         return this.serviceHelper.fetchList<IWeatherData>({
-            url: `${this.baseStationUrl}&endDate=${endDate.getTime()}`
+            url: `${this.baseStationUrl}&endDate=${moment(endDate).format()}`
         });
     }
 

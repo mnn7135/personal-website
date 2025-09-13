@@ -64,9 +64,11 @@ const chartConfig = {
 const axisMapper = (value: any) => {
     const strValue: string = value as string;
 
-    const time = new Date(strValue).toLocaleTimeString();
+    const localeTime = new Date(strValue).toLocaleTimeString();
+    const timeSuffix = localeTime.split(' ')[1];
+    const time = localeTime.split(' ')[0].slice(0, -3);
 
-    return time;
+    return `${time} ${timeSuffix}`;
 };
 
 export function WeatherChart(props: WeatherChartProps) {
