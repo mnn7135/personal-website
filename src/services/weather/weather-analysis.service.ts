@@ -8,7 +8,6 @@ export default class IWeatherAnalysisService {
     private helperService: IWeatherHelperService;
 
     private weatherData: IWeatherData[];
-    private sunData: ISunDataResult;
 
     private MOST_RECENT_DATA_INDEX: number = 0;
     private BREEZY_MIN_SPEED: number = 15;
@@ -24,8 +23,16 @@ export default class IWeatherAnalysisService {
      */
     constructor(weatherData: IWeatherData[], sunData: ISunDataResult) {
         this.weatherData = weatherData;
-        this.sunData = sunData;
         this.helperService = new IWeatherHelperService(sunData);
+    }
+
+    /**
+     * A function that gets the helper service.
+     *
+     * @returns the helper service
+     */
+    public getHelperService(): IWeatherHelperService {
+        return this.helperService;
     }
 
     /**

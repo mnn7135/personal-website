@@ -8,24 +8,32 @@ import WeatherInfoListCard from '@/components/personal-website/weather-info-list
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
 import IWeatherAnalysisService from '@/services/weather/weather-analysis.service';
 import IWeatherDataService from '@/services/weather/weather-data.service';
+import IWeatherPredictionService from '@/services/weather/weather-prediction.service';
 import { ISunDataResult } from '@/types/weather/sun-data.domain';
-import { IWeatherData } from '@/types/weather/weather-data.domain';
+import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.domain';
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
 const DATA_FETCH_DELAY = 1000;
+const MS_IN_A_DAY = 86400000;
 
 export default function WeatherPage() {
+    /** Fetch Weather Data */
+    const [today, setToday] = useState<Date>();
     const [todayWeatherData, setTodayWeatherData] = useState<IWeatherData>();
+    const weatherDataService = new IWeatherDataService();
+
     const [weatherData, setWeatherData] = useState<IWeatherData[]>();
-    const [sunData, setSunData] = useState<ISunDataResult>();
-    const [analysisService, setAnalysisService] = useState<IWeatherAnalysisService>();
+    const [oneDayAgoWeatherData, setOneDayAgoWeatherData] = useState<IWeatherData[]>();
+    const [twoDaysAgoWeatherData, setTwoDaysAgoWeatherData] = useState<IWeatherData[]>();
+    const [threeDaysAgoWeatherData, setThreeDaysAgoWeatherData] = useState<IWeatherData[]>();
 
     const fetchWeatherData = async () => {
         setTimeout(async () => {
-            const weatherService = new IWeatherDataService();
-            const fetchedData = await weatherService.getWeatherData();
+            const fetchedData = await weatherDataService.getWeatherData();
             setWeatherData(fetchedData);
+            setToday(new Date(fetchedData[0].date));
+            setTodayWeatherData(fetchedData[0]);
         }, DATA_FETCH_DELAY);
     };
 
@@ -36,21 +44,46 @@ export default function WeatherPage() {
     });
 
     useEffect(() => {
-        if (weatherData) {
-            setTodayWeatherData(weatherData[0]);
+        if (today) {
+            const oneDayAgo = new Date(today.getTime() - 1 * MS_IN_A_DAY);
+
+            setTimeout(async () => {
+                setOneDayAgoWeatherData(await weatherDataService.getWeatherDataEndDate(oneDayAgo));
+            }, DATA_FETCH_DELAY);
         }
-    }, [weatherData]);
+    }, [today]);
 
     useEffect(() => {
-        if (weatherData && sunData) {
-            setAnalysisService(new IWeatherAnalysisService(weatherData, sunData));
+        if (today && oneDayAgoWeatherData) {
+            const twoDaysAgo = new Date(today.getTime() - 2 * MS_IN_A_DAY);
+
+            setTimeout(async () => {
+                setTwoDaysAgoWeatherData(
+                    await weatherDataService.getWeatherDataEndDate(twoDaysAgo)
+                );
+            }, DATA_FETCH_DELAY);
         }
-    }, [weatherData, sunData]);
+    }, [today, oneDayAgoWeatherData]);
+
+    useEffect(() => {
+        if (today && twoDaysAgoWeatherData) {
+            const threeDaysAgo = new Date(today.getTime() - 3 * MS_IN_A_DAY);
+
+            setTimeout(async () => {
+                setThreeDaysAgoWeatherData(
+                    await weatherDataService.getWeatherDataEndDate(threeDaysAgo)
+                );
+            }, DATA_FETCH_DELAY);
+        }
+    }, [today, twoDaysAgoWeatherData]);
+
+    /** Fetch Sun Data */
+    const [sunData, setSunData] = useState<ISunDataResult>();
+    const [analysisService, setAnalysisService] = useState<IWeatherAnalysisService>();
 
     const fetchSunData = async () => {
         setTimeout(async () => {
-            const weatherService = new IWeatherDataService();
-            const fetchedData = await weatherService.getSunData();
+            const fetchedData = await weatherDataService.getSunData();
             setSunData(fetchedData.results);
         }, DATA_FETCH_DELAY);
     };
@@ -60,6 +93,54 @@ export default function WeatherPage() {
             fetchSunData();
         }
     });
+
+    /** Fetch Weather Forecasts */
+    const [oneDayPredict, setOneDayPredict] = useState<IWeatherForecast>();
+    const [twoDayPredict, setTwoDayPredict] = useState<IWeatherForecast>();
+    const [threeDayPredict, setThreeDayPredict] = useState<IWeatherForecast>();
+
+    const [weatherPredictionService, setWeatherPredictionService] =
+        useState<IWeatherPredictionService>();
+
+    useEffect(() => {
+        if (weatherPredictionService) {
+            setOneDayPredict(weatherPredictionService.getTomorrowForecast());
+            setTwoDayPredict(weatherPredictionService.getTwoDayForecast());
+            setThreeDayPredict(weatherPredictionService.getThreeDayForecast());
+        }
+    }, [weatherPredictionService]);
+
+    useEffect(() => {
+        if (weatherData && sunData) {
+            setAnalysisService(new IWeatherAnalysisService(weatherData, sunData));
+        }
+    }, [weatherData, sunData]);
+
+    useEffect(() => {
+        if (
+            weatherData &&
+            oneDayAgoWeatherData &&
+            twoDaysAgoWeatherData &&
+            threeDaysAgoWeatherData &&
+            sunData
+        ) {
+            setWeatherPredictionService(
+                new IWeatherPredictionService(
+                    weatherData,
+                    oneDayAgoWeatherData,
+                    twoDaysAgoWeatherData,
+                    threeDaysAgoWeatherData,
+                    sunData
+                )
+            );
+        }
+    }, [
+        weatherData,
+        oneDayAgoWeatherData,
+        twoDaysAgoWeatherData,
+        threeDaysAgoWeatherData,
+        sunData
+    ]);
 
     return (
         <div>
@@ -107,53 +188,43 @@ export default function WeatherPage() {
             <br></br>
             <div className="flex flex-row flex-wrap place-content-around">
                 <WeatherCard
-                    day={
-                        todayWeatherData?.date
-                            ? new Date(
-                                  new Date(todayWeatherData?.date).setDate(
-                                      new Date(todayWeatherData?.date).getDate() + 1
-                                  )
-                              )
-                            : new Date()
-                    }
-                    icon={''}
-                    temperature={Math.round(0) + ' °F'}
-                    weatherDescription={''}
+                    day={today ? new Date(today.getTime() + 1 * MS_IN_A_DAY) : new Date()}
+                    icon={oneDayPredict?.condition ?? ''}
+                    temperature={`${oneDayPredict?.temperatue ? Math.round(oneDayPredict?.temperatue) : 0} °F`}
+                    weatherDescription={oneDayPredict?.condition ?? ''}
                 ></WeatherCard>
                 <WeatherCard
-                    day={
-                        todayWeatherData?.date
-                            ? new Date(
-                                  new Date(todayWeatherData?.date).setDate(
-                                      new Date(todayWeatherData?.date).getDate() + 2
-                                  )
-                              )
-                            : new Date()
-                    }
-                    icon={''}
-                    temperature={Math.round(0) + ' °F'}
-                    weatherDescription={''}
+                    day={today ? new Date(today.getTime() + 2 * MS_IN_A_DAY) : new Date()}
+                    icon={twoDayPredict?.condition ?? ''}
+                    temperature={`${twoDayPredict?.temperatue ? Math.round(twoDayPredict?.temperatue) : 0} °F`}
+                    weatherDescription={twoDayPredict?.condition ?? ''}
                 ></WeatherCard>
                 <WeatherCard
-                    day={
-                        todayWeatherData?.date
-                            ? new Date(
-                                  new Date(todayWeatherData?.date).setDate(
-                                      new Date(todayWeatherData?.date).getDate() + 3
-                                  )
-                              )
-                            : new Date()
-                    }
-                    icon={''}
-                    temperature={Math.round(0) + ' °F'}
-                    weatherDescription={''}
+                    day={today ? new Date(today.getTime() + 3 * MS_IN_A_DAY) : new Date()}
+                    icon={threeDayPredict?.condition ?? ''}
+                    temperature={`${threeDayPredict?.temperatue ? Math.round(threeDayPredict?.temperatue) : 0} °F`}
+                    weatherDescription={threeDayPredict?.condition ?? ''}
                 ></WeatherCard>
             </div>
 
             <div className="p-2 text-center text-2xl font-bold">{config.LIVE_DATA_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
-            <WeatherChart chartData={weatherData} />
+            <WeatherChart
+                chartData={
+                    weatherData &&
+                    oneDayAgoWeatherData &&
+                    twoDaysAgoWeatherData &&
+                    threeDaysAgoWeatherData
+                        ? [
+                              ...weatherData,
+                              ...oneDayAgoWeatherData,
+                              ...twoDaysAgoWeatherData,
+                              ...threeDaysAgoWeatherData
+                          ]
+                        : []
+                }
+            />
         </div>
     );
 }
