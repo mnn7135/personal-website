@@ -51,7 +51,7 @@ export default function WeatherPage() {
                 setOneDayAgoWeatherData(await weatherDataService.getWeatherDataEndDate(oneDayAgo));
             }, DATA_FETCH_DELAY);
         }
-    }, [today]);
+    }, [today, weatherDataService]);
 
     useEffect(() => {
         if (today && oneDayAgoWeatherData) {
@@ -63,7 +63,7 @@ export default function WeatherPage() {
                 );
             }, DATA_FETCH_DELAY);
         }
-    }, [today, oneDayAgoWeatherData]);
+    }, [today, oneDayAgoWeatherData, weatherDataService]);
 
     useEffect(() => {
         if (today && twoDaysAgoWeatherData) {
@@ -75,7 +75,7 @@ export default function WeatherPage() {
                 );
             }, DATA_FETCH_DELAY);
         }
-    }, [today, twoDaysAgoWeatherData]);
+    }, [today, twoDaysAgoWeatherData, weatherDataService]);
 
     /** Fetch Sun Data */
     const [sunData, setSunData] = useState<ISunDataResult>();

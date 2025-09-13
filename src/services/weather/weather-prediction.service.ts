@@ -40,7 +40,7 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature
      */
     private getWeatherForecast(weatherData: IWeatherData[]): IWeatherForecast {
-        let predictedTemperature =
+        const predictedTemperature =
             this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf +
             this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf *
                 this.analysisService.getDataTrend(weatherData, 'tempf') *
