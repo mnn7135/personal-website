@@ -10,6 +10,7 @@ const resizeObserverMock = () => ({
 });
 
 window.ResizeObserver = jest.fn().mockImplementation(resizeObserverMock);
+jest.mock('@neondatabase/serverless');
 
 // Run Tests
 describe('simple rendering test', () => {
