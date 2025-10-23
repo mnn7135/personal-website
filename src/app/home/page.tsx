@@ -65,6 +65,9 @@ export default function HomePage() {
                         height={imageSize}
                     ></Image>
                 </Button>
+            </div>
+            <br></br>
+            <div className="flex flex-row flex-wrap place-content-around">
                 <Button
                     onClick={() => window.open(config.LINKEDIN_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
@@ -74,35 +77,6 @@ export default function HomePage() {
                     <Image
                         src={config.LINKEDIN_IMG_SRC}
                         alt={config.LINKEDIN_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-            </div>
-            <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <Button
-                    onClick={() => window.open(config.AMBIENT_WEATHER_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.AMBIENT_WEATHER_IMG_SRC}
-                        alt={config.AMBIENT_WEATHER_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.NEXT_JS_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.NEXT_JS_IMG_SRC}
-                        alt={config.NEXT_JS_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>
@@ -150,40 +124,27 @@ export default function HomePage() {
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => window.open(config.MINECRAFT_LINK, '_blank')}
+                    onClick={() => window.open(config.AMBIENT_WEATHER_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
                     {' '}
                     <Image
-                        src={config.MINECRAFT_IMG_SRC}
-                        alt={config.MINECRAFT_ALT}
+                        src={config.AMBIENT_WEATHER_IMG_SRC}
+                        alt={config.AMBIENT_WEATHER_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>
                 </Button>
                 <Button
-                    onClick={() => window.open(config.MABINOGI_LINK, '_blank')}
+                    onClick={() => window.open(config.NEXT_JS_LINK, '_blank')}
                     className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
                     variant={'outline'}
                 >
                     {' '}
                     <Image
-                        src={config.MABINOGI_IMG_SRC}
-                        alt={config.MABINOGI_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.NATION_STATES_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.NATION_STATES_IMG_SRC}
-                        alt={config.NATION_STATES_ALT}
+                        src={config.NEXT_JS_IMG_SRC}
+                        alt={config.NEXT_JS_ALT}
                         width={imageSize}
                         height={imageSize}
                     ></Image>

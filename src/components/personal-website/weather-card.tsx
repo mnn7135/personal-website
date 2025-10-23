@@ -7,6 +7,7 @@ import {
     CloudRainIcon,
     CloudSnowIcon,
     CloudyIcon,
+    LoaderIcon,
     MoonStarIcon,
     SunIcon,
     WindIcon
@@ -50,6 +51,8 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
                 return <CloudFogIcon size={WEATHER_ICON_SIZE} />;
             case config.WEATHER_BREEZE:
                 return <WindIcon size={WEATHER_ICON_SIZE} />;
+            case 'LOADING':
+                return <LoaderIcon size={WEATHER_ICON_SIZE}></LoaderIcon>;
         }
     }
 
