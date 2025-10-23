@@ -21,7 +21,7 @@ import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.dom
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
-const DATA_FETCH_DELAY = 1000;
+const DATA_FETCH_DELAY_FUNC = (ms = 1250) => new Promise((r) => setTimeout(r, ms)); // Delay by 1.25 seconds
 const MS_IN_A_DAY = 86400000;
 
 export default function WeatherPage() {
@@ -31,12 +31,10 @@ export default function WeatherPage() {
     const [today, setToday] = useState<Date>();
 
     const fetchWeatherData = async () => {
-        setTimeout(async () => {
-            const fetchedData = await getWeatherData();
-            setWeatherData(fetchedData);
-            setToday(new Date(fetchedData[0].date));
-            setTodayWeatherData(fetchedData[0]);
-        }, DATA_FETCH_DELAY);
+        const fetchedData = await getWeatherData();
+        setWeatherData(fetchedData);
+        setToday(new Date(fetchedData[0].date));
+        setTodayWeatherData(fetchedData[0]);
     };
 
     useEffect(() => {
@@ -69,38 +67,47 @@ export default function WeatherPage() {
 
     // Fetches and sets the weather data from one day ago (with delay).
     const [oneDayAgoWeatherData, setOneDayAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
+
+    const fetchOneDayAgoWeatherData = async () => {
         if (today) {
             const oneDayAgo = new Date(today.getTime() - 1 * MS_IN_A_DAY);
 
-            setTimeout(async () => {
-                setOneDayAgoWeatherData(await getWeatherDataEndDate(oneDayAgo));
-            }, DATA_FETCH_DELAY);
+            await DATA_FETCH_DELAY_FUNC();
+            setOneDayAgoWeatherData(await getWeatherDataEndDate(oneDayAgo));
         }
+    };
+    useEffect(() => {
+        fetchOneDayAgoWeatherData();
     }, [today]);
 
     // Fetches and sets the weather data from two days ago (with delay).
     const [twoDaysAgoWeatherData, setTwoDaysAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
-        if (today && oneDayAgoWeatherData) {
+
+    const fetchTwoDaysAgoWeatherData = async () => {
+        if (today) {
             const twoDaysAgo = new Date(today.getTime() - 2 * MS_IN_A_DAY);
 
-            setTimeout(async () => {
-                setTwoDaysAgoWeatherData(await getWeatherDataEndDate(twoDaysAgo));
-            }, DATA_FETCH_DELAY);
+            await DATA_FETCH_DELAY_FUNC();
+            setTwoDaysAgoWeatherData(await getWeatherDataEndDate(twoDaysAgo));
         }
+    };
+    useEffect(() => {
+        fetchTwoDaysAgoWeatherData();
     }, [today, oneDayAgoWeatherData]);
 
     // Fetches and sets the weather data from three days ago (with delay).
     const [threeDaysAgoWeatherData, setThreeDaysAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
-        if (today && twoDaysAgoWeatherData) {
+
+    const fetchThreeDaysAgoWeatherData = async () => {
+        if (today) {
             const threeDaysAgo = new Date(today.getTime() - 3 * MS_IN_A_DAY);
 
-            setTimeout(async () => {
-                setThreeDaysAgoWeatherData(await getWeatherDataEndDate(threeDaysAgo));
-            }, DATA_FETCH_DELAY);
+            await DATA_FETCH_DELAY_FUNC();
+            setThreeDaysAgoWeatherData(await getWeatherDataEndDate(threeDaysAgo));
         }
+    };
+    useEffect(() => {
+        fetchThreeDaysAgoWeatherData();
     }, [today, twoDaysAgoWeatherData]);
 
     // Fetches and sets the sun data for today.
@@ -108,10 +115,8 @@ export default function WeatherPage() {
     const [analysisService, setAnalysisService] = useState<IWeatherAnalysisService>();
 
     const fetchSunData = async () => {
-        setTimeout(async () => {
-            const fetchedData = await getSunData();
-            setSunData(fetchedData.results);
-        }, DATA_FETCH_DELAY);
+        const fetchedData = await getSunData();
+        setSunData(fetchedData.results);
     };
 
     useEffect(() => {
