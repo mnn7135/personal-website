@@ -9,7 +9,7 @@ import { getHasSubmittedTodayData, postTodayData } from './dao/weather-dao';
 
 const serviceHelper: AxiosServiceHelper = new AxiosServiceHelper();
 const config: IWeatherConfig = loadWeatherConfig();
-const DATA_FETCH_DELAY = 1250;
+const DATA_FETCH_DELAY = 2500;
 const MS_IN_A_DAY = 86400000;
 
 let baseStationUrl: string = '';
