@@ -54,9 +54,12 @@
     "ASTRONOMY_IMG_2_ALT": "The Stars through a telescope",
     "ASTRONOMY_IMG_3_ALT": "The Stars through a telescope",
 
-    "ASTRONOMY_IMG_1_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_moon.jpg",
-    "ASTRONOMY_IMG_2_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_space_1.jpg",
-    "ASTRONOMY_IMG_3_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/astr_space_2.jpg",
+    "ASTRONOMY_IMG_1_SRC": "https://i.imgur.com/tnktA18.jpeg",
+    "ASTRONOMY_IMG_2_SRC": "https://i.imgur.com/w7QWEco.jpeg",
+    "ASTRONOMY_IMG_3_SRC": "https://i.imgur.com/rIsWKiL.jpeg",
+
+    "PERSONAL_IMG_ALT": "A picture of me.",
+    "PERSONAL_IMG_SRC": "https://i.imgur.com/pAlK6w0.jpeg",
 
     "WEATHER_TITLE": "Weather | Phoenix Station",
     "RIGHT_NOW_SECTION": "Right Now",
@@ -87,51 +90,39 @@
 
     "STACK_OVERFLOW_LINK": "https://stackoverflow.com",
     "STACK_OVERFLOW_ALT": "Stack Overflow",
-    "STACK_OVERFLOW_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/stack.749a9928307c77d49b15.jpg",
+    "STACK_OVERFLOW_IMG_SRC": "https://i.imgur.com/JsPbCK9.jpeg",
 
     "GIT_LINK": "https://github.com",
     "GIT_ALT": "GitHub",
-    "GIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/git.5c3561a15e2dfa8a1dd7.jpg",
+    "GIT_IMG_SRC": "https://i.imgur.com/k9sb5Zm.jpeg",
 
     "RIT_LINK": "https://www.rit.edu",
     "RIT_ALT": "Rochester Institute of Technology",
-    "RIT_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/ritp.a39b4e4f182a0fb73cd2.jpg",
+    "RIT_IMG_SRC": "https://i.imgur.com/LAVFCH2.jpeg",
 
     "LINKEDIN_LINK": "https://www.linkedin.com/in/michael-nersinger/",
     "LINKEDIN_ALT": "Linkedin: Michael Nersinger",
-    "LINKEDIN_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/lin.03aeed1f655554b83738.jpg",
+    "LINKEDIN_IMG_SRC": "https://i.imgur.com/w7WLdRQ.jpeg",
 
     "AMBIENT_WEATHER_LINK": "https://ambientweather.net/",
     "AMBIENT_WEATHER_ALT": "Ambient Weather Network",
-    "AMBIENT_WEATHER_IMG_SRC": "https://pbs.twimg.com/profile_images/1623373136308670487/dO8ivD_U_400x400.jpg",
+    "AMBIENT_WEATHER_IMG_SRC": "https://i.imgur.com/lyXHMl3.jpeg",
     
     "NEXT_JS_LINK": "https://nextjs.org/",
     "NEXT_JS_ALT": "NextJS Framework",
-    "NEXT_JS_IMG_SRC": "https://images.icon-icons.com/2148/PNG/512/nextjs_icon_132160.png",
+    "NEXT_JS_IMG_SRC": "https://i.imgur.com/8OA1Ake.png",
 
     "BING_LINK": "https://www.bing.com",
     "BING_ALT": "Bing",
-    "BING_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/bing.e74a90bf6ea9df62508f.jpg",
+    "BING_IMG_SRC": "https://i.imgur.com/kWXsne9.jpeg",
 
     "GOOGLE_LINK": "https://www.google.com/",
     "GOOGLE_ALT": "Google",
-    "GOOGLE_IMG_SRC": "https://mnn7135.github.io/personalWeb/static/media/google.a66774b11bfe973fe45f.jpg",
+    "GOOGLE_IMG_SRC": "https://i.imgur.com/wgU0a3S.jpeg",
 
     "FIRST_LINK": "https://www.firstinspires.org",
     "FIRST_ALT": "FIRST Robotics",
-    "FIRST_IMG_SRC": "https://raw.githubusercontent.com/mnn7135/personalWeb/refs/heads/master/src/client/pages/images/first.jpg",
-
-    "MINECRAFT_LINK": "https://minecraft.wiki/",
-    "MINECRAFT_ALT": "Minecraft Wiki",
-    "MINECRAFT_IMG_SRC": "https://images.icon-icons.com/2699/PNG/512/minecraft_logo_icon_168974.png",
-
-    "MABINOGI_LINK": "https://wiki.mabinogiworld.com/view/Wiki_Home",
-    "MABINOGI_ALT": "Mabinogi World Wiki",
-    "MABINOGI_IMG_SRC": "https://wiki.mabinogiworld.com/images/4/49/Mabisign.PNG",
-
-    "NATION_STATES_LINK": "https://www.nationstates.net/",
-    "NATION_STATES_ALT": "NationStates - Online Nation Simulator",
-    "NATION_STATES_IMG_SRC": "https://static.wikia.nocookie.net/logopedia/images/7/70/NationStates_Logo_%282002%2C_Badge%29.png/revision/latest?cb=20230218231545",
+    "FIRST_IMG_SRC": "https://i.imgur.com/vgI2UbK.jpeg",
 
     "HOME_PAGE_ROUTE": "home",
     "ABOUT_PAGE_ROUTE": "home/about",

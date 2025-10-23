@@ -17,13 +17,11 @@ export default function AboutPage() {
                         <div className="flex-flow flex place-content-around p-4">
                             <Avatar className="h-75 w-75">
                                 <AvatarImage
-                                    src={
-                                        'https://lh3.googleusercontent.com/a/ACg8ocINab9khEXa2QVb4Zr5K1SQzbL0MviwvnQ8K0PNhcGNFuaY5Mim=s360-c-no'
-                                    }
-                                    alt="User profile picture"
+                                    src={config.PERSONAL_IMG_SRC}
+                                    alt={config.PERSONAL_IMG_ALT}
                                 />
 
-                                <AvatarFallback>{'MN'}</AvatarFallback>
+                                <AvatarFallback>{'-'}</AvatarFallback>
                             </Avatar>
                         </div>
                         <InfoCard

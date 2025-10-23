@@ -26,6 +26,9 @@ export interface IAppConfig {
     OTHER_TECH_SKILLS_LIST: string[];
     OTHER_SKILLS_LIST: string[];
 
+    PERSONAL_IMG_SRC: string;
+    PERSONAL_IMG_ALT: string;
+
     /** Projects/Software Page */
     PROJECT_SECTION: string;
 
@@ -120,18 +123,6 @@ export interface IAppConfig {
     FIRST_LINK: string;
     FIRST_ALT: string;
     FIRST_IMG_SRC: string;
-
-    MINECRAFT_LINK: string;
-    MINECRAFT_ALT: string;
-    MINECRAFT_IMG_SRC: string;
-
-    MABINOGI_LINK: string;
-    MABINOGI_ALT: string;
-    MABINOGI_IMG_SRC: string;
-
-    NATION_STATES_LINK: string;
-    NATION_STATES_ALT: string;
-    NATION_STATES_IMG_SRC: string;
 
     HOME_PAGE_ROUTE: string;
     ABOUT_PAGE_ROUTE: string;
