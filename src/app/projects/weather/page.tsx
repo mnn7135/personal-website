@@ -21,7 +21,7 @@ import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.dom
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
-const DATA_FETCH_DELAY_FUNC = (ms = 1250) => new Promise((r) => setTimeout(r, ms)); // Delay by 1.25 seconds
+const DATA_FETCH_DELAY_FUNC = (ms = 10000) => new Promise((r) => setTimeout(r, ms)); // Delay by 10 seconds
 const MS_IN_A_DAY = 86400000;
 
 export default function WeatherPage() {
