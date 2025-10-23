@@ -32,3 +32,9 @@ export interface IWeatherForecast {
     temperatue: number;
     condition: string;
 }
+
+export interface IWeatherDataHistory {
+    yesterday: IWeatherData[];
+    twoDays: IWeatherData[];
+    threeDays: IWeatherData[];
+}

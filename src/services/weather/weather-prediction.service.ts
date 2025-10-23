@@ -1,4 +1,8 @@
-import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.domain';
+import {
+    IWeatherData,
+    IWeatherDataHistory,
+    IWeatherForecast
+} from '@/types/weather/weather-data.domain';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
 import IWeatherAnalysisService from './weather-analysis.service';
 import { ISunDataResult } from '@/types/weather/sun-data.domain';
@@ -19,15 +23,13 @@ export default class IWeatherPredictionService {
 
     constructor(
         todaysWeatherData: IWeatherData[],
-        oneDayAgoWeatherData: IWeatherData[],
-        twoDaysAgoWeatherData: IWeatherData[],
-        threeDaysAgoWeatherData: IWeatherData[],
+        weatherHistoryData: IWeatherDataHistory,
         sunData: ISunDataResult
     ) {
         this.todaysWeatherData = todaysWeatherData;
-        this.oneDayAgoWeatherData = oneDayAgoWeatherData;
-        this.twoDaysAgoWeatherData = twoDaysAgoWeatherData;
-        this.threeDaysAgoWeatherData = threeDaysAgoWeatherData;
+        this.oneDayAgoWeatherData = weatherHistoryData.yesterday;
+        this.twoDaysAgoWeatherData = weatherHistoryData.twoDays;
+        this.threeDaysAgoWeatherData = weatherHistoryData.threeDays;
 
         this.analysisService = new IWeatherAnalysisService([], sunData);
     }

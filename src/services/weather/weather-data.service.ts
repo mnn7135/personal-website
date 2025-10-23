@@ -1,7 +1,7 @@
 'use server';
 
 import { ISunData } from '@/types/weather/sun-data.domain';
-import { IWeatherData } from '@/types/weather/weather-data.domain';
+import { IWeatherData, IWeatherDataHistory } from '@/types/weather/weather-data.domain';
 import { AxiosServiceHelper } from '../axios/axios-helper.service';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
 import moment from 'moment';
@@ -9,6 +9,8 @@ import { getHasSubmittedTodayData, postTodayData } from './dao/weather-dao';
 
 const serviceHelper: AxiosServiceHelper = new AxiosServiceHelper();
 const config: IWeatherConfig = loadWeatherConfig();
+const DATA_FETCH_DELAY = 1250;
+const MS_IN_A_DAY = 86400000;
 
 let baseStationUrl: string = '';
 let baseSunUrl: string = '';
@@ -44,11 +46,37 @@ export async function getWeatherData(): Promise<IWeatherData[]> {
  * @param endDate The day to fetch data for
  * @returns A list of weather data for today.
  */
-export async function getWeatherDataEndDate(endDate: Date): Promise<IWeatherData[]> {
+async function getWeatherDataEndDate(endDate: Date): Promise<IWeatherData[]> {
     endDate.setFullYear(new Date().getFullYear());
     return serviceHelper.fetchList<IWeatherData>({
         url: `${baseStationUrl}&endDate=${moment(endDate).format()}`
     });
+}
+
+export async function getWeatherDataHistory(): Promise<IWeatherDataHistory> {
+    const today = new Date();
+    const oneDayAgo = new Date(today.getTime() - 1 * MS_IN_A_DAY);
+    const twoDaysAgo = new Date(today.getTime() - 2 * MS_IN_A_DAY);
+    const threeDaysAgo = new Date(today.getTime() - 3 * MS_IN_A_DAY);
+
+    await delay(DATA_FETCH_DELAY);
+    const yesterdayData = await getWeatherDataEndDate(oneDayAgo);
+
+    await delay(DATA_FETCH_DELAY);
+    const twoDaysData = await getWeatherDataEndDate(twoDaysAgo);
+
+    await delay(DATA_FETCH_DELAY);
+    const threeDaysData = await getWeatherDataEndDate(threeDaysAgo);
+
+    return {
+        yesterday: yesterdayData,
+        twoDays: twoDaysData,
+        threeDays: threeDaysData
+    };
+}
+
+async function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
