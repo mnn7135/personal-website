@@ -5,7 +5,7 @@ import { IWeatherData } from '@/types/weather/weather-data.domain';
 import { AxiosServiceHelper } from '../axios/axios-helper.service';
 import { IWeatherConfig, loadWeatherConfig } from '../configs/weather-config.service';
 import moment from 'moment';
-import { getHasSubmittedTodayData, postTodayData } from './dao/weather-dao';
+import { getHasSubmittedTodayData, getWeatherHistoryData, postTodayData } from './dao/weather-dao';
 
 const serviceHelper: AxiosServiceHelper = new AxiosServiceHelper();
 const config: IWeatherConfig = loadWeatherConfig();
@@ -78,4 +78,13 @@ export async function hasSubmittedWeatherToday(): Promise<boolean> {
  */
 export async function postTodayWeatherData(data: IWeatherData): Promise<void> {
     postTodayData(data);
+}
+
+/**
+ * A function that fetches the weather data history that has been submitted to the database.
+ *
+ * @returns A list of weather data objects from previous recorded days.
+ */
+export async function getWeatherHistory(): Promise<IWeatherData[]> {
+    return getWeatherHistoryData();
 }
