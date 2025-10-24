@@ -5,6 +5,7 @@ import { ISunDataResult } from '@/types/weather/sun-data.domain';
 
 export default class IWeatherPredictionService {
     private todaysWeatherData: IWeatherData[];
+    private historicalWeatherData: IWeatherData[];
 
     private config: IWeatherConfig = loadWeatherConfig();
     private analysisService: IWeatherAnalysisService;
@@ -14,9 +15,13 @@ export default class IWeatherPredictionService {
     private MINIMUM_WIND_VALUE: number = 10;
     private DAY_FACTOR_CONSTANT: number = 288;
 
-    constructor(todaysWeatherData: IWeatherData[], sunData: ISunDataResult) {
+    constructor(
+        todaysWeatherData: IWeatherData[],
+        historicalWeatherData: IWeatherData[],
+        sunData: ISunDataResult
+    ) {
         this.todaysWeatherData = todaysWeatherData;
-
+        this.historicalWeatherData = historicalWeatherData;
         this.analysisService = new IWeatherAnalysisService([], sunData);
     }
 
@@ -84,7 +89,10 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        return this.getWeatherForecast([...this.todaysWeatherData], 1);
+        return this.getWeatherForecast(
+            [...this.todaysWeatherData, ...this.historicalWeatherData],
+            1
+        );
     }
 
     /**
@@ -93,7 +101,10 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast([...this.todaysWeatherData], 2);
+        return this.getWeatherForecast(
+            [...this.todaysWeatherData, ...this.historicalWeatherData],
+            2
+        );
     }
 
     /**
@@ -102,6 +113,9 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast([...this.todaysWeatherData], 3);
+        return this.getWeatherForecast(
+            [...this.todaysWeatherData, ...this.historicalWeatherData],
+            3
+        );
     }
 }

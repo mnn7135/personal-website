@@ -56,9 +56,9 @@ export default class IWeatherAnalysisService {
         const maxTemp = this.getDataMax(this.weatherData, 'tempf');
         const windChill = this.helperService.getWindChill(
             this.weatherData[this.MOST_RECENT_DATA_INDEX].tempf,
-            this.weatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m
+            this.weatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m ?? 0
         );
-        const hourlyRain = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin;
+        const hourlyRain = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin ?? 0;
 
         if ((maxGust >= 46 && maxGust <= 57) || (maxWind >= 31 && maxWind >= 39)) {
             alertMessage = this.config.WIND_ADVISORY;
@@ -160,9 +160,9 @@ export default class IWeatherAnalysisService {
         let weatherCondition = '';
         const isDaytime = this.helperService.isDaytime(this.helperService.getCurrentTime());
 
-        const maxWindSpeed = this.weatherData[0].windspdmph_avg10m;
+        const maxWindSpeed = this.weatherData[0].windspdmph_avg10m ?? 0;
         const pressureTrend = this.getDataTrend(this.weatherData, 'baromabsin');
-        const hourlyRainfall = this.weatherData[0].hourlyrainin;
+        const hourlyRainfall = this.weatherData[0].hourlyrainin ?? 0;
         const humidity = this.weatherData[0].humidity;
         const temperature = this.weatherData[0].tempf;
         const dewPoint = this.weatherData[0].dewPoint;

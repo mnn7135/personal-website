@@ -16,6 +16,7 @@ import { ThinPaddingBar } from './padding-bar';
 
 interface WeatherChartProps {
     chartData?: IWeatherData[];
+    historicalData?: IWeatherData[];
 }
 
 const chartConfig = {
@@ -64,23 +65,30 @@ const chartConfig = {
 const axisMapper = (value: any) => {
     const strValue: string = value as string;
 
-    const localeTime = new Date(strValue).toLocaleTimeString();
-    const timeSuffix = localeTime.split(' ')[1];
-    const time = localeTime.split(' ')[0].slice(0, -3);
+    const localeTime = new Date(strValue).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
-    return `${time} ${timeSuffix}`;
+    return `${localeTime}`;
 };
 
 export function WeatherChart(props: WeatherChartProps) {
     const [selectedGraph, setSelectedGraph] = useState<string>('tempf');
     const helperService = new IWeatherHelperService();
-    const shortenedData = [];
+    const graphData = [];
     let count = 0;
+
+    if (props.historicalData) {
+        for (const row of props.historicalData) {
+            graphData.push({
+                ...row,
+                baromabsin: row.baromabsin
+            });
+        }
+    }
 
     if (props.chartData) {
         for (const row of props.chartData) {
-            if (count % 15 == 0) {
-                shortenedData.push({
+            if (count % 12 == 0) {
+                graphData.push({
                     ...row,
                     baromabsin: helperService.getPressureInMbar(row.baromabsin)
                 });
@@ -88,6 +96,13 @@ export function WeatherChart(props: WeatherChartProps) {
             count++;
         }
     }
+
+    graphData.sort((a, b) => {
+        if (a.date < b.date) {
+            return 1;
+        }
+        return -1;
+    });
 
     return (
         <div className="flex flex-col">
@@ -130,7 +145,7 @@ export function WeatherChart(props: WeatherChartProps) {
             <ThinPaddingBar></ThinPaddingBar>
             <br></br>
             <ChartLineDefault
-                chartData={shortenedData as any[]}
+                chartData={graphData as any[]}
                 xAxisKey={'date'}
                 xAxisLabelMapper={axisMapper}
                 yAxisKey={selectedGraph}

@@ -11,6 +11,7 @@ import IWeatherAnalysisService from '@/services/weather/weather-analysis.service
 import {
     getSunData,
     getWeatherData,
+    getWeatherHistory,
     hasSubmittedWeatherToday,
     postTodayWeatherData
 } from '@/services/weather/weather-data.service';
@@ -63,17 +64,30 @@ export default function WeatherPage() {
         }
     };
 
-    // TODO: Fetches weather history from the SQL database, as opposed to the weather station.
+    // Fetches weather history data stored in the database.
+    const [weatherHistoryData, setWeatherHistoryData] = useState<IWeatherData[]>();
+
+    const fetchWeatherHistory = async () => {
+        const historicalData: IWeatherData[] = await getWeatherHistory();
+
+        if (historicalData) {
+            setWeatherHistoryData(historicalData);
+        }
+    };
+
+    useEffect(() => {
+        if (!weatherHistoryData) {
+            fetchWeatherHistory();
+        }
+    }, [hasSubmittedData]);
 
     // Fetches and sets the sun data for today.
     const [sunData, setSunData] = useState<ISunDataResult>();
     const [analysisService, setAnalysisService] = useState<IWeatherAnalysisService>();
 
     const fetchSunData = async () => {
-        setTimeout(async () => {
-            const fetchedData = await getSunData();
-            setSunData(fetchedData.results);
-        });
+        const fetchedData = await getSunData();
+        setSunData(fetchedData.results);
     };
 
     useEffect(() => {
@@ -105,10 +119,12 @@ export default function WeatherPage() {
     }, [weatherData, sunData]);
 
     useEffect(() => {
-        if (weatherData && sunData) {
-            setWeatherPredictionService(new IWeatherPredictionService(weatherData, sunData));
+        if (weatherData && weatherHistoryData && sunData) {
+            setWeatherPredictionService(
+                new IWeatherPredictionService(weatherData, weatherHistoryData, sunData)
+            );
         }
-    }, [weatherData, sunData]);
+    }, [weatherData, weatherHistoryData, sunData]);
 
     return (
         <div>
@@ -196,8 +212,8 @@ export default function WeatherPage() {
             <div className="p-2 text-center text-2xl font-bold">{config.LIVE_DATA_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
-            {weatherData ? (
-                <WeatherChart chartData={[...weatherData]} />
+            {weatherData && weatherHistoryData ? (
+                <WeatherChart chartData={weatherData} historicalData={weatherHistoryData} />
             ) : (
                 <div className="p-2 text-center text-2xl">Loading...</div>
             )}

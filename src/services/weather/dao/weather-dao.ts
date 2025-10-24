@@ -27,6 +27,34 @@ export async function getHasSubmittedTodayData(): Promise<boolean> {
 }
 
 /**
+ * A function that fetches the weather data history that has been submitted to the database.
+ *
+ * @returns A list of weather data objects from previous recorded days.
+ */
+export async function getWeatherHistoryData(): Promise<IWeatherData[]> {
+    const weatherHistory: IWeatherData[] = [];
+    const response = await sql`SELECT * FROM public.weather_data;`;
+
+    if (response.length > 0) {
+        for (const row of response) {
+            weatherHistory.push({
+                baromabsin: Number(row.pressure),
+                tempf: Number(row.temperature),
+                humidity: Number(row.humidity),
+                windspdmph_avg10m: Number(row.wind_speed),
+                dailyrainin: Number(row.daily_rainfall),
+                solarradiation: Number(row.solar_radiation),
+                uv: row.uv_index,
+                dewPoint: Number(row.dew_point),
+                date: row.date
+            });
+        }
+    }
+
+    return weatherHistory;
+}
+
+/**
  * A function that submits the weather data for today to the database, in Local time.
  *
  * @param data The weather data for today to submit.
