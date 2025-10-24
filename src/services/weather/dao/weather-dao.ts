@@ -13,10 +13,9 @@ const sql = neon(process.env.DATABASE_URL ?? '');
  * @returns True if the weather data for today has been submitted.
  */
 export async function getHasSubmittedTodayData(): Promise<boolean> {
-    const localToday = new Date();
-    const localTodayString = `${localToday.getFullYear()}-${localToday.getMonth() + 1}-${localToday.getDate()}`;
+    const localToday = convertDateToLocalTimestamp(new Date()).split(',')[0];
     const response =
-        await sql`SELECT date FROM public.weather_data WHERE DATE_TRUNC('day', date) = DATE(${localTodayString});`;
+        await sql`SELECT date FROM public.weather_data WHERE DATE_TRUNC('day', date) = DATE(${localToday});`;
 
     if (response.length > 0) {
         const { date } = response[0];
@@ -44,7 +43,7 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
                  solar_radiation, 
                  uv_index)
                 VALUES 
-                (${convertDateToLocalTime(data.date)}, 
+                (${convertDateToLocalTimestamp(data.date)}, 
                  ${data.tempf}, 
                  ${(data.baromabsin * config.INCHES_MERCURY_TO_MBAR_CONVERSION).toFixed(2)}, 
                  ${data.humidity},
@@ -62,10 +61,10 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
 }
 
 /**
- * A helper function that converts a UTC Timestamp to the System's Local Time.
+ * A helper function that converts a Local Date to Eastern Time as a Timestamp.
  *
  * @param date The date to convert.
  */
-function convertDateToLocalTime(date: Date): Date {
-    return new Date(new Date(date).getTime());
+function convertDateToLocalTimestamp(date: Date): string {
+    return new Date(date).toLocaleString('en-US', { timeZone: 'America/New_York' });
 }

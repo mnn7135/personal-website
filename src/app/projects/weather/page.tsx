@@ -11,7 +11,6 @@ import IWeatherAnalysisService from '@/services/weather/weather-analysis.service
 import {
     getSunData,
     getWeatherData,
-    getWeatherDataEndDate,
     hasSubmittedWeatherToday,
     postTodayWeatherData
 } from '@/services/weather/weather-data.service';
@@ -21,7 +20,6 @@ import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.dom
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
-const DATA_FETCH_DELAY = 1000;
 const MS_IN_A_DAY = 86400000;
 
 export default function WeatherPage() {
@@ -31,12 +29,10 @@ export default function WeatherPage() {
     const [today, setToday] = useState<Date>();
 
     const fetchWeatherData = async () => {
-        setTimeout(async () => {
-            const fetchedData = await getWeatherData();
-            setWeatherData(fetchedData);
-            setToday(new Date(fetchedData[0].date));
-            setTodayWeatherData(fetchedData[0]);
-        }, DATA_FETCH_DELAY);
+        const fetchedData = await getWeatherData();
+        setWeatherData(fetchedData);
+        setToday(new Date(fetchedData[0].date));
+        setTodayWeatherData(fetchedData[0]);
     };
 
     useEffect(() => {
@@ -67,41 +63,7 @@ export default function WeatherPage() {
         }
     };
 
-    // Fetches and sets the weather data from one day ago (with delay).
-    const [oneDayAgoWeatherData, setOneDayAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
-        if (today) {
-            const oneDayAgo = new Date(today.getTime() - 1 * MS_IN_A_DAY);
-
-            setTimeout(async () => {
-                setOneDayAgoWeatherData(await getWeatherDataEndDate(oneDayAgo));
-            }, DATA_FETCH_DELAY);
-        }
-    }, [today]);
-
-    // Fetches and sets the weather data from two days ago (with delay).
-    const [twoDaysAgoWeatherData, setTwoDaysAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
-        if (today && oneDayAgoWeatherData) {
-            const twoDaysAgo = new Date(today.getTime() - 2 * MS_IN_A_DAY);
-
-            setTimeout(async () => {
-                setTwoDaysAgoWeatherData(await getWeatherDataEndDate(twoDaysAgo));
-            }, DATA_FETCH_DELAY);
-        }
-    }, [today, oneDayAgoWeatherData]);
-
-    // Fetches and sets the weather data from three days ago (with delay).
-    const [threeDaysAgoWeatherData, setThreeDaysAgoWeatherData] = useState<IWeatherData[]>();
-    useEffect(() => {
-        if (today && twoDaysAgoWeatherData) {
-            const threeDaysAgo = new Date(today.getTime() - 3 * MS_IN_A_DAY);
-
-            setTimeout(async () => {
-                setThreeDaysAgoWeatherData(await getWeatherDataEndDate(threeDaysAgo));
-            }, DATA_FETCH_DELAY);
-        }
-    }, [today, twoDaysAgoWeatherData]);
+    // TODO: Fetches weather history from the SQL database, as opposed to the weather station.
 
     // Fetches and sets the sun data for today.
     const [sunData, setSunData] = useState<ISunDataResult>();
@@ -111,7 +73,7 @@ export default function WeatherPage() {
         setTimeout(async () => {
             const fetchedData = await getSunData();
             setSunData(fetchedData.results);
-        }, DATA_FETCH_DELAY);
+        });
     };
 
     useEffect(() => {
@@ -143,30 +105,10 @@ export default function WeatherPage() {
     }, [weatherData, sunData]);
 
     useEffect(() => {
-        if (
-            weatherData &&
-            oneDayAgoWeatherData &&
-            twoDaysAgoWeatherData &&
-            threeDaysAgoWeatherData &&
-            sunData
-        ) {
-            setWeatherPredictionService(
-                new IWeatherPredictionService(
-                    weatherData,
-                    oneDayAgoWeatherData,
-                    twoDaysAgoWeatherData,
-                    threeDaysAgoWeatherData,
-                    sunData
-                )
-            );
+        if (weatherData && sunData) {
+            setWeatherPredictionService(new IWeatherPredictionService(weatherData, sunData));
         }
-    }, [
-        weatherData,
-        oneDayAgoWeatherData,
-        twoDaysAgoWeatherData,
-        threeDaysAgoWeatherData,
-        sunData
-    ]);
+    }, [weatherData, sunData]);
 
     return (
         <div>
@@ -254,18 +196,8 @@ export default function WeatherPage() {
             <div className="p-2 text-center text-2xl font-bold">{config.LIVE_DATA_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
-            {weatherData &&
-            oneDayAgoWeatherData &&
-            twoDaysAgoWeatherData &&
-            threeDaysAgoWeatherData ? (
-                <WeatherChart
-                    chartData={[
-                        ...weatherData,
-                        ...oneDayAgoWeatherData,
-                        ...twoDaysAgoWeatherData,
-                        ...threeDaysAgoWeatherData
-                    ]}
-                />
+            {weatherData ? (
+                <WeatherChart chartData={[...weatherData]} />
             ) : (
                 <div className="p-2 text-center text-2xl">Loading...</div>
             )}
