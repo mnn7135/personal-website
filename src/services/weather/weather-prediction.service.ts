@@ -5,9 +5,6 @@ import { ISunDataResult } from '@/types/weather/sun-data.domain';
 
 export default class IWeatherPredictionService {
     private todaysWeatherData: IWeatherData[];
-    private oneDayAgoWeatherData: IWeatherData[];
-    private twoDaysAgoWeatherData: IWeatherData[];
-    private threeDaysAgoWeatherData: IWeatherData[];
 
     private config: IWeatherConfig = loadWeatherConfig();
     private analysisService: IWeatherAnalysisService;
@@ -17,17 +14,8 @@ export default class IWeatherPredictionService {
     private MINIMUM_WIND_VALUE: number = 10;
     private DAY_FACTOR_CONSTANT: number = 288;
 
-    constructor(
-        todaysWeatherData: IWeatherData[],
-        oneDayAgoWeatherData: IWeatherData[],
-        twoDaysAgoWeatherData: IWeatherData[],
-        threeDaysAgoWeatherData: IWeatherData[],
-        sunData: ISunDataResult
-    ) {
+    constructor(todaysWeatherData: IWeatherData[], sunData: ISunDataResult) {
         this.todaysWeatherData = todaysWeatherData;
-        this.oneDayAgoWeatherData = oneDayAgoWeatherData;
-        this.twoDaysAgoWeatherData = twoDaysAgoWeatherData;
-        this.threeDaysAgoWeatherData = threeDaysAgoWeatherData;
 
         this.analysisService = new IWeatherAnalysisService([], sunData);
     }
@@ -37,25 +25,29 @@ export default class IWeatherPredictionService {
      * the given weather data history.
      *
      * @param weatherData the data to forecast from
+     * @param scaleFactor the value that indicates the adjustment scale to predicted values
      * @returns the forecasted condition and temperature
      */
-    private getWeatherForecast(weatherData: IWeatherData[]): IWeatherForecast {
+    private getWeatherForecast(weatherData: IWeatherData[], scaleFactor: number): IWeatherForecast {
         const predictedTemperature =
             this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf +
             this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf *
-                this.analysisService.getDataTrend(weatherData, 'tempf') *
-                (weatherData.length / this.DAY_FACTOR_CONSTANT);
+                (this.analysisService.getDataTrend(weatherData, 'tempf') *
+                    (weatherData.length / this.DAY_FACTOR_CONSTANT)) *
+                scaleFactor;
 
         let predictedCondition = '';
 
-        const pressureTrend = this.analysisService.getDataTrend(weatherData, 'baromabsin');
+        const pressureTrend =
+            this.analysisService.getDataTrend(weatherData, 'baromabsin') * scaleFactor;
         const hasRainedToday =
             this.analysisService.getDataMax(this.todaysWeatherData, 'hourlyrainin') > 0;
         const windMaxToday = this.analysisService.getDataMax(
             this.todaysWeatherData,
             'windspeedmph'
         );
-        const windTrendOverall = this.analysisService.getDataTrend(weatherData, 'windspeedmph');
+        const windTrendOverall =
+            this.analysisService.getDataTrend(weatherData, 'windspeedmph') * scaleFactor;
 
         if (pressureTrend < this.PRESSURE_GRADIENT) {
             if (hasRainedToday) {
@@ -92,7 +84,7 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        return this.getWeatherForecast([...this.todaysWeatherData, ...this.oneDayAgoWeatherData]);
+        return this.getWeatherForecast([...this.todaysWeatherData], 1);
     }
 
     /**
@@ -101,11 +93,7 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast([
-            ...this.todaysWeatherData,
-            ...this.oneDayAgoWeatherData,
-            ...this.twoDaysAgoWeatherData
-        ]);
+        return this.getWeatherForecast([...this.todaysWeatherData], 2);
     }
 
     /**
@@ -114,11 +102,6 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast([
-            ...this.todaysWeatherData,
-            ...this.oneDayAgoWeatherData,
-            ...this.twoDaysAgoWeatherData,
-            ...this.threeDaysAgoWeatherData
-        ]);
+        return this.getWeatherForecast([...this.todaysWeatherData], 3);
     }
 }
