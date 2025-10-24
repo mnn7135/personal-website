@@ -14,7 +14,7 @@ const sql = neon(process.env.DATABASE_URL ?? '');
  */
 export async function getHasSubmittedTodayData(): Promise<boolean> {
     const localToday = new Date();
-    const localTodayString = localToday.toISOString().substring(0, 10);
+    const localTodayString = `${localToday.getFullYear()}-${localToday.getMonth() + 1}-${localToday.getDate()}`;
     const response =
         await sql`SELECT date FROM public.weather_data WHERE DATE_TRUNC('day', date) = DATE(${localTodayString});`;
 
@@ -28,7 +28,7 @@ export async function getHasSubmittedTodayData(): Promise<boolean> {
 }
 
 /**
- * A function that submits the weather data for today to the database, in UTC time.
+ * A function that submits the weather data for today to the database, in Local time.
  *
  * @param data The weather data for today to submit.
  */
