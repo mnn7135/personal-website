@@ -47,7 +47,7 @@ export async function getWeatherHistoryData(): Promise<IWeatherData[]> {
                 solarradiation: Number(row.solar_radiation),
                 uv: row.uv_index,
                 dewPoint: Number(row.dew_point),
-                date: new Date(row.date)
+                date: new Date(new Date(row.date).getTime())
             });
         }
     }
