@@ -42,6 +42,7 @@ export async function getWeatherHistoryData(): Promise<IWeatherData[]> {
                 tempf: Number(row.temperature),
                 humidity: Number(row.humidity),
                 windspdmph_avg10m: Number(row.wind_speed),
+                winddir_avg10m: Number(row.wind_direction),
                 dailyrainin: Number(row.daily_rainfall),
                 solarradiation: Number(row.solar_radiation),
                 uv: row.uv_index,
@@ -66,7 +67,8 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
                  pressure, 
                  humidity, 
                  dew_point, 
-                 wind_speed, 
+                 wind_speed,
+                 wind_direction, 
                  daily_rainfall, 
                  solar_radiation, 
                  uv_index)
@@ -76,7 +78,8 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
                  ${(data.baromabsin * config.INCHES_MERCURY_TO_MBAR_CONVERSION).toFixed(2)}, 
                  ${data.humidity},
                  ${data.dewPoint},
-                 ${data.windspeedmph},
+                 ${data.windspdmph_avg10m},
+                 ${data.winddir_avg10m},
                  ${data.dailyrainin},
                  ${data.solarradiation},
                  ${data.uv});`;

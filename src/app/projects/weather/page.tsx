@@ -4,6 +4,7 @@ import InfoCard from '@/components/personal-website/info-card';
 import { PaddingBar, SmallPaddingBar } from '@/components/personal-website/padding-bar';
 import WeatherCard from '@/components/personal-website/weather-card';
 import { WeatherChart } from '@/components/personal-website/weather-chart';
+import { WeatherHistoryChart } from '@/components/personal-website/weather-history-chart';
 import WeatherInfoListCard from '@/components/personal-website/weather-info-list-card';
 import { Button } from '@/components/ui/button';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
@@ -212,11 +213,27 @@ export default function WeatherPage() {
             <div className="p-2 text-center text-2xl font-bold">{config.LIVE_DATA_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
-            {weatherData && weatherHistoryData ? (
-                <WeatherChart chartData={weatherData} historicalData={weatherHistoryData} />
+            {weatherData ? (
+                <WeatherChart chartData={weatherData} />
             ) : (
                 <div className="p-2 text-center text-2xl">Loading...</div>
             )}
+            <br></br>
+            <div className="p-2 text-center text-2xl font-bold">
+                {config.HISTORICAL_DATA_SECTION}
+            </div>
+            <SmallPaddingBar></SmallPaddingBar>
+            <br></br>
+            {weatherHistoryData ? (
+                <WeatherHistoryChart historicalData={weatherHistoryData} />
+            ) : (
+                <div className="p-2 text-center text-2xl">Loading...</div>
+            )}
+            <br></br>
+            <SmallPaddingBar></SmallPaddingBar>
+            <div className="p-2">{`${config.LAST_PULL_FROM} ${weatherData ? new Date(weatherData[0].date).toLocaleString('en-US', { timeZone: 'America/New_York' }) : 'Fetching...'}`}</div>
+            <div className="p-2">{`${config.LAST_MAINTENANCE}`}</div>
+            <div className="p-2">{`${config.WEATHER_STATION_DISCLAIMER}`}</div>
         </div>
     );
 }

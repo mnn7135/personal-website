@@ -1,6 +1,6 @@
 import InfoCard from '@/components/personal-website/info-card';
 import InfoListCard from '@/components/personal-website/info-list-card';
-import { PaddingBar } from '@/components/personal-website/padding-bar';
+import { PaddingBar, SmallPaddingBar } from '@/components/personal-website/padding-bar';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
 
 const config: IAppConfig = loadAppConfig();
@@ -35,6 +35,19 @@ export default function SoftwarePage() {
                     center={true}
                 >
                     <InfoListCard data={config.PROJECT_3_DESCRIPTION}></InfoListCard>
+                </InfoCard>
+            </div>
+            <br></br>
+            <SmallPaddingBar></SmallPaddingBar>
+            <br></br>
+            <div className="flex flex-row flex-wrap place-content-around">
+                <InfoCard
+                    cardTitle={config.PROJECT_4_TITLE}
+                    secondaryTitle={config.PROJECT_4_SKILLS}
+                    cardDescription={config.PROJECT_4_TIMEFRAME}
+                    center={true}
+                >
+                    <InfoListCard data={config.PROJECT_4_DESCRIPTION}></InfoListCard>
                 </InfoCard>
             </div>
         </div>
