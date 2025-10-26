@@ -47,7 +47,7 @@ export async function getWeatherHistoryData(): Promise<IWeatherData[]> {
                 solarradiation: Number(row.solar_radiation),
                 uv: row.uv_index,
                 dewPoint: Number(row.dew_point),
-                date: new Date(new Date(row.date).getTime())
+                date: adjustTimeForDeployment(row.date)
             });
         }
     }
@@ -98,4 +98,16 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
  */
 function convertDateToLocalTimestamp(date: Date): string {
     return new Date(date).toLocaleString('en-US', { timeZone: 'America/New_York' });
+}
+
+/**
+ * A helper function that adjusts the time correctly when used on the Vercel deployment.
+ * TODO: Find a better way to handle time discrepancy of 4 hours.
+ *
+ * @param date The date to convert.
+ */
+function adjustTimeForDeployment(date: Date): Date {
+    const adjustedDate = new Date(date);
+    adjustedDate.setHours(adjustedDate.getHours() + 4);
+    return adjustedDate;
 }
