@@ -47,6 +47,11 @@
         "• Mentored and peer programmed with other students to assist in project development",
         "• Spearheaded the design and migration of a metrics feature to the React standard to improve security"],
 
+            "PROJECT_4_TITLE": "SimCity Creator DS (USA) Reverse Engineering",
+    "PROJECT_4_SKILLS": "Low-level Coding, Ghidra, Reverse Engineering, Documentation",
+    "PROJECT_4_TIMEFRAME": "Oct 2025 - [Ongoing]",
+    "PROJECT_4_DESCRIPTION": ["• Investigated and researched a strategy to reverse engineer a DS game for further engineering experience"],
+
     "ASTRONOMY_TITLE": "Astronomy",
     "ASTRONOMY_HEADER": "Overview",
     "ASTRONOMY_DESCRIPTION": "I've always been into astronomy. Here are some various astronomical photos I've taken with my telescope (See below!).",
@@ -81,7 +86,8 @@
     "WEATHER_DATA_LABELS_LIST": ["Sunrise", "Sunset", "Wind", "Pressure", "Wind Gusts", "UV Index", "Humidity", "Hourly Rainfall", "Dew Point"],
     "SUNRISE_SUNSET_DISCLAIMER": "* Sunrise and sunset data provided by https://sunrise-sunset.org/api.",
     "MBAR_DISCLAIMER": "* One standard atmosphere of pressure equals 1013.25 millibars at sea level.",
-    "LIVE_DATA_SECTION": "Live Data",
+    "LIVE_DATA_SECTION": "Live Data (from the last 24 hours)",
+    "HISTORICAL_DATA_SECTION": "Historical Data (since 10/25/2025)",
     "LAST_PULL_FROM": "Last pull from",
     "LAST_MAINTENANCE": "Last maintenanced on 5/25/2025, 1:45:00 PM",
     "WEATHER_STATION_DISCLAIMER": "Phoenix Station is my personal AmbientWeather WS-2000 Smart Station",

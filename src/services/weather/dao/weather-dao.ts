@@ -42,11 +42,12 @@ export async function getWeatherHistoryData(): Promise<IWeatherData[]> {
                 tempf: Number(row.temperature),
                 humidity: Number(row.humidity),
                 windspdmph_avg10m: Number(row.wind_speed),
+                winddir_avg10m: Number(row.wind_direction),
                 dailyrainin: Number(row.daily_rainfall),
                 solarradiation: Number(row.solar_radiation),
                 uv: row.uv_index,
                 dewPoint: Number(row.dew_point),
-                date: row.date
+                date: adjustTimeForDeployment(row.date)
             });
         }
     }
@@ -66,7 +67,8 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
                  pressure, 
                  humidity, 
                  dew_point, 
-                 wind_speed, 
+                 wind_speed,
+                 wind_direction, 
                  daily_rainfall, 
                  solar_radiation, 
                  uv_index)
@@ -76,7 +78,8 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
                  ${(data.baromabsin * config.INCHES_MERCURY_TO_MBAR_CONVERSION).toFixed(2)}, 
                  ${data.humidity},
                  ${data.dewPoint},
-                 ${data.windspeedmph},
+                 ${data.windspdmph_avg10m},
+                 ${data.winddir_avg10m},
                  ${data.dailyrainin},
                  ${data.solarradiation},
                  ${data.uv});`;
@@ -95,4 +98,16 @@ export async function postTodayData(data: IWeatherData): Promise<void> {
  */
 function convertDateToLocalTimestamp(date: Date): string {
     return new Date(date).toLocaleString('en-US', { timeZone: 'America/New_York' });
+}
+
+/**
+ * A helper function that adjusts the time correctly when used on the Vercel deployment.
+ * TODO: Find a better way to handle time discrepancy of 4 hours.
+ *
+ * @param date The date to convert.
+ */
+function adjustTimeForDeployment(date: Date): Date {
+    const adjustedDate = new Date(date);
+    adjustedDate.setHours(adjustedDate.getHours() + 4);
+    return adjustedDate;
 }

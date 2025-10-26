@@ -11,11 +11,10 @@ import {
     SelectValue
 } from '../ui/select';
 import { useState } from 'react';
-import IWeatherHelperService from '@/services/weather/weather-helper.service';
 import { ThinPaddingBar } from './padding-bar';
 
 interface WeatherChartProps {
-    chartData?: IWeatherData[];
+    historicalData?: IWeatherData[];
 }
 
 const chartConfig = {
@@ -23,45 +22,37 @@ const chartConfig = {
         label: 'Temperature (°F)',
         color: 'var(--chart-1)'
     },
-    feelsLike: {
-        label: 'Temperature (°F)',
-        color: 'var(--chart-2)'
-    },
     dewPoint: {
         label: 'Dew Point (°F)',
-        color: 'var(--chart-3)'
+        color: 'var(--chart-2)'
     },
     humidity: {
         label: 'Humidity (%)',
-        color: 'var(--chart-4)'
+        color: 'var(--chart-3)'
     },
-    hourlyrainin: {
+    dailyrainin: {
         label: 'Hourly Rainfall (in.)',
-        color: 'var(--chart-5)'
+        color: 'var(--chart-4)'
     },
     baromabsin: {
         label: 'Pressure (mbar)',
-        color: 'var(--chart-1)'
+        color: 'var(--chart-5)'
     },
     windspdmph_avg10m: {
         label: 'Wind Speed (mph)',
-        color: 'var(--chart-2)'
+        color: 'var(--chart-1)'
     },
     winddir_avg10m: {
         label: 'Wind Direction (\u00B0 from N)',
-        color: 'var(--chart-3)'
-    },
-    windgustmph: {
-        label: 'Wind Gust (mph)',
-        color: 'var(--chart-4)'
+        color: 'var(--chart-2)'
     },
     uv: {
         label: 'UV Index',
-        color: 'var(--chart-5)'
+        color: 'var(--chart-3)'
     },
     solarradiation: {
         label: 'Solar Radiation (W/m^2)',
-        color: 'var(--chart-1)'
+        color: 'var(--chart-4)'
     }
 } satisfies ChartConfig;
 
@@ -73,21 +64,16 @@ const axisMapper = (value: any) => {
     return `${localeTime}`;
 };
 
-export function WeatherChart(props: WeatherChartProps) {
-    const [selectedGraph, setSelectedGraph] = useState<string>('tempf');
-    const helperService = new IWeatherHelperService();
+export function WeatherHistoryChart(props: WeatherChartProps) {
+    const [selectedGraph, setSelectedGraph] = useState<string>('baromabsin');
     const graphData = [];
-    let count = 0;
 
-    if (props.chartData) {
-        for (const row of props.chartData) {
-            if (count % 12 == 0) {
-                graphData.push({
-                    ...row,
-                    baromabsin: helperService.getPressureInMbar(row.baromabsin)
-                });
-            }
-            count++;
+    if (props.historicalData) {
+        for (const row of props.historicalData) {
+            graphData.push({
+                ...row,
+                baromabsin: row.baromabsin
+            });
         }
     }
 
@@ -105,7 +91,7 @@ export function WeatherChart(props: WeatherChartProps) {
                     onValueChange={(value) => {
                         setSelectedGraph(value);
                     }}
-                    defaultValue="tempf"
+                    defaultValue="baromabsin"
                 >
                     <SelectTrigger className="w-[250px]">
                         <SelectValue placeholder="Select a data element to view." />
@@ -114,10 +100,9 @@ export function WeatherChart(props: WeatherChartProps) {
                         <SelectGroup>
                             <SelectLabel>Conditions</SelectLabel>
                             <SelectItem value="tempf">Outdoor Temperature</SelectItem>
-                            <SelectItem value="feelsLike">Feels Like Temperature</SelectItem>
                             <SelectItem value="dewPoint">Dew Point</SelectItem>
                             <SelectItem value="humidity">Humidity</SelectItem>
-                            <SelectItem value="hourlyrainin">Hourly Rainfall</SelectItem>
+                            <SelectItem value="dailyrainin">Daily Rainfall</SelectItem>
                             <SelectItem value="baromabsin">Pressure</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
@@ -128,7 +113,6 @@ export function WeatherChart(props: WeatherChartProps) {
                             <SelectItem value="winddir_avg10m">
                                 {'Wind Direction (\u00B0 from N)'}
                             </SelectItem>
-                            <SelectItem value="windgustmph">{'Maximum Wind Gusts'}</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
                             <SelectLabel>Solar</SelectLabel>
