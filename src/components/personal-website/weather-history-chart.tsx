@@ -59,7 +59,7 @@ const chartConfig = {
 const axisMapper = (value: any) => {
     const strValue: string = value as string;
 
-    const localeTime = new Date(strValue).toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const localeTime = new Date(strValue);
 
     return `${localeTime}`;
 };
