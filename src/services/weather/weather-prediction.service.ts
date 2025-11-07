@@ -89,10 +89,7 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        return this.getWeatherForecast(
-            [...this.todaysWeatherData, ...this.historicalWeatherData],
-            1
-        );
+        return this.getWeatherForecast([...this.historicalWeatherData], 1);
     }
 
     /**
@@ -101,10 +98,7 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast(
-            [...this.todaysWeatherData, ...this.historicalWeatherData],
-            2
-        );
+        return this.getWeatherForecast([...this.historicalWeatherData], 2);
     }
 
     /**
@@ -113,9 +107,6 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        return this.getWeatherForecast(
-            [...this.todaysWeatherData, ...this.historicalWeatherData],
-            3
-        );
+        return this.getWeatherForecast([...this.historicalWeatherData], 3);
     }
 }
