@@ -22,10 +22,13 @@ const projects: { title: string; href: string; description: string }[] = [
         title: 'Weather',
         href: '/projects/weather',
         description: 'Real-time weather information for Victor, NY.'
-    },
+    }
+];
+
+const others: { title: string; href: string; description: string }[] = [
     {
         title: 'Astronomy',
-        href: '/projects/astronomy',
+        href: '/other/astronomy',
         description: "Astronomy photos I've taken."
     }
 ];
@@ -70,6 +73,18 @@ export function WebsiteNavagationMenu() {
                                     href={project.href}
                                 >
                                     <div className="flex-wrap">{project.description}</div>
+                                </ListItem>
+                            ))}
+                        </ul>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger>Other</NavigationMenuTrigger>
+                    <NavigationMenuContent className="absolute w-55">
+                        <ul className="w-50">
+                            {others.map((other) => (
+                                <ListItem key={other.title} title={other.title} href={other.href}>
+                                    <div className="flex-wrap">{other.description}</div>
                                 </ListItem>
                             ))}
                         </ul>

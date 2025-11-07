@@ -1,4 +1,4 @@
-import Page from '@/app/projects/astronomy/page';
+import Page from '@/app/other/astronomy/page';
 import '@testing-library/jest-dom';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';

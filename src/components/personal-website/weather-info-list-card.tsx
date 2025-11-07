@@ -20,11 +20,19 @@ export default function WeatherInfoListCard(props: WeatherInfoListCardProps) {
     }
 
     if (props.weatherData) {
-        weatherDataDisplay.push(Math.round(props.weatherData.windspdmph_avg10m ?? 0) + ' mph'); // Wind
+        weatherDataDisplay.push(
+            Math.round(props.weatherData.windspdmph_avg10m ?? 0) +
+                ' mph from ' +
+                helperService.getWindDirection(props.weatherData.winddir_avg10m ?? 0)
+        ); // Wind
         weatherDataDisplay.push(
             helperService.getPressureInMbar(props.weatherData.baromabsin) + ' mbar'
         ); // Pressure
-        weatherDataDisplay.push(Math.round(props.weatherData.windgustmph ?? 0) + ' mph'); // Wind Gusts
+        weatherDataDisplay.push(
+            Math.round(props.weatherData.windgustmph ?? 0) +
+                ' mph from ' +
+                helperService.getWindDirection(props.weatherData.winddir_avg10m ?? 0)
+        ); // Wind Gusts
         weatherDataDisplay.push(helperService.getUVRisk(props.weatherData.uv)); // UV Index
         weatherDataDisplay.push(props.weatherData.humidity + '%'); // Humidity
         weatherDataDisplay.push(props.weatherData.hourlyrainin + ' in'); // Hourly Rainfall

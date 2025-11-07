@@ -31,7 +31,7 @@ const chartConfig = {
         color: 'var(--chart-3)'
     },
     dailyrainin: {
-        label: 'Hourly Rainfall (in.)',
+        label: 'Daily Rainfall (in.)',
         color: 'var(--chart-4)'
     },
     baromabsin: {
