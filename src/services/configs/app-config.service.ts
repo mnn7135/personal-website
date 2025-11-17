@@ -90,6 +90,7 @@ export interface IAppConfig {
     LAST_PULL_FROM: string;
     LAST_MAINTENANCE: string;
     WEATHER_STATION_DISCLAIMER: string;
+    WEATHER_GRAPHS_SECTION: string;
 
     /** Home Page */
     QUCIK_LINKS_SECTION: string;

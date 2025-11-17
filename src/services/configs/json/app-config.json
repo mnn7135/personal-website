@@ -86,6 +86,7 @@
     "WEATHER_DATA_LABELS_LIST": ["Sunrise", "Sunset", "Wind", "Pressure", "Wind Gusts", "UV Index", "Humidity", "Hourly Rainfall", "Dew Point"],
     "SUNRISE_SUNSET_DISCLAIMER": "* Sunrise and sunset data provided by https://sunrise-sunset.org/api.",
     "MBAR_DISCLAIMER": "* One standard atmosphere of pressure equals 1013.25 millibars at sea level.",
+    "WEATHER_GRAPHS_SECTION": "Weather Graphs",
     "LIVE_DATA_SECTION": "Live Data (from the last 24 hours)",
     "HISTORICAL_DATA_SECTION": "Historical Data (since 10/25/2025)",
     "LAST_PULL_FROM": "Last pull from",
