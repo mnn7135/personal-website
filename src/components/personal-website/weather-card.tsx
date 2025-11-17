@@ -56,14 +56,14 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
         }
     }
 
-    const monthNameLong = props.day.toLocaleString('en-US', {
-        month: 'long'
+    const monthNameShort = props.day.toLocaleString('en-US', {
+        month: 'short'
     });
     const currentDay = props.day.toLocaleString('en-US', { day: 'numeric' });
 
     return (
         <InfoCard
-            overhead={`${helperService.getDayStringFromNumber(props.day.getDay())}, ${monthNameLong} ${currentDay}`}
+            overhead={`${helperService.getDayStringFromNumber(props.day.getDay())}, ${monthNameShort} ${currentDay}`}
             icon={getWeatherIcon(props.icon)}
             scaleTitle={true}
             cardTitle={props.temperature}

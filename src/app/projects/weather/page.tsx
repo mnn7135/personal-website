@@ -19,6 +19,8 @@ import {
 import IWeatherPredictionService from '@/services/weather/weather-prediction.service';
 import { ISunDataResult } from '@/types/weather/sun-data.domain';
 import { IWeatherData, IWeatherForecast } from '@/types/weather/weather-data.domain';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@radix-ui/react-collapsible';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
@@ -127,6 +129,10 @@ export default function WeatherPage() {
         }
     }, [weatherData, weatherHistoryData, sunData]);
 
+    // For use in weather chart collapsible menus.
+    const [isLiveDataOpen, setIsLiveDataOpen] = useState<boolean>(false);
+    const [isHistoricalDataOpen, setIsHistoricalDataOpen] = useState<boolean>(false);
+
     return (
         <div>
             <div className="p-2 text-3xl font-bold">{config.WEATHER_TITLE}</div>
@@ -210,30 +216,62 @@ export default function WeatherPage() {
                     <></>
                 )}
             </div>
-            <div className="p-2 text-center text-2xl font-bold">{config.LIVE_DATA_SECTION}</div>
-            <SmallPaddingBar></SmallPaddingBar>
-            <br></br>
-            {weatherData ? (
-                <WeatherChart chartData={weatherData} />
-            ) : (
-                <div className="p-2 text-center text-2xl">Loading...</div>
-            )}
-            <br></br>
             <div className="p-2 text-center text-2xl font-bold">
-                {config.HISTORICAL_DATA_SECTION}
+                {config.WEATHER_GRAPHS_SECTION}
             </div>
             <SmallPaddingBar></SmallPaddingBar>
-            <br></br>
-            {weatherHistoryData ? (
-                <WeatherHistoryChart historicalData={weatherHistoryData} />
-            ) : (
-                <div className="p-2 text-center text-2xl">Loading...</div>
-            )}
-            <br></br>
+            <Collapsible
+                open={isLiveDataOpen}
+                onOpenChange={setIsLiveDataOpen}
+                className="flex flex-col gap-2"
+            >
+                <div className="flex items-center justify-between gap-4 px-4">
+                    <div className="p-2 text-center text-xl">{config.LIVE_DATA_SECTION}</div>
+                    <hr></hr>
+                    <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="icon" className="size-8">
+                            {isLiveDataOpen ? <ChevronUp /> : <ChevronDown />}
+                            <span className="sr-only">Toggle</span>
+                        </Button>
+                    </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent className="flex flex-col gap-2">
+                    {weatherData ? (
+                        <WeatherChart chartData={weatherData} />
+                    ) : (
+                        <div className="p-2 text-center text-xl">Loading...</div>
+                    )}
+                </CollapsibleContent>
+            </Collapsible>
             <SmallPaddingBar></SmallPaddingBar>
-            <div className="p-2">{`${config.LAST_PULL_FROM} ${weatherData ? new Date(weatherData[0].date).toLocaleString('en-US', { timeZone: 'America/New_York' }) : 'Fetching...'}`}</div>
-            <div className="p-2">{`${config.LAST_MAINTENANCE}`}</div>
-            <div className="p-2">{`${config.WEATHER_STATION_DISCLAIMER}`}</div>
+            <Collapsible
+                open={isHistoricalDataOpen}
+                onOpenChange={setIsHistoricalDataOpen}
+                className="flex flex-col gap-2"
+            >
+                <div className="flex items-center justify-between gap-4 px-4">
+                    <div className="p-2 text-center text-xl">{config.HISTORICAL_DATA_SECTION}</div>
+                    <SmallPaddingBar />
+                    <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="icon" className="size-8">
+                            {isHistoricalDataOpen ? <ChevronUp /> : <ChevronDown />}
+                            <span className="sr-only">Toggle</span>
+                        </Button>
+                    </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent className="flex flex-col gap-2">
+                    {weatherHistoryData ? (
+                        <WeatherHistoryChart historicalData={weatherHistoryData} />
+                    ) : (
+                        <div className="p-2 text-center text-xl">Loading...</div>
+                    )}
+                </CollapsibleContent>
+            </Collapsible>
+
+            <SmallPaddingBar></SmallPaddingBar>
+            <div className="p-1">{`${config.LAST_PULL_FROM} ${weatherData ? new Date(weatherData[0].date).toLocaleString('en-US', { timeZone: 'America/New_York' }) : 'Fetching...'}`}</div>
+            <div className="p-1">{`${config.LAST_MAINTENANCE}`}</div>
+            <div className="p-1">{`${config.WEATHER_STATION_DISCLAIMER}`}</div>
         </div>
     );
 }

@@ -167,11 +167,20 @@ export default class IWeatherAnalysisService {
         const temperature = this.weatherData[0].tempf;
         const dewPoint = this.weatherData[0].dewPoint;
         const solarRadiation = this.weatherData[0].solarradiation;
+        const maxSolarRadiationToday = this.getDataMax(this.weatherData, 'solarradiation');
 
         if (hourlyRainfall > 0) {
-            weatherCondition = this.config.WEATHER_RAIN;
+            if (temperature > 32) {
+                weatherCondition = this.config.WEATHER_RAIN;
+            } else {
+                weatherCondition = this.config.WEATHER_SNOW;
+            }
             if (pressureTrend < this.PRESSURE_GRADIENT) {
-                weatherCondition = this.config.WEATHER_STORM;
+                if (temperature > 32) {
+                    weatherCondition = this.config.WEATHER_STORM;
+                } else {
+                    weatherCondition = this.config.WEATHER_SNOW;
+                }
             }
         } else if (maxWindSpeed >= this.BREEZY_MIN_SPEED && maxWindSpeed < this.BREEZY_MAX_SPEED) {
             weatherCondition = this.config.WEATHER_BREEZE;
@@ -198,7 +207,11 @@ export default class IWeatherAnalysisService {
                 if (pressureTrend < this.PRESSURE_GRADIENT) {
                     weatherCondition = this.config.WEATHER_CLOUDS;
                 } else {
-                    weatherCondition = this.config.WEATHER_CLEAR;
+                    if (maxSolarRadiationToday < this.SUNNY_SOLAR_RAD) {
+                        weatherCondition = this.config.WEATHER_CLOUDS;
+                    } else {
+                        weatherCondition = this.config.WEATHER_CLEAR;
+                    }
                 }
             }
         }
