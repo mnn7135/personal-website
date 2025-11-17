@@ -44,7 +44,7 @@ export default class IWeatherPredictionService {
          */
         const temperatureTrend = this.analysisService.getDataTrend(weatherData, 'tempf');
 
-        let predictedTemperature =
+        const predictedTemperature =
             (this.analysisService.getDataMax(weatherData, 'tempf') +
                 this.analysisService.getDataAverage(weatherData, 'tempf')) /
                 2 +
