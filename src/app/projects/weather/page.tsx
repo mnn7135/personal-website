@@ -225,13 +225,14 @@ export default function WeatherPage() {
                 onOpenChange={setIsLiveDataOpen}
                 className="flex flex-col gap-2"
             >
-                <div className="flex items-center justify-between gap-4 px-4">
-                    <div className="p-2 text-center text-xl">{config.LIVE_DATA_SECTION}</div>
-                    <hr></hr>
+                <div className="flex items-center justify-center gap-4 px-4">
                     <CollapsibleTrigger asChild>
-                        <Button variant="ghost" size="icon" className="size-8">
+                        <Button variant="ghost">
+                            <div className="p-2 text-center text-xl">
+                                {config.LIVE_DATA_SECTION}
+                            </div>
+                            <SmallPaddingBar />
                             {isLiveDataOpen ? <ChevronUp /> : <ChevronDown />}
-                            <span className="sr-only">Toggle</span>
                         </Button>
                     </CollapsibleTrigger>
                 </div>
@@ -249,13 +250,14 @@ export default function WeatherPage() {
                 onOpenChange={setIsHistoricalDataOpen}
                 className="flex flex-col gap-2"
             >
-                <div className="flex items-center justify-between gap-4 px-4">
-                    <div className="p-2 text-center text-xl">{config.HISTORICAL_DATA_SECTION}</div>
-                    <SmallPaddingBar />
+                <div className="flex items-center justify-center gap-4 px-4">
                     <CollapsibleTrigger asChild>
-                        <Button variant="ghost" size="icon" className="size-8">
+                        <Button variant="ghost">
+                            <div className="p-2 text-center text-xl">
+                                {config.HISTORICAL_DATA_SECTION}
+                            </div>
+                            <SmallPaddingBar />
                             {isHistoricalDataOpen ? <ChevronUp /> : <ChevronDown />}
-                            <span className="sr-only">Toggle</span>
                         </Button>
                     </CollapsibleTrigger>
                 </div>
