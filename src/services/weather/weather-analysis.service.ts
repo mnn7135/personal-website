@@ -110,9 +110,9 @@ export default class IWeatherAnalysisService {
      */
     public getDataMin(data: IWeatherData[], dataProperty: string): number {
         const dataKey = dataProperty as keyof (typeof data)[0];
-        let dataMin: number = 0;
+        let dataMin: number = Number.MAX_SAFE_INTEGER;
         for (const row of data) {
-            if ((row[dataKey] as number) > dataMin) {
+            if ((row[dataKey] as number) < dataMin) {
                 dataMin = row[dataKey] as number;
             }
         }

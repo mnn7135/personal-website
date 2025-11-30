@@ -12,10 +12,9 @@ export default class IWeatherPredictionService {
     private analysisService: IWeatherAnalysisService;
 
     private MOST_RECENT_DATA_INDEX: number = 0;
-    private PRESSURE_GRADIENT: number = -0.2;
+    private PRESSURE_GRADIENT: number = -0.35;
     private MINIMUM_WIND_VALUE: number = 10;
     private DAY_FACTOR_CONSTANT: number = 288;
-    private HOURS_IN_A_DAY = 24;
 
     constructor(
         todaysWeatherData: IWeatherData[],
@@ -45,10 +44,12 @@ export default class IWeatherPredictionService {
         const temperatureTrend = this.analysisService.getDataTrend(weatherData, 'tempf');
 
         const predictedTemperature =
-            (this.analysisService.getDataMax(weatherData, 'tempf') +
-                this.analysisService.getDataAverage(weatherData, 'tempf')) /
-                2 +
-            temperatureTrend;
+            weatherData[this.MOST_RECENT_DATA_INDEX].tempf +
+            temperatureTrend +
+            ((Math.abs(temperatureTrend) / temperatureTrend) *
+                (this.analysisService.getDataMax(weatherData, 'tempf') -
+                    this.analysisService.getDataMin(weatherData, 'tempf'))) /
+                weatherData.length;
 
         /**
          * To predict the weather condition, determine the pressure trend for the data period. In
