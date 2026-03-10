@@ -47,11 +47,6 @@ export interface IAppConfig {
     PROJECT_3_TIMEFRAME: string;
     PROJECT_3_DESCRIPTION: string[];
 
-    PROJECT_4_TITLE: string;
-    PROJECT_4_SKILLS: string;
-    PROJECT_4_TIMEFRAME: string;
-    PROJECT_4_DESCRIPTION: string[];
-
     /** Projects/Astronomy Page */
     ASTRONOMY_TITLE: string;
     ASTRONOMY_HEADER: string;

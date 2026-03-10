@@ -11,6 +11,8 @@ export default class IWeatherPredictionService {
     private config: IWeatherConfig = loadWeatherConfig();
     private analysisService: IWeatherAnalysisService;
 
+    private hasDataBeenSubmittedToday: boolean;
+
     private MOST_RECENT_DATA_INDEX: number = 0;
     private PRESSURE_GRADIENT: number = -0.35;
     private MINIMUM_WIND_VALUE: number = 10;
@@ -25,6 +27,7 @@ export default class IWeatherPredictionService {
         this.historicalWeatherData = historicalWeatherData;
         this.historyDataLength = historicalWeatherData.length - 1;
         this.analysisService = new IWeatherAnalysisService([], sunData);
+        this.hasDataBeenSubmittedToday = this.hasWeatherDataBeenSubmittedToday();
     }
 
     /**
@@ -109,11 +112,12 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        // Last three days' data
+        // Last week's data.
         return this.getWeatherForecast([
-            this.historicalWeatherData[this.historyDataLength],
-            this.historicalWeatherData[this.historyDataLength - 1],
-            this.historicalWeatherData[this.historyDataLength - 2]
+            this.hasDataBeenSubmittedToday
+                ? this.historicalWeatherData[this.historyDataLength]
+                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+            ...this.historicalWeatherData.slice(-8, -1)
         ]);
     }
 
@@ -123,13 +127,12 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        // Last five days' data
+        // Last week and a half's data.
         return this.getWeatherForecast([
-            this.historicalWeatherData[this.historyDataLength],
-            this.historicalWeatherData[this.historyDataLength - 1],
-            this.historicalWeatherData[this.historyDataLength - 2],
-            this.historicalWeatherData[this.historyDataLength - 3],
-            this.historicalWeatherData[this.historyDataLength - 4]
+            this.hasDataBeenSubmittedToday
+                ? this.historicalWeatherData[this.historyDataLength]
+                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+            ...this.historicalWeatherData.slice(-12, -1)
         ]);
     }
 
@@ -139,15 +142,34 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        // Last week's data
+        // Last two week's data.
         return this.getWeatherForecast([
-            this.historicalWeatherData[this.historyDataLength],
-            this.historicalWeatherData[this.historyDataLength - 1],
-            this.historicalWeatherData[this.historyDataLength - 2],
-            this.historicalWeatherData[this.historyDataLength - 3],
-            this.historicalWeatherData[this.historyDataLength - 4],
-            this.historicalWeatherData[this.historyDataLength - 5],
-            this.historicalWeatherData[this.historyDataLength - 6]
+            this.hasDataBeenSubmittedToday
+                ? this.historicalWeatherData[this.historyDataLength]
+                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+            ...this.historicalWeatherData.slice(-15, -1)
         ]);
+    }
+
+    /**
+     * A helper function to determine if today's data has been submitted, and thus
+     * which data to include or exclude.
+     */
+    private hasWeatherDataBeenSubmittedToday(): boolean {
+        const historicalDate = new Date(
+            this.historicalWeatherData[this.historyDataLength].date
+        ).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+
+        const today = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+
+        return today == historicalDate;
     }
 }

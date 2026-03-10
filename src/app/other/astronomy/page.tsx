@@ -17,7 +17,6 @@ export default function AstronomyPage() {
                 stretch={true}
                 cardTitle={config.ASTRONOMY_HEADER}
                 cardDescription={config.ASTRONOMY_DESCRIPTION}
-                scaleDescription={true}
                 center={true}
             ></InfoCard>
             <br></br>

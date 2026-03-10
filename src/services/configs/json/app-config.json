@@ -1,16 +1,8 @@
 {
     "ABOUT_TITLE": "About Me",
 
-    "OBJECTIVE_SECTION": "Objective",
-    "OBJECTIVE_DESCRIPTION": "Seeking a job in the Software Engineering field with excellent programming skills in Java, React, TypeScript, SQL Databases, and HTML. Experience working on database design and with scrum agile-driven teams. Previous work at Georgia Tech Research Institute as a full-stack developer with experience designing and developing new features. Other experience includes migrating from an older technology like AngularJS to React.",
-    
-    "ABOUT_SECTION": "About",
-    "ABOUT_DESCRIPTION": "I am a Software Engineering graduate who is proficient in all parts of the process when it comes to creating a software product. I have great experience working with SQL, Java, and React-based frameworks, and testing is my passion. I am an avid cat lover and there's no place I love more than the Adirondacks of New York.",
-
-    "NAME": "Michael Nersinger",
-    "MINOR_DEGREE": "History Minor",
-    "DEGREE": "Software Engineering BS @ Rochester Institute of Technology",
-    "RELEVANT_COURSEWORK": "GPA: 3.88, Relevant Coursework: Engineering Secure Software, Leading High-Performance Teams, Introduction to Database and Data Modeling, Software System Requirements and Architecture, Trends in Software Development Process",
+    "ABOUT_SECTION": "My Experience",
+    "ABOUT_DESCRIPTION": "I am an experienced Software Engineer with excellent programming skills in Java, TypeScript, and JavaScript/HTML. I also have experience with SQL, React, Cloud-based solutions, working on database design, and working with and leading agile-driven teams. I have previous work experience at Georgia Tech Research Institute as a Full-Stack Engineer, migrating a feature from one technology, AngularJS, to React, and documenting the process and rationale to satisfy product sponsors. I am detail-oriented, but I have no problems keeping the ball rolling.",
 
     "SMALL_BLURB_SECTION": "FIRST Robotics",
     "SMALL_BLURB_DESCRIPTION": "In High School, I was a robotics team member for three years. FIRST Robotics is a high school-level competition where teams design a robot each year to compete in an alliance-based game. Robotics is where I started developing my skills in Java, the programming language I have the most experience with. For the software sub-team, we spent most of our time working with the robot (in its earliest iteration when available). In this case, our system was a rough agile system –we used Trello and Slack, and through both iterations of robots and code, a final iteration would emerge. In my senior year, I was the leader of the software sub-team, and I worked on the drive train and controls of the robot. The API libraries provided by FIRST were not suited to the system we were using, so I had to create a different solution. The drive train worked great, and using its base, we developed an autonomous period routine (where no human driver is allowed) that allowed the driver to ignore the sandstorm period and gave full power to the robot to place a hatch on its own. Robotics allowed me to develop my programming abilities with the ability to test code and, in some cases, be able to make changes on the fly.",
@@ -19,38 +11,68 @@
     "PROGRAMMING_SKILLS_SECTION": "Programming Skills",
     "OTHER_TECH_SKILLS_SECTION": "Other Technology Skills",
     "OTHER_SKILLS_SECTION": "Other Skills",
-    "PROGRAMMING_SKILLS_LIST": ["Java", "TypeScript", "React Native", "Next.js", "JavaScript", "HTML", "R", "Python", "C", "C#"],
-    "OTHER_TECH_SKILLS_LIST": ["Amazon Web Services", "Google Cloud", "PostgreSQL", "Supabase", "MongoDB", "Jest Framework", "Windows", "Linux", "Macintosh", "iOS Development"],
-    "OTHER_SKILLS_LIST": ["Scrum/Agile Development", "Software Architecture Design", "CAD Design", "Virtual Machines"],
+    "PROGRAMMING_SKILLS_LIST": [
+        "Java",
+        "TypeScript",
+        "React Native",
+        "Next.js",
+        "JavaScript",
+        "HTML",
+        "R",
+        "Python",
+        "C",
+        "C#"
+    ],
+    "OTHER_TECH_SKILLS_LIST": [
+        "Amazon Web Services",
+        "Google Cloud",
+        "PostgreSQL",
+        "Supabase",
+        "MongoDB",
+        "Jest Framework",
+        "Windows",
+        "Linux",
+        "Macintosh",
+        "iOS Development"
+    ],
+    "OTHER_SKILLS_LIST": [
+        "Scrum/Agile Development",
+        "Software Architecture Design",
+        "CAD Design",
+        "Virtual Machines"
+    ],
 
     "PROJECT_SECTION": "Software Projects",
 
     "PROJECT_1_TITLE": "FiTR - Senior Capstone Project",
     "PROJECT_1_SKILLS": "Scrum",
     "PROJECT_1_TIMEFRAME": "Jan 2025 - Aug 2025",
-    "PROJECT_1_DESCRIPTION": ["• Collaborated with a team of 8 seniors to design and implement a full-stack web application",
-        "• Researched and justified design decision to use Supabase and Next.js to satisfy sponsor project",
-        "• Collected metrics as team scrum master to ensure adherence to project and sprint milestones",
-        "• Designed and implemented the login and authentication system to satisfy sponsor priorities"],
+    "PROJECT_1_DESCRIPTION": [
+        "• Collaborated with a team of 8 seniors to design and implement a full-stack web application.",
+        "• Researched and justified design decision to use Supabase and Next.js to satisfy sponsor project.",
+        "• Collected metrics as team scrum master to ensure adherence to project and sprint milestones.",
+        "• Designed and implemented the login and authentication system using OAuth to satisfy sponsor priorities."
+    ],
 
     "PROJECT_2_TITLE": "Personal Website",
     "PROJECT_2_SKILLS": "TypeScript, NextJS, Jest",
     "PROJECT_2_TIMEFRAME": "Aug 2025 - [Ongoing]",
-    "PROJECT_2_DESCRIPTION": ["• Designed and implemented a personal website using Next.js and a physical weather station",
-        "• Populated information from the weather station with an API library to get sensor data",
-        "• Implemented automated testing and deployment to streamline new feature rollouts"],
+    "PROJECT_2_DESCRIPTION": [
+        "• Designed and implemented a personal website using Next.js and a physical weather station.",
+        "• Populated information from the weather station with an API library to get sensor data.",
+        "• Implemented automated testing and deployment to streamline new feature rollouts.",
+        "• Designed and implemented, based on location and weather station data, a weather forecasting system."
+    ],
 
     "PROJECT_3_TITLE": "Javelin - GTRI",
     "PROJECT_3_SKILLS": "Java, TypeScript, React Native, SQL, Scrum",
     "PROJECT_3_TIMEFRAME": "Aug 2023 - Dec 2024",
-    "PROJECT_3_DESCRIPTION": ["• Collaborated with an agile team of 10+ to complete feature-driven sprints to satisfy needs",
-        "• Mentored and peer programmed with other students to assist in project development",
-        "• Spearheaded the design and migration of a metrics feature to the React standard to improve security"],
-
-            "PROJECT_4_TITLE": "SimCity Creator DS (USA) Reverse Engineering",
-    "PROJECT_4_SKILLS": "Low-level Coding, Ghidra, Reverse Engineering, Documentation",
-    "PROJECT_4_TIMEFRAME": "Oct 2025 - [Ongoing]",
-    "PROJECT_4_DESCRIPTION": ["• Investigated and researched a strategy to reverse engineer a DS game for further engineering experience"],
+    "PROJECT_3_DESCRIPTION": [
+        "• Collaborated with an agile team of 15+ developers to complete feature-driven sprints to satisfy sponsor desires and product needs. ",
+        "• Utilized Java, JavaScript, TypeScript, React, and Oracle DB technologies to continue to support the existing tech stack of over 10+ years of contributions. ",
+        "• Spearheaded the design and migration of an existing feature from Angular to a newer standard, React, to improve security and future reliability.",
+        "• Mentored and peer programmed with other developers and student developers to assist in project development."
+    ],
 
     "ASTRONOMY_TITLE": "Astronomy",
     "ASTRONOMY_HEADER": "Overview",
@@ -83,7 +105,17 @@
     "PRESSURE_MBAR": "mbar",
     "WIND_SPEED_MPH": "mph",
     "WIND_SPEED_MPH_DIR": "mph from",
-    "WEATHER_DATA_LABELS_LIST": ["Sunrise", "Sunset", "Wind", "Pressure", "Wind Gusts", "UV Index", "Humidity", "Hourly Rainfall", "Dew Point"],
+    "WEATHER_DATA_LABELS_LIST": [
+        "Sunrise",
+        "Sunset",
+        "Wind",
+        "Pressure",
+        "Wind Gusts",
+        "UV Index",
+        "Humidity",
+        "Hourly Rainfall",
+        "Dew Point"
+    ],
     "SUNRISE_SUNSET_DISCLAIMER": "* Sunrise and sunset data provided by https://sunrise-sunset.org/api.",
     "MBAR_DISCLAIMER": "* One standard atmosphere of pressure equals 1013.25 millibars at sea level.",
     "WEATHER_GRAPHS_SECTION": "Weather Graphs",
@@ -91,7 +123,7 @@
     "HISTORICAL_DATA_SECTION": "Historical Data (since 10/25/2025)",
     "LAST_PULL_FROM": "Last pull from",
     "LAST_MAINTENANCE": "Last maintenanced on 5/25/2025, 1:45:00 PM",
-    "WEATHER_STATION_DISCLAIMER": "Phoenix Station is my personal AmbientWeather WS-2000 Smart Station",
+    "WEATHER_STATION_DISCLAIMER": "Phoenix Station is my personal AmbientWeather WS-2000 Smart Station.",
 
     "QUCIK_LINKS_SECTION": "Quick Links",
 
@@ -114,7 +146,7 @@
     "AMBIENT_WEATHER_LINK": "https://ambientweather.net/",
     "AMBIENT_WEATHER_ALT": "Ambient Weather Network",
     "AMBIENT_WEATHER_IMG_SRC": "https://i.imgur.com/lyXHMl3.jpeg",
-    
+
     "NEXT_JS_LINK": "https://nextjs.org/",
     "NEXT_JS_ALT": "NextJS Framework",
     "NEXT_JS_IMG_SRC": "https://i.imgur.com/8OA1Ake.png",

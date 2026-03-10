@@ -36,22 +36,13 @@ export default function AboutPage() {
                                 cardTitle={config.SMALL_BLURB_SECTION}
                                 cardDescription={config.SMALL_BLURB_DESCRIPTION}
                                 center={true}
-                            ></InfoCard>
-                            <InfoCard
-                                cardTitle={config.NAME}
-                                secondaryTitle={config.MINOR_DEGREE}
-                                ternaryTitle={config.DEGREE}
-                                cardDescription={config.RELEVANT_COURSEWORK}
-                                center={true}
-                            ></InfoCard>
-                            <InfoCard
-                                cardTitle={config.OBJECTIVE_SECTION}
-                                cardDescription={config.OBJECTIVE_DESCRIPTION}
-                                center={true}
+                                stretch={true}
                             ></InfoCard>
                         </div>
                         <br></br>
-                        <div className="p-2 text-center text-2xl">{config.SKILLS_SECTION}</div>
+                        <div className="p-2 text-center text-2xl font-bold">
+                            {config.SKILLS_SECTION}
+                        </div>
                         <SmallPaddingBar></SmallPaddingBar>
                         <br></br>
                         <div className="flex flex-row flex-wrap place-content-around">

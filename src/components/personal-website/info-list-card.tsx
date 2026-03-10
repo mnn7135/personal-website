@@ -15,18 +15,6 @@ export default function InfoListCard(props: InfoListCardProps) {
             className={`w-full ${props.stretch ? '' : 'max-w-md'}`}
             style={{ textAlign: props.center ? 'center' : 'left' }}
         >
-            <CardHeader>
-                {props.cardTitle ? (
-                    <>
-                        <CardTitle>
-                            <div className="text-2xl">{props.cardTitle}</div>
-                        </CardTitle>
-                        <SmallPaddingBar></SmallPaddingBar>
-                    </>
-                ) : (
-                    <></>
-                )}
-            </CardHeader>
             <CardContent>
                 <div className="flex" style={{ textAlign: props.center ? 'center' : 'left' }}>
                     <div className={`${props.dataLabels ? 'flex-5/12 flex-col' : ''}`}>
