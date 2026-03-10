@@ -14,7 +14,7 @@ export default class IWeatherPredictionService {
     private hasDataBeenSubmittedToday: boolean;
 
     private MOST_RECENT_DATA_INDEX: number = 0;
-    private PRESSURE_GRADIENT: number = -0.35;
+    private PRESSURE_GRADIENT: number = 2.5; // Based on observations from weather station data.
     private MINIMUM_WIND_VALUE: number = 10;
     private DAY_FACTOR_CONSTANT: number = 288;
 
@@ -40,6 +40,42 @@ export default class IWeatherPredictionService {
      */
     private getWeatherForecast(weatherData: IWeatherData[]): IWeatherForecast {
         /**
+         * To predict the weather condition, determine the pressure trend for the data period. In
+         * addition, determine if it has rained today. Measure for other weather conditions to
+         * determine if those special conditions warrant display.
+         */
+        let predictedCondition = '';
+
+        const pressureTrend = this.analysisService.getDataPointDifference(
+            weatherData,
+            'baromabsin'
+        );
+
+        const windTrendOverall = this.analysisService.getDataTrend(
+            weatherData,
+            'windspdmph_avg10m'
+        );
+
+        const predictedWindSpeed =
+            Math.abs(windTrendOverall) + Math.abs((pressureTrend * weatherData.length) / 3);
+
+        const averageWindDirection = this.analysisService.getDataAverage(
+            weatherData,
+            'winddir_avg10m'
+        );
+
+        let windDirectionEffect = 1; // Warm, Moist air from the south.
+        if (
+            this.analysisService
+                .getHelperService()
+                .getWindDirection(averageWindDirection)
+                .includes('N')
+        ) {
+            windDirectionEffect = -1; // Cold, Dry air from the north.
+        }
+        const predictedWindTemperatureDifference = predictedWindSpeed * 0.6 * windDirectionEffect;
+
+        /**
          * Determine the temperature using the average of the maximum temperature and average temperature
          * as recorded in the weatherData object. This should of course, also factor in the general
          * temperature trend to determine a value.
@@ -48,53 +84,29 @@ export default class IWeatherPredictionService {
 
         const predictedTemperature =
             weatherData[this.MOST_RECENT_DATA_INDEX].tempf +
+            predictedWindTemperatureDifference +
             temperatureTrend +
-            ((Math.abs(temperatureTrend) / temperatureTrend) *
+            (((Math.abs(temperatureTrend) + 1) / (temperatureTrend + 1)) *
                 (this.analysisService.getDataMax(weatherData, 'tempf') -
                     this.analysisService.getDataMin(weatherData, 'tempf'))) /
                 weatherData.length;
 
-        /**
-         * To predict the weather condition, determine the pressure trend for the data period. In
-         * addition, determine if it has rained today. Measure for other weather conditions to
-         * determine if those special conditions warrant display.
-         */
-        let predictedCondition = '';
-
-        const pressureTrend = this.analysisService.getDataTrend(weatherData, 'baromabsin');
-        const hasRainedToday =
-            this.analysisService.getDataMax(this.todaysWeatherData, 'hourlyrainin') > 0;
-        const windMaxToday = this.analysisService.getDataMax(
-            this.todaysWeatherData,
-            'windspeedmph_avg10m'
-        );
-        const windTrendOverall = this.analysisService.getDataTrend(
-            weatherData,
-            'windspeedmph_avg10m'
-        );
-
-        if (pressureTrend < this.PRESSURE_GRADIENT) {
-            if (hasRainedToday) {
-                if (pressureTrend < this.PRESSURE_GRADIENT * 2) {
-                    if (predictedTemperature > 32) {
-                        predictedCondition = this.config.WEATHER_STORM;
-                    } else {
-                        predictedCondition = this.config.WEATHER_SNOW;
-                    }
+        // Extreme changes in pressure tend to indicate unstable weather, potentially storms.
+        if (Math.abs(pressureTrend) > this.PRESSURE_GRADIENT) {
+            if (Math.abs(pressureTrend) >= 2 * this.PRESSURE_GRADIENT) {
+                if (predictedTemperature > 32) {
+                    predictedCondition = this.config.WEATHER_STORM;
                 } else {
-                    if (predictedTemperature > 32) {
-                        predictedCondition = this.config.WEATHER_RAIN;
-                    } else {
-                        predictedCondition = this.config.WEATHER_SNOW;
-                    }
+                    predictedCondition = this.config.WEATHER_SNOW;
                 }
             } else {
-                predictedCondition = this.config.WEATHER_CLOUDS;
+                if (predictedTemperature > 32) {
+                    predictedCondition = this.config.WEATHER_RAIN;
+                } else {
+                    predictedCondition = this.config.WEATHER_SNOW;
+                }
             }
-        } else if (
-            windTrendOverall * (weatherData.length / this.DAY_FACTOR_CONSTANT) + windMaxToday >
-            this.MINIMUM_WIND_VALUE
-        ) {
+        } else if (predictedWindSpeed > this.MINIMUM_WIND_VALUE) {
             predictedCondition = this.config.WEATHER_WIND;
         } else {
             predictedCondition = this.config.WEATHER_SUNNY;
@@ -112,12 +124,12 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        // Last week's data.
+        // Last two days' data.
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
                 : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
-            ...this.historicalWeatherData.slice(-8, -1)
+            ...this.historicalWeatherData.slice(-3, -1)
         ]);
     }
 
@@ -127,12 +139,12 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        // Last week and a half's data.
+        // Last week's data.
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
                 : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
-            ...this.historicalWeatherData.slice(-12, -1)
+            ...this.historicalWeatherData.slice(-8, -3)
         ]);
     }
 
@@ -147,7 +159,7 @@ export default class IWeatherPredictionService {
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
                 : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
-            ...this.historicalWeatherData.slice(-15, -1)
+            ...this.historicalWeatherData.slice(-15, -8)
         ]);
     }
 

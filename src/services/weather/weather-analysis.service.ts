@@ -12,7 +12,7 @@ export default class IWeatherAnalysisService {
     private MOST_RECENT_DATA_INDEX: number = 0;
     private BREEZY_MIN_SPEED: number = 15;
     private BREEZY_MAX_SPEED: number = 20;
-    private PRESSURE_GRADIENT: number = -0.2;
+    private PRESSURE_GRADIENT: number = 2.5; // Based on observations from weather station data.
     private DEW_POINT_TEMP_DIFF: number = 4.5;
     private MAXIMUM_HUMIDITY: number = 100;
     private CLOUDY_SOLAR_RAD: number = 200;
@@ -135,6 +135,21 @@ export default class IWeatherAnalysisService {
     }
 
     /**
+     * A helper function that determines the difference between points of a given data property of weather data.
+     *
+     * @param data The weather data to find the point difference of
+     * @param dataProperty The property of the weather data to find the point difference of
+     * @returns
+     */
+    public getDataPointDifference(data: IWeatherData[], dataProperty: string): number {
+        const dataKey = dataProperty as keyof (typeof data)[0];
+        const dataLength: number = data.length;
+        const pointDifference =
+            (data[dataLength - 1][dataKey] as number) - (data[0][dataKey] as number);
+        return pointDifference;
+    }
+
+    /**
      * A helper function that determines the average value of a given data property of weather data.
      *
      * @param data The weather data to find the average value of
@@ -175,7 +190,7 @@ export default class IWeatherAnalysisService {
             } else {
                 weatherCondition = this.config.WEATHER_SNOW;
             }
-            if (pressureTrend < this.PRESSURE_GRADIENT) {
+            if (Math.abs(pressureTrend) > this.PRESSURE_GRADIENT) {
                 if (temperature > 32) {
                     weatherCondition = this.config.WEATHER_STORM;
                 } else {
