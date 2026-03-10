@@ -37,19 +37,6 @@ export default function SoftwarePage() {
                     <InfoListCard data={config.PROJECT_3_DESCRIPTION}></InfoListCard>
                 </InfoCard>
             </div>
-            <br></br>
-            <SmallPaddingBar></SmallPaddingBar>
-            <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <InfoCard
-                    cardTitle={config.PROJECT_4_TITLE}
-                    secondaryTitle={config.PROJECT_4_SKILLS}
-                    cardDescription={config.PROJECT_4_TIMEFRAME}
-                    center={true}
-                >
-                    <InfoListCard data={config.PROJECT_4_DESCRIPTION}></InfoListCard>
-                </InfoCard>
-            </div>
         </div>
     );
 }

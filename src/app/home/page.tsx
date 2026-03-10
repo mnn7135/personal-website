@@ -10,12 +10,12 @@ const config: IAppConfig = loadAppConfig();
 const BUTTON_SCALE = '1/4';
 
 export default function HomePage() {
-    const [imageSize, setImageSize] = useState<number>(225);
+    const [imageSize, setImageSize] = useState<number>(220);
     const [lastWindowSize, setLastWindowSize] = useState<number>();
 
     useEffect(() => {
         if (window.innerWidth != lastWindowSize) {
-            setImageSize((window.innerWidth / 1920) * 225);
+            setImageSize((window.innerWidth / 1920) * imageSize);
         }
 
         setLastWindowSize(window.innerWidth);

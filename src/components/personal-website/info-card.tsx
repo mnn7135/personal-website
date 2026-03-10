@@ -37,7 +37,11 @@ export default function InfoCard(props: InfoCardProps) {
                 {props.cardTitle ? (
                     <>
                         <CardTitle>
-                            <div className={props.scaleTitle ? 'text-8xl' : 'text-2xl'}>
+                            <div
+                                className={
+                                    props.scaleTitle ? 'text-8xl font-bold' : 'text-2xl font-bold'
+                                }
+                            >
                                 {props.cardTitle}
                             </div>
                         </CardTitle>
@@ -93,7 +97,6 @@ export default function InfoCard(props: InfoCardProps) {
             ) : (
                 <></>
             )}
-            <CardFooter className="flex-col gap-2"></CardFooter>
         </Card>
     );
 }

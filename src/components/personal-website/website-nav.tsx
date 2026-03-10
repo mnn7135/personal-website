@@ -57,7 +57,7 @@ export function WebsiteNavagationMenu() {
                                 </NavigationMenuLink>
                             </li>
                             <ListItem href="/home/about" title="About Me">
-                                About me and and a brief digital resume.
+                                About me and an overview of my experience.
                             </ListItem>
                         </ul>
                     </NavigationMenuContent>
