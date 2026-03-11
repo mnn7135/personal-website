@@ -6,6 +6,7 @@ import { ISunDataResult } from '@/types/weather/sun-data.domain';
 export default class IWeatherPredictionService {
     private todaysWeatherData: IWeatherData[];
     private historicalWeatherData: IWeatherData[];
+    private currentWeatherData: IWeatherData;
     private historyDataLength: number;
 
     private config: IWeatherConfig = loadWeatherConfig();
@@ -28,6 +29,23 @@ export default class IWeatherPredictionService {
         this.historyDataLength = historicalWeatherData.length - 1;
         this.analysisService = new IWeatherAnalysisService([], sunData);
         this.hasDataBeenSubmittedToday = this.hasWeatherDataBeenSubmittedToday();
+
+        // This is needed to ensure that pressure is correctly converted from inHg to millibar.
+        this.currentWeatherData = {
+            tempf: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf,
+            baromabsin: this.analysisService
+                .getHelperService()
+                .getPressureInMbar(this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].baromabsin),
+            windspdmph_avg10m:
+                this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m,
+            winddir_avg10m: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].winddir_avg10m,
+            humidity: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].humidity,
+            dailyrainin: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dailyrainin,
+            solarradiation: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].solarradiation,
+            uv: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].uv,
+            dewPoint: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dewPoint,
+            date: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].date
+        };
     }
 
     /**
@@ -128,7 +146,7 @@ export default class IWeatherPredictionService {
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
-                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+                : this.currentWeatherData,
             ...this.historicalWeatherData.slice(-3, -1)
         ]);
     }
@@ -143,7 +161,7 @@ export default class IWeatherPredictionService {
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
-                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+                : this.currentWeatherData,
             ...this.historicalWeatherData.slice(-8, -3)
         ]);
     }
@@ -154,11 +172,12 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
+        console.log(this.currentWeatherData);
         // Last two week's data.
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
                 ? this.historicalWeatherData[this.historyDataLength]
-                : this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
+                : this.currentWeatherData,
             ...this.historicalWeatherData.slice(-15, -8)
         ]);
     }
