@@ -32,19 +32,10 @@ export default class IWeatherPredictionService {
 
         // This is needed to ensure that pressure is correctly converted from inHg to millibar.
         this.currentWeatherData = {
-            tempf: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf,
+            ...this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
             baromabsin: this.analysisService
                 .getHelperService()
-                .getPressureInMbar(this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].baromabsin),
-            windspdmph_avg10m:
-                this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m,
-            winddir_avg10m: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].winddir_avg10m,
-            humidity: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].humidity,
-            dailyrainin: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dailyrainin,
-            solarradiation: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].solarradiation,
-            uv: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].uv,
-            dewPoint: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dewPoint,
-            date: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].date
+                .getPressureInMbar(this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].baromabsin)
         };
     }
 
@@ -74,40 +65,36 @@ export default class IWeatherPredictionService {
             'windspdmph_avg10m'
         );
 
-        const predictedWindSpeed =
-            Math.abs(windTrendOverall) + Math.abs((pressureTrend * weatherData.length) / 3);
+        const predictedWindSpeed = Math.abs(windTrendOverall) + Math.abs(pressureTrend);
 
         const averageWindDirection = this.analysisService.getDataAverage(
             weatherData,
             'winddir_avg10m'
         );
 
-        let windDirectionEffect = 1; // Warm, Moist air from the south.
+        let windDirectionEffect = 0;
         if (
             this.analysisService
                 .getHelperService()
                 .getWindDirection(averageWindDirection)
-                .includes('N')
+                .startsWith('N')
         ) {
             windDirectionEffect = -1; // Cold, Dry air from the north.
+        } else if (
+            this.analysisService
+                .getHelperService()
+                .getWindDirection(averageWindDirection)
+                .startsWith('S')
+        ) {
+            windDirectionEffect = 1; // Warm, Moist air from the south.
         }
         const predictedWindTemperatureDifference = predictedWindSpeed * 0.6 * windDirectionEffect;
-
-        /**
-         * Determine the temperature using the average of the maximum temperature and average temperature
-         * as recorded in the weatherData object. This should of course, also factor in the general
-         * temperature trend to determine a value.
-         */
         const temperatureTrend = this.analysisService.getDataTrend(weatherData, 'tempf');
 
         const predictedTemperature =
             weatherData[this.MOST_RECENT_DATA_INDEX].tempf +
             predictedWindTemperatureDifference +
-            temperatureTrend +
-            (((Math.abs(temperatureTrend) + 1) / (temperatureTrend + 1)) *
-                (this.analysisService.getDataMax(weatherData, 'tempf') -
-                    this.analysisService.getDataMin(weatherData, 'tempf'))) /
-                weatherData.length;
+            temperatureTrend;
 
         // Extreme changes in pressure tend to indicate unstable weather, potentially storms.
         if (Math.abs(pressureTrend) > this.PRESSURE_GRADIENT) {
@@ -172,7 +159,6 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        console.log(this.currentWeatherData);
         // Last two week's data.
         return this.getWeatherForecast([
             this.hasDataBeenSubmittedToday
