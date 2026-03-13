@@ -32,19 +32,10 @@ export default class IWeatherPredictionService {
 
         // This is needed to ensure that pressure is correctly converted from inHg to millibar.
         this.currentWeatherData = {
-            tempf: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].tempf,
+            ...this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX],
             baromabsin: this.analysisService
                 .getHelperService()
-                .getPressureInMbar(this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].baromabsin),
-            windspdmph_avg10m:
-                this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m,
-            winddir_avg10m: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].winddir_avg10m,
-            humidity: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].humidity,
-            dailyrainin: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dailyrainin,
-            solarradiation: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].solarradiation,
-            uv: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].uv,
-            dewPoint: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].dewPoint,
-            date: this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].date
+                .getPressureInMbar(this.todaysWeatherData[this.MOST_RECENT_DATA_INDEX].baromabsin)
         };
     }
 
@@ -81,7 +72,7 @@ export default class IWeatherPredictionService {
             'winddir_avg10m'
         );
 
-        let windDirectionEffect = 1; // Warm, Moist air from the south.
+        let windDirectionEffect = 0;
         if (
             this.analysisService
                 .getHelperService()
@@ -89,6 +80,13 @@ export default class IWeatherPredictionService {
                 .startsWith('N')
         ) {
             windDirectionEffect = -1; // Cold, Dry air from the north.
+        } else if (
+            this.analysisService
+                .getHelperService()
+                .getWindDirection(averageWindDirection)
+                .startsWith('S')
+        ) {
+            windDirectionEffect = 1; // Warm, Moist air from the south.
         }
         const predictedWindTemperatureDifference = predictedWindSpeed * 0.6 * windDirectionEffect;
         const temperatureTrend = this.analysisService.getDataTrend(weatherData, 'tempf');
