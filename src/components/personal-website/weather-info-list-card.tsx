@@ -46,6 +46,7 @@ export default function WeatherInfoListCard(props: WeatherInfoListCardProps) {
             cardTitle={props.cardTitle ?? ''}
             center={false}
             stretch={true}
+            alllowLastLineBar={true}
         ></InfoListCard>
     );
 }
