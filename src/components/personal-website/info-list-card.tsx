@@ -4,9 +4,11 @@ import { SmallPaddingBar, ThinPaddingBar } from './padding-bar';
 interface InfoListCardProps {
     cardTitle?: string;
     dataLabels?: string[];
+    scaleDataText?: boolean;
     data: string[];
     center?: boolean;
     stretch?: boolean;
+    alllowLastLineBar?: boolean;
 }
 
 export default function InfoListCard(props: InfoListCardProps) {
@@ -16,6 +18,7 @@ export default function InfoListCard(props: InfoListCardProps) {
             style={{ textAlign: props.center ? 'center' : 'left' }}
         >
             <CardContent>
+                <div className="text-xl font-bold">{props.cardTitle ?? props.cardTitle}</div>
                 <div className="flex" style={{ textAlign: props.center ? 'center' : 'left' }}>
                     <div className={`${props.dataLabels ? 'flex-5/12 flex-col' : ''}`}>
                         {props.dataLabels ? (
@@ -41,8 +44,21 @@ export default function InfoListCard(props: InfoListCardProps) {
                             ? props.data.map((dataElement, index) => {
                                   return (
                                       <div key={`info-card-data-${index}`}>
-                                          <div className="p-1">{dataElement}</div>
-                                          <ThinPaddingBar></ThinPaddingBar>
+                                          <div
+                                              className={
+                                                  props.scaleDataText
+                                                      ? 'p-1 text-2xl font-extrabold'
+                                                      : 'p-1'
+                                              }
+                                          >
+                                              {dataElement}
+                                          </div>
+                                          {props.data.length - 1 == index &&
+                                          !props.alllowLastLineBar ? (
+                                              <></>
+                                          ) : (
+                                              <ThinPaddingBar></ThinPaddingBar>
+                                          )}
                                       </div>
                                   );
                               })

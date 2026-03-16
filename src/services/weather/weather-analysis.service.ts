@@ -48,11 +48,14 @@ export default class IWeatherAnalysisService {
      *
      * @returns a local weather warning or advisory
      */
-    public getActiveAlerts(): string {
-        let alertMessage = '';
+    public getActiveAlerts(): string[] {
+        let alertMessages: string[] = [];
 
         const maxGust = this.getDataMax(this.weatherData, 'windgustmph');
         const maxWind = this.getDataMax(this.weatherData, 'windspdmph_avg10m');
+        const adjustedGustSpeed = maxGust * this.config.WIND_DAMPENING_AFFECT_SCALE_FACTOR;
+        const adjustedWindSpeed = maxWind * this.config.WIND_DAMPENING_AFFECT_SCALE_FACTOR;
+
         const maxTemp = this.getDataMax(this.weatherData, 'tempf');
         const windChill = this.helperService.getWindChill(
             this.weatherData[this.MOST_RECENT_DATA_INDEX].tempf,
@@ -60,27 +63,35 @@ export default class IWeatherAnalysisService {
         );
         const hourlyRain = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin ?? 0;
 
-        if ((maxGust >= 46 && maxGust <= 57) || (maxWind >= 31 && maxWind >= 39)) {
-            alertMessage = this.config.WIND_ADVISORY;
-        } else if ((maxGust >= 58 || maxWind >= 40) && hourlyRain < 1) {
-            alertMessage = this.config.HIGH_WIND_WARNING;
-        } else if (maxTemp < 105 && maxTemp >= 100) {
-            alertMessage = this.config.HEAT_ADVISORY;
-        } else if (maxTemp >= 105) {
-            alertMessage = this.config.EXCESSIVE_HEAT_WARNING;
-        } else if (maxTemp <= 50 && maxWind >= 5 && windChill <= -25) {
-            alertMessage = this.config.WIND_CHILL_WARNING;
-        } else if (maxTemp <= 50 && maxWind >= 5 && windChill <= -15 && windChill > -25) {
-            alertMessage = this.config.WIND_CHILL_ADVISORY;
-        } else if (hourlyRain >= 1 && maxGust >= 58) {
-            alertMessage = this.config.SEVERE_THUNDERSTORM_WARNING;
-        } else if (hourlyRain >= 3) {
-            alertMessage = this.config.FLASH_FLOOD_WARNING;
-        } else {
-            alertMessage = this.config.NO_ALERTS;
+        if (
+            (adjustedGustSpeed >= 46 && adjustedGustSpeed <= 57) ||
+            (adjustedWindSpeed >= 31 && adjustedWindSpeed >= 39)
+        ) {
+            alertMessages.push(this.config.WIND_ADVISORY.toUpperCase());
+        }
+        if ((adjustedGustSpeed >= 58 || adjustedWindSpeed >= 40) && hourlyRain < 1) {
+            alertMessages.push(this.config.HIGH_WIND_WARNING.toUpperCase());
+        }
+        if (maxTemp < 105 && maxTemp >= 100) {
+            alertMessages.push(this.config.HEAT_ADVISORY.toUpperCase());
+        }
+        if (maxTemp >= 105) {
+            alertMessages.push(this.config.EXCESSIVE_HEAT_WARNING.toUpperCase());
+        }
+        if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -25) {
+            alertMessages.push(this.config.WIND_CHILL_WARNING.toUpperCase());
+        }
+        if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -15 && windChill > -25) {
+            alertMessages.push(this.config.WIND_CHILL_ADVISORY.toUpperCase());
+        }
+        if (hourlyRain >= 1 && adjustedGustSpeed >= 58) {
+            alertMessages.push(this.config.SEVERE_THUNDERSTORM_WARNING.toUpperCase());
+        }
+        if (hourlyRain >= 3) {
+            alertMessages.push(this.config.FLASH_FLOOD_WARNING.toUpperCase());
         }
 
-        return alertMessage.toUpperCase();
+        return alertMessages;
     }
 
     /**
