@@ -45,10 +45,12 @@ export interface IWeatherConfig {
     WEATHER_FOG: string;
     WEATHER_BREEZE: string;
 
-    // This value adjusts for the ground-level dampening
-    // affect that reduces apparent wind speeds, making
-    // the system more able to issue accurate alerts.
-    WIND_DAMPENING_AFFECT_SCALE_FACTOR: number;
+    // This value adjusts for the ground-level dampening effect
+    // that reduces apparent wind speeds, making the system more
+    // able to issue accurate alerts.
+    //
+    // Ideally, this number should be somewhere between 1.75 - 2.25
+    WIND_DAMPENING_EFFECT_SCALE_FACTOR: number;
 }
 
 export function loadWeatherConfig(): IWeatherConfig {

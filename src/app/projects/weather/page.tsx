@@ -142,15 +142,19 @@ export default function WeatherPage() {
             <div className="p-2 text-center text-2xl font-bold">{config.RIGHT_NOW_SECTION}</div>
             <SmallPaddingBar></SmallPaddingBar>
             <br></br>
-            {analysisService?.getActiveAlerts() ? (
+            {analysisService ? (
                 <div className="flex flex-row flex-wrap place-content-around">
-                    <InfoListCard
-                        cardTitle={'These are the active alerts for this region.'}
-                        stretch={true}
-                        center={true}
-                        data={analysisService?.getActiveAlerts()}
-                        scaleDataText={true}
-                    ></InfoListCard>
+                    {analysisService.getActiveAlerts().length > 0 ? (
+                        <InfoListCard
+                            cardTitle={'These are the active weather alerts:'}
+                            stretch={true}
+                            center={true}
+                            data={analysisService?.getActiveAlerts()}
+                            scaleDataText={true}
+                        ></InfoListCard>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             ) : (
                 <></>
