@@ -12,12 +12,10 @@ export default class IWeatherPredictionService {
     private config: IWeatherConfig = loadWeatherConfig();
     private analysisService: IWeatherAnalysisService;
 
-    private hasDataBeenSubmittedToday: boolean;
-
     private MOST_RECENT_DATA_INDEX: number = 0;
     private PRESSURE_GRADIENT: number = 2.5; // Based on observations from weather station data.
     private MINIMUM_WIND_VALUE: number = 10;
-    private DAY_FACTOR_CONSTANT: number = 288;
+    private FREEZING_POINT_F: number = 32;
 
     constructor(
         todaysWeatherData: IWeatherData[],
@@ -28,7 +26,6 @@ export default class IWeatherPredictionService {
         this.historicalWeatherData = historicalWeatherData;
         this.historyDataLength = historicalWeatherData.length - 1;
         this.analysisService = new IWeatherAnalysisService([], sunData);
-        this.hasDataBeenSubmittedToday = this.hasWeatherDataBeenSubmittedToday();
 
         // This is needed to ensure that pressure is correctly converted from inHg to millibar.
         this.currentWeatherData = {
@@ -99,13 +96,13 @@ export default class IWeatherPredictionService {
         // Extreme changes in pressure tend to indicate unstable weather, potentially storms.
         if (Math.abs(pressureTrend) > this.PRESSURE_GRADIENT) {
             if (Math.abs(pressureTrend) >= 2 * this.PRESSURE_GRADIENT) {
-                if (predictedTemperature > 32) {
+                if (predictedTemperature > this.FREEZING_POINT_F) {
                     predictedCondition = this.config.WEATHER_STORM;
                 } else {
                     predictedCondition = this.config.WEATHER_SNOW;
                 }
             } else {
-                if (predictedTemperature > 32) {
+                if (predictedTemperature > this.FREEZING_POINT_F) {
                     predictedCondition = this.config.WEATHER_RAIN;
                 } else {
                     predictedCondition = this.config.WEATHER_SNOW;
@@ -129,11 +126,10 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for tomorrow
      */
     public getTomorrowForecast(): IWeatherForecast {
-        // Last two days' data.
+        // Last two days' data, today's data, and current conditions.
         return this.getWeatherForecast([
-            this.hasDataBeenSubmittedToday
-                ? this.historicalWeatherData[this.historyDataLength]
-                : this.currentWeatherData,
+            this.currentWeatherData,
+            this.historicalWeatherData[this.historyDataLength],
             ...this.historicalWeatherData.slice(-3, -1)
         ]);
     }
@@ -144,11 +140,10 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for two days from now
      */
     public getTwoDayForecast(): IWeatherForecast {
-        // Last week's data.
+        // Last week up to two days agos' data, today's data, and current conditions.
         return this.getWeatherForecast([
-            this.hasDataBeenSubmittedToday
-                ? this.historicalWeatherData[this.historyDataLength]
-                : this.currentWeatherData,
+            this.currentWeatherData,
+            this.historicalWeatherData[this.historyDataLength],
             ...this.historicalWeatherData.slice(-8, -3)
         ]);
     }
@@ -159,34 +154,11 @@ export default class IWeatherPredictionService {
      * @returns the forecasted condition and temperature for three days from now
      */
     public getThreeDayForecast(): IWeatherForecast {
-        // Last two week's data.
+        // Last two weeks up to last weeks' data, today's data, and current conditions.
         return this.getWeatherForecast([
-            this.hasDataBeenSubmittedToday
-                ? this.historicalWeatherData[this.historyDataLength]
-                : this.currentWeatherData,
+            this.currentWeatherData,
+            this.historicalWeatherData[this.historyDataLength],
             ...this.historicalWeatherData.slice(-15, -8)
         ]);
-    }
-
-    /**
-     * A helper function to determine if today's data has been submitted, and thus
-     * which data to include or exclude.
-     */
-    private hasWeatherDataBeenSubmittedToday(): boolean {
-        const historicalDate = new Date(
-            this.historicalWeatherData[this.historyDataLength].date
-        ).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        });
-
-        const today = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        });
-
-        return today == historicalDate;
     }
 }

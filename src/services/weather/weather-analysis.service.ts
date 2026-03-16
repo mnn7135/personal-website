@@ -10,6 +10,7 @@ export default class IWeatherAnalysisService {
     private weatherData: IWeatherData[];
 
     private MOST_RECENT_DATA_INDEX: number = 0;
+    private HOUR_AGO_DATA_INDEX: number = 13;
     private BREEZY_MIN_SPEED: number = 15;
     private BREEZY_MAX_SPEED: number = 20;
     private PRESSURE_GRADIENT: number = 2.5; // Based on observations from weather station data.
@@ -17,6 +18,7 @@ export default class IWeatherAnalysisService {
     private MAXIMUM_HUMIDITY: number = 100;
     private CLOUDY_SOLAR_RAD: number = 200;
     private SUNNY_SOLAR_RAD: number = 450;
+    private FREEZING_POINT_F: number = 32;
 
     /**
      * The constructor for the WeatherAnalysis service.
@@ -50,38 +52,40 @@ export default class IWeatherAnalysisService {
      */
     public getActiveAlerts(): string[] {
         let alertMessages: string[] = [];
-
-        const maxGust = this.getDataMax(this.weatherData, 'windgustmph');
-        const maxWind = this.getDataMax(this.weatherData, 'windspdmph_avg10m');
-        const adjustedGustSpeed = maxGust * this.config.WIND_DAMPENING_AFFECT_SCALE_FACTOR;
-        const adjustedWindSpeed = maxWind * this.config.WIND_DAMPENING_AFFECT_SCALE_FACTOR;
-
-        const maxTemp = this.getDataMax(this.weatherData, 'tempf');
-        const windChill = this.helperService.getWindChill(
-            this.weatherData[this.MOST_RECENT_DATA_INDEX].tempf,
-            this.weatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m ?? 0
+        const lastHourWeatherData: IWeatherData[] = this.weatherData.slice(
+            this.MOST_RECENT_DATA_INDEX,
+            this.HOUR_AGO_DATA_INDEX
         );
-        const hourlyRain = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin ?? 0;
+        const maxGust = this.getDataMax(lastHourWeatherData, 'windgustmph');
+        const maxWind = this.getDataMax(lastHourWeatherData, 'windspdmph_avg10m');
 
+        const adjustedGustSpeed = maxGust * this.config.WIND_DAMPENING_EFFECT_SCALE_FACTOR;
+        const adjustedWindSpeed = maxWind * this.config.WIND_DAMPENING_EFFECT_SCALE_FACTOR;
+
+        const maxTemp = this.getDataMax(lastHourWeatherData, 'tempf');
+        const windChill = this.helperService.getWindChill(maxTemp, adjustedWindSpeed);
+        const hourlyRain = this.getDataMax(lastHourWeatherData, 'hourlyrainin');
+
+        // Weather alerts here are determined using values provided by the National Weather
+        // Service (NWS).
         if (
             (adjustedGustSpeed >= 46 && adjustedGustSpeed <= 57) ||
             (adjustedWindSpeed >= 31 && adjustedWindSpeed >= 39)
         ) {
             alertMessages.push(this.config.WIND_ADVISORY.toUpperCase());
-        }
-        if ((adjustedGustSpeed >= 58 || adjustedWindSpeed >= 40) && hourlyRain < 1) {
+        } else if ((adjustedGustSpeed >= 58 || adjustedWindSpeed >= 40) && hourlyRain < 1) {
             alertMessages.push(this.config.HIGH_WIND_WARNING.toUpperCase());
         }
+
         if (maxTemp < 105 && maxTemp >= 100) {
             alertMessages.push(this.config.HEAT_ADVISORY.toUpperCase());
-        }
-        if (maxTemp >= 105) {
+        } else if (maxTemp >= 105) {
             alertMessages.push(this.config.EXCESSIVE_HEAT_WARNING.toUpperCase());
         }
+
         if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -25) {
             alertMessages.push(this.config.WIND_CHILL_WARNING.toUpperCase());
-        }
-        if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -15 && windChill > -25) {
+        } else if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -15 && windChill > -25) {
             alertMessages.push(this.config.WIND_CHILL_ADVISORY.toUpperCase());
         }
         if (hourlyRain >= 1 && adjustedGustSpeed >= 58) {
@@ -186,31 +190,37 @@ export default class IWeatherAnalysisService {
         let weatherCondition = '';
         const isDaytime = this.helperService.isDaytime(this.helperService.getCurrentTime());
 
-        const maxWindSpeed = this.weatherData[0].windspdmph_avg10m ?? 0;
+        const averageWindSpeed =
+            this.weatherData[this.MOST_RECENT_DATA_INDEX].windspdmph_avg10m ?? 0;
+        const adjustedWindSpeed = averageWindSpeed * this.config.WIND_DAMPENING_EFFECT_SCALE_FACTOR;
+        const hourlyRainfall = this.weatherData[this.MOST_RECENT_DATA_INDEX].hourlyrainin ?? 0;
+        const humidity = this.weatherData[this.MOST_RECENT_DATA_INDEX].humidity;
+        const temperature = this.weatherData[this.MOST_RECENT_DATA_INDEX].tempf;
+        const dewPoint = this.weatherData[this.MOST_RECENT_DATA_INDEX].dewPoint;
+        const solarRadiation = this.weatherData[this.MOST_RECENT_DATA_INDEX].solarradiation;
+
         const pressureTrend = this.getDataTrend(this.weatherData, 'baromabsin');
-        const hourlyRainfall = this.weatherData[0].hourlyrainin ?? 0;
-        const humidity = this.weatherData[0].humidity;
-        const temperature = this.weatherData[0].tempf;
-        const dewPoint = this.weatherData[0].dewPoint;
-        const solarRadiation = this.weatherData[0].solarradiation;
         const maxSolarRadiationToday = this.getDataMax(this.weatherData, 'solarradiation');
 
         if (hourlyRainfall > 0) {
-            if (temperature > 32) {
+            if (temperature > this.FREEZING_POINT_F) {
                 weatherCondition = this.config.WEATHER_RAIN;
             } else {
                 weatherCondition = this.config.WEATHER_SNOW;
             }
             if (Math.abs(pressureTrend) > this.PRESSURE_GRADIENT) {
-                if (temperature > 32) {
+                if (temperature > this.FREEZING_POINT_F) {
                     weatherCondition = this.config.WEATHER_STORM;
                 } else {
                     weatherCondition = this.config.WEATHER_SNOW;
                 }
             }
-        } else if (maxWindSpeed >= this.BREEZY_MIN_SPEED && maxWindSpeed < this.BREEZY_MAX_SPEED) {
+        } else if (
+            adjustedWindSpeed >= this.BREEZY_MIN_SPEED &&
+            adjustedWindSpeed < this.BREEZY_MAX_SPEED
+        ) {
             weatherCondition = this.config.WEATHER_BREEZE;
-        } else if (maxWindSpeed >= this.BREEZY_MAX_SPEED) {
+        } else if (adjustedWindSpeed >= this.BREEZY_MAX_SPEED) {
             weatherCondition = this.config.WEATHER_WIND;
         } else if (
             humidity >= this.MAXIMUM_HUMIDITY &&
