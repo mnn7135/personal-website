@@ -1,65 +1,11 @@
 import appConfig from './json/app-config.json';
 
 export interface IAppConfig {
-    /** Home/About Me Page */
-    ABOUT_TITLE: string;
-
-    OBJECTIVE_SECTION: string;
-    OBJECTIVE_DESCRIPTION: string;
-
-    ABOUT_SECTION: string;
-    ABOUT_DESCRIPTION: string;
-
-    NAME: string;
-    MINOR_DEGREE: string;
-    RELEVANT_COURSEWORK: string;
-    DEGREE: string;
-
-    SMALL_BLURB_SECTION: string;
-    SMALL_BLURB_DESCRIPTION: string;
-
-    SKILLS_SECTION: string;
-    PROGRAMMING_SKILLS_SECTION: string;
-    OTHER_TECH_SKILLS_SECTION: string;
-    OTHER_SKILLS_SECTION: string;
-    PROGRAMMING_SKILLS_LIST: string[];
-    OTHER_TECH_SKILLS_LIST: string[];
-    OTHER_SKILLS_LIST: string[];
-
+    /** Developer Photo */
     PERSONAL_IMG_SRC: string;
     PERSONAL_IMG_ALT: string;
 
-    /** Projects/Software Page */
-    PROJECT_SECTION: string;
-
-    PROJECT_1_TITLE: string;
-    PROJECT_1_SKILLS: string;
-    PROJECT_1_TIMEFRAME: string;
-    PROJECT_1_DESCRIPTION: string[];
-
-    PROJECT_2_TITLE: string;
-    PROJECT_2_SKILLS: string;
-    PROJECT_2_TIMEFRAME: string;
-    PROJECT_2_DESCRIPTION: string[];
-
-    PROJECT_3_TITLE: string;
-    PROJECT_3_SKILLS: string;
-    PROJECT_3_TIMEFRAME: string;
-    PROJECT_3_DESCRIPTION: string[];
-
-    /** Projects/Astronomy Page */
-    ASTRONOMY_TITLE: string;
-    ASTRONOMY_HEADER: string;
-    ASTRONOMY_DESCRIPTION: string;
-
-    ASTRONOMY_IMG_1_ALT: string;
-    ASTRONOMY_IMG_2_ALT: string;
-    ASTRONOMY_IMG_3_ALT: string;
-    ASTRONOMY_IMG_1_SRC: string;
-    ASTRONOMY_IMG_2_SRC: string;
-    ASTRONOMY_IMG_3_SRC: string;
-
-    /** Projetcs/Weather Page */
+    /** Weather Page */
     WEATHER_TITLE: string;
     RIGHT_NOW_SECTION: string;
     LATER_SECTION: string;
@@ -85,53 +31,51 @@ export interface IAppConfig {
     LAST_PULL_FROM: string;
     LAST_MAINTENANCE: string;
     WEATHER_STATION_DISCLAIMER: string;
-    WEATHER_GRAPHS_SECTION: string;
+
+    /** Tools Page */
+    TOOLS_TITLE: string;
+    TOOLS_SUBMIT_BUTTON_TEXT: string;
+    TOOLS_ALERT_TEXT: string;
 
     /** Home Page */
-    QUCIK_LINKS_SECTION: string;
+    HOME_TITLE: string;
+    HOME_TITLE_TOP: string;
+    HOME_TITLE_MID: string;
+    HOME_TITLE_BTM: string;
+    HOME_TEXT_ONE: string;
+    HOME_TEXT_TWO: string;
 
-    STACK_OVERFLOW_LINK: string;
-    STACK_OVERFLOW_ALT: string;
-    STACK_OVERFLOW_IMG_SRC: string;
+    /** About Page */
+    ABOUT_TITLE: string;
+    ABOUT_TEXT_ONE: string;
+    ABOUT_TEXT_TWO: string;
 
-    GIT_LINK: string;
-    GIT_ALT: string;
-    GIT_IMG_SRC: string;
+    /** About Page */
+    CONTACT_TITLE: string;
+    CONTACT_TEXT: string;
+    CONTACT_TITLE_SUBMIT_STATION: string;
+    CONTACT_TEXT_SUBMIT_STATION: string;
+    CONTACT_SUBMIT_BUTTON_TEXT: string;
 
-    RIT_LINK: string;
-    RIT_ALT: string;
-    RIT_IMG_SRC: string;
+    /** Radar Page */
+    RADAR_TITLE: string;
 
-    LINKEDIN_LINK: string;
-    LINKEDIN_ALT: string;
-    LINKEDIN_IMG_SRC: string;
+    /** Graphs Page */
+    WEATHER_GRAPHS_TITLE: string;
+    WEATHER_GRAPHS_LOCATION_TEXT: string;
+    WEATHER_GRAPHS_LOCATION: string;
 
-    AMBIENT_WEATHER_LINK: string;
-    AMBIENT_WEATHER_ALT: string;
-    AMBIENT_WEATHER_IMG_SRC: string;
+    /** Placeholder Text */
+    LOREM_IPSUM: string;
 
-    NEXT_JS_LINK: string;
-    NEXT_JS_ALT: string;
-    NEXT_JS_IMG_SRC: string;
-
-    BING_LINK: string;
-    BING_ALT: string;
-    BING_IMG_SRC: string;
-
-    GOOGLE_LINK: string;
-    GOOGLE_ALT: string;
-    GOOGLE_IMG_SRC: string;
-
-    FIRST_LINK: string;
-    FIRST_ALT: string;
-    FIRST_IMG_SRC: string;
-
+    /** Routes */
     HOME_PAGE_ROUTE: string;
     ABOUT_PAGE_ROUTE: string;
     WEATHER_PAGE_ROUTE: string;
     ASTRONOMY_PAGE_ROUTE: string;
     SOFTWARE_PAGE_ROUTE: string;
 
+    /** Footer */
     GITHUB_PROJ_LINK: string;
     ATTRIBUTION: string;
 }

@@ -1,4 +1,4 @@
-import Page from '@/app/home/about/page';
+import Page from '@/app/about/page';
 import '@testing-library/jest-dom';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';
@@ -10,7 +10,7 @@ describe('simple rendering test', () => {
             render(<Page />);
         });
 
-        const actual = screen.getByText('About Me');
+        const actual = screen.getByText('About WeatherWolf');
 
         expect(actual).toBeInTheDocument();
     });

@@ -67,7 +67,7 @@ export default class IWeatherAnalysisService {
         const hourlyRain = this.getDataMax(lastHourWeatherData, 'hourlyrainin');
 
         // Weather alerts here are determined using values provided by the National Weather
-        // Service (NWS).
+        // Service (NWS), where possible.
         if (
             (adjustedGustSpeed >= 46 && adjustedGustSpeed <= 57) ||
             (adjustedWindSpeed >= 31 && adjustedWindSpeed >= 39)
@@ -88,11 +88,17 @@ export default class IWeatherAnalysisService {
         } else if (maxTemp <= 50 && adjustedWindSpeed >= 5 && windChill <= -15 && windChill > -25) {
             alertMessages.push(this.config.WIND_CHILL_ADVISORY.toUpperCase());
         }
-        if (hourlyRain >= 1 && adjustedGustSpeed >= 58) {
+
+        // This PWS cannot measure hail size. Instead, use rainfall rate to issue this alert.
+        if (hourlyRain >= 0.25 || adjustedGustSpeed >= 58) {
             alertMessages.push(this.config.SEVERE_THUNDERSTORM_WARNING.toUpperCase());
         }
-        if (hourlyRain >= 3) {
+        if (hourlyRain >= 0.25) {
             alertMessages.push(this.config.FLASH_FLOOD_WARNING.toUpperCase());
+        }
+
+        if (alertMessages.length == 0) {
+            alertMessages.push(this.config.NO_ALERTS);
         }
 
         return alertMessages;

@@ -2,6 +2,8 @@
     "BASE_STATION_URL": "https://api.ambientweather.net/v1/devices/DEVICE_KEY?apiKey=API_KEY&applicationKey=APP_KEY",
     "BASE_SUN_URL": "https://api.sunrise-sunset.org/json?lat=LATITUDE&lng=LONGITUDE&date=today&formatted=0",
 
+    "LIVE_RADAR_URL": "https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJ3ZWF0aGVyIiwiY2VudGVyIjpbLTc2LjkzMyw0Mi43MzldLCJsb2NhdGlvbiI6Wy03NS4xNDcsMzkuOTVdLCJ6b29tIjo3LjkzOTU3MzAzODM3MzYxNiwibGF5ZXIiOiJicmVmX3FjZCJ9LCJhbmltYXRpbmciOnRydWUsImJhc2UiOiJzdGFuZGFyZCIsImFydGNjIjpmYWxzZSwiY291bnR5IjpmYWxzZSwiY3dhIjpmYWxzZSwicmZjIjpmYWxzZSwic3RhdGUiOmZhbHNlLCJtZW51IjpmYWxzZSwic2hvcnRGdXNlZE9ubHkiOmZhbHNlLCJvcGFjaXR5Ijp7ImFsZXJ0cyI6MC44LCJsb2NhbCI6MC42LCJsb2NhbFN0YXRpb25zIjowLjgsIm5hdGlvbmFsIjowLjZ9fQ%3D%3D",
+
     "WEATHER_SUNNY": "Sunny",
     "WEATHER_CLOUDS": "Cloudy",
     "WEATHER_PARTLY_CLOUDS": "Partly Cloudy",
@@ -33,7 +35,7 @@
     "SEVERE_THUNDERSTORM_WARNING": "Severe Thunderstorm Warning",
     "FLASH_FLOOD_WARNING": "Flash Flood Warning",
     "BLIZZARD_WARNING": "Blizzard Warning",
-    "NO_ALERTS": "",
+    "NO_ALERTS": "No active alerts for our region.",
 
     "INCHES_MERCURY_TO_MBAR_CONVERSION": 33.8639,
 

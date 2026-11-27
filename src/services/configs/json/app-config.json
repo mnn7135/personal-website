@@ -1,100 +1,9 @@
 {
-    "ABOUT_TITLE": "About Me",
-
-    "ABOUT_SECTION": "My Experience",
-    "ABOUT_DESCRIPTION": "I am an experienced Software Engineer with excellent programming skills in Java, TypeScript, and JavaScript/HTML. I also have experience with SQL, React, Cloud-based solutions, working on database design, and working with and leading agile-driven teams. I have previous work experience at Georgia Tech Research Institute as a Full-Stack Engineer, migrating a feature from one technology, AngularJS, to React, and documenting the process and rationale to satisfy product sponsors. I am detail-oriented, but I have no problems keeping the ball rolling.",
-
-    "SMALL_BLURB_SECTION": "FIRST Robotics",
-    "SMALL_BLURB_DESCRIPTION": "In High School, I was a robotics team member for three years. FIRST Robotics is a high school-level competition where teams design a robot each year to compete in an alliance-based game. Robotics is where I started developing my skills in Java, the programming language I have the most experience with. For the software sub-team, we spent most of our time working with the robot (in its earliest iteration when available). In this case, our system was a rough agile system –we used Trello and Slack, and through both iterations of robots and code, a final iteration would emerge. In my senior year, I was the leader of the software sub-team, and I worked on the drive train and controls of the robot. The API libraries provided by FIRST were not suited to the system we were using, so I had to create a different solution. The drive train worked great, and using its base, we developed an autonomous period routine (where no human driver is allowed) that allowed the driver to ignore the sandstorm period and gave full power to the robot to place a hatch on its own. Robotics allowed me to develop my programming abilities with the ability to test code and, in some cases, be able to make changes on the fly.",
-
-    "SKILLS_SECTION": "Skills",
-    "PROGRAMMING_SKILLS_SECTION": "Programming Skills",
-    "OTHER_TECH_SKILLS_SECTION": "Other Technology Skills",
-    "OTHER_SKILLS_SECTION": "Other Skills",
-    "PROGRAMMING_SKILLS_LIST": [
-        "Java",
-        "TypeScript",
-        "React Native",
-        "Next.js",
-        "JavaScript",
-        "HTML",
-        "R",
-        "Python",
-        "C",
-        "C#"
-    ],
-    "OTHER_TECH_SKILLS_LIST": [
-        "Amazon Web Services",
-        "Google Cloud",
-        "PostgreSQL",
-        "Supabase",
-        "MongoDB",
-        "Jest Framework",
-        "Windows",
-        "Linux",
-        "Macintosh",
-        "iOS Development"
-    ],
-    "OTHER_SKILLS_LIST": [
-        "Scrum/Agile Development",
-        "Software Architecture Design",
-        "CAD Design",
-        "Virtual Machines"
-    ],
-
-    "PROJECT_SECTION": "Software Projects",
-
-    "PROJECT_1_TITLE": "FiTR - Senior Capstone Project",
-    "PROJECT_1_SKILLS": "Scrum",
-    "PROJECT_1_TIMEFRAME": "Jan 2025 - Aug 2025",
-    "PROJECT_1_DESCRIPTION": [
-        "• Collaborated with a team of 8 seniors to design and implement a full-stack web application.",
-        "• Researched and justified design decision to use Supabase and Next.js to satisfy sponsor project.",
-        "• Collected metrics as team scrum master to ensure adherence to project and sprint milestones.",
-        "• Designed and implemented the login and authentication system using OAuth to satisfy sponsor priorities."
-    ],
-
-    "PROJECT_2_TITLE": "Personal Website",
-    "PROJECT_2_SKILLS": "TypeScript, NextJS, Jest",
-    "PROJECT_2_TIMEFRAME": "Aug 2025 - [Ongoing]",
-    "PROJECT_2_DESCRIPTION": [
-        "• Designed and implemented a personal website using Next.js and a physical weather station.",
-        "• Populated information from the weather station with an API library to get sensor data.",
-        "• Implemented automated testing and deployment to streamline new feature rollouts.",
-        "• Designed and implemented, based on location and weather station data, a weather forecasting system."
-    ],
-
-    "PROJECT_3_TITLE": "Javelin - GTRI",
-    "PROJECT_3_SKILLS": "Java, TypeScript, React Native, SQL, Scrum",
-    "PROJECT_3_TIMEFRAME": "Aug 2023 - Dec 2024",
-    "PROJECT_3_DESCRIPTION": [
-        "• Collaborated with an agile team of 15+ developers to complete feature-driven sprints to satisfy sponsor desires and product needs. ",
-        "• Utilized Java, JavaScript, TypeScript, React, and Oracle DB technologies to continue to support the existing tech stack of over 10+ years of contributions. ",
-        "• Spearheaded the design and migration of an existing feature from Angular to a newer standard, React, to improve security and future reliability.",
-        "• Mentored and peer programmed with other developers and student developers to assist in project development."
-    ],
-
-    "ASTRONOMY_TITLE": "Astronomy",
-    "ASTRONOMY_HEADER": "Overview",
-    "ASTRONOMY_DESCRIPTION": "I've always been into astronomy. Here are some various astronomical photos I've taken with my telescope (See below!).",
-    "ASTRONOMY_IMG_1_ALT": "The Moon through a telescope",
-    "ASTRONOMY_IMG_2_ALT": "The Stars through a telescope",
-    "ASTRONOMY_IMG_3_ALT": "The Stars through a telescope",
-
-    "ASTRONOMY_IMG_1_SRC": "https://i.imgur.com/tnktA18.jpeg",
-    "ASTRONOMY_IMG_2_SRC": "https://i.imgur.com/w7QWEco.jpeg",
-    "ASTRONOMY_IMG_3_SRC": "https://i.imgur.com/rIsWKiL.jpeg",
-
     "PERSONAL_IMG_ALT": "A picture of me.",
     "PERSONAL_IMG_SRC": "https://i.imgur.com/pAlK6w0.jpeg",
 
-    "WEATHER_TITLE": "Weather | Phoenix Station",
-    "RIGHT_NOW_SECTION": "Right Now",
-    "LATER_SECTION": "Later Today",
-    "FORECAST_SECTION": "3-Day Forecast",
-    "TOMORROW_CARD": "Tomorrow",
-    "TWO_DAY_CARD": "2-Day",
-    "THREE_DAY_CARD": "3-Day",
+    "WEATHER_TITLE": "Current Conditions",
+    "FORECAST_SECTION": "5-Day Forecast",
     "FEELS_LIKE_LABEL": "Feels Like",
     "HIGH_LABEL": "High",
     "LOW_LABEL": "Low",
@@ -118,50 +27,38 @@
     ],
     "SUNRISE_SUNSET_DISCLAIMER": "* Sunrise and sunset data provided by https://sunrise-sunset.org/api.",
     "MBAR_DISCLAIMER": "* One standard atmosphere of pressure equals 1013.25 millibars at sea level.",
-    "WEATHER_GRAPHS_SECTION": "Weather Graphs",
-    "LIVE_DATA_SECTION": "Live Data (from the last 24 hours)",
-    "HISTORICAL_DATA_SECTION": "Historical Data (since 10/25/2025)",
     "LAST_PULL_FROM": "Last pull from",
     "LAST_MAINTENANCE": "Last maintenanced on 5/25/2025, 1:45:00 PM",
     "WEATHER_STATION_DISCLAIMER": "Phoenix Station is my personal AmbientWeather WS-2000 Smart Station.",
 
-    "QUCIK_LINKS_SECTION": "Quick Links",
+    "TOOLS_TITLE": "Weather Tools",
+    "TOOLS_SUBMIT_BUTTON_TEXT": "Submit Today's Data",
+    "TOOLS_ALERT_TEXT": "Data already submitted for today.",
 
-    "STACK_OVERFLOW_LINK": "https://stackoverflow.com",
-    "STACK_OVERFLOW_ALT": "Stack Overflow",
-    "STACK_OVERFLOW_IMG_SRC": "https://i.imgur.com/JsPbCK9.jpeg",
+    "HOME_TITLE": "Our Mission",
+    "HOME_TITLE_TOP": "Be",
+    "HOME_TITLE_MID": "Weather aWERE,",
+    "HOME_TITLE_BTM": "Finger Lakes!",
+    "HOME_TEXT_ONE": "placeholder home text 1",
+    "HOME_TEXT_TWO": "placeholder home text 2",
 
-    "GIT_LINK": "https://github.com",
-    "GIT_ALT": "GitHub",
-    "GIT_IMG_SRC": "https://i.imgur.com/k9sb5Zm.jpeg",
+    "ABOUT_TITLE": "About WeatherWolf",
+    "ABOUT_TEXT_ONE": "about placeholder 1",
+    "ABOUT_TEXT_TWO": "about placeholder 2",
 
-    "RIT_LINK": "https://www.rit.edu",
-    "RIT_ALT": "Rochester Institute of Technology",
-    "RIT_IMG_SRC": "https://i.imgur.com/LAVFCH2.jpeg",
+    "CONTACT_TITLE": "Contact",
+    "CONTACT_TEXT": "placeholder text contact 1",
+    "CONTACT_TITLE_SUBMIT_STATION": "Submit a Weather Station",
+    "CONTACT_TEXT_SUBMIT_STATION": "placeholder text contact 2",
+    "CONTACT_SUBMIT_BUTTON_TEXT": "Submit",
 
-    "LINKEDIN_LINK": "https://www.linkedin.com/in/michael-nersinger/",
-    "LINKEDIN_ALT": "Linkedin: Michael Nersinger",
-    "LINKEDIN_IMG_SRC": "https://i.imgur.com/w7WLdRQ.jpeg",
+    "RADAR_TITLE": "Live Radar",
 
-    "AMBIENT_WEATHER_LINK": "https://ambientweather.net/",
-    "AMBIENT_WEATHER_ALT": "Ambient Weather Network",
-    "AMBIENT_WEATHER_IMG_SRC": "https://i.imgur.com/lyXHMl3.jpeg",
+    "WEATHER_GRAPHS_TITLE": "Weather Graphs",
+    "WEATHER_GRAPHS_LOCATION_TEXT": "Current Location",
+    "WEATHER_GRAPHS_LOCATION": "Victor, NY (Phoenix Station)",
 
-    "NEXT_JS_LINK": "https://nextjs.org/",
-    "NEXT_JS_ALT": "NextJS Framework",
-    "NEXT_JS_IMG_SRC": "https://i.imgur.com/8OA1Ake.png",
-
-    "BING_LINK": "https://www.bing.com",
-    "BING_ALT": "Bing",
-    "BING_IMG_SRC": "https://i.imgur.com/kWXsne9.jpeg",
-
-    "GOOGLE_LINK": "https://www.google.com/",
-    "GOOGLE_ALT": "Google",
-    "GOOGLE_IMG_SRC": "https://i.imgur.com/wgU0a3S.jpeg",
-
-    "FIRST_LINK": "https://www.firstinspires.org",
-    "FIRST_ALT": "FIRST Robotics",
-    "FIRST_IMG_SRC": "https://i.imgur.com/vgI2UbK.jpeg",
+    "LOREM_IPSUM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 
     "HOME_PAGE_ROUTE": "home",
     "ABOUT_PAGE_ROUTE": "home/about",

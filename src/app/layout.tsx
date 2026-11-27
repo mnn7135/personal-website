@@ -4,6 +4,7 @@ import './globals.css';
 import { WebsiteNavagationMenu } from '@/components/personal-website/website-nav';
 import { SmallPaddingBar } from '@/components/personal-website/padding-bar';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
+import WeatherDataProvider from '@/components/providers/weatherDataProvider';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Michael's Homepage",
-    description: "Michael's personal website programmed with NextJS."
+    title: 'WeatherWolf',
+    description: 'Providing weather coverage for the Finger Lakes Region. Be weather aWERE!'
 };
 
 const config: IAppConfig = loadAppConfig();
@@ -31,23 +32,25 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <div className="flex-wrap">
-                    <WebsiteNavagationMenu></WebsiteNavagationMenu>
-                    <div className="bg-accent h-4"></div>
-                    <SmallPaddingBar></SmallPaddingBar>
-                    <div className="p-2">{children}</div>
-                    <SmallPaddingBar></SmallPaddingBar>
-                    <div className="p-2">
-                        {config.ATTRIBUTION}
-                        &nbsp;
-                        <a
-                            style={{ color: 'blue' }}
-                            href={config.GITHUB_PROJ_LINK}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {config.GITHUB_PROJ_LINK}
-                        </a>
-                    </div>
+                    <WeatherDataProvider>
+                        <WebsiteNavagationMenu></WebsiteNavagationMenu>
+                        <div className="h-2 bg-gray-300"></div>
+                        <SmallPaddingBar></SmallPaddingBar>
+                        <div className="p-2">{children}</div>
+                        <SmallPaddingBar></SmallPaddingBar>
+                        <div className="p-2">
+                            {config.ATTRIBUTION}
+                            &nbsp;
+                            <a
+                                style={{ color: 'blue' }}
+                                href={config.GITHUB_PROJ_LINK}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {config.GITHUB_PROJ_LINK}
+                            </a>
+                        </div>
+                    </WeatherDataProvider>
                 </div>
             </body>
         </html>

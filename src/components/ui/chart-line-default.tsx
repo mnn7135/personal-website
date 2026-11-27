@@ -41,8 +41,8 @@ export function ChartLineDefault(props: ChartLineDefaultProps) {
                         <CartesianGrid vertical={false} />
                         <XAxis
                             dataKey={props.xAxisKey}
-                            tickLine={false}
-                            axisLine={false}
+                            tickLine={true}
+                            axisLine={true}
                             tickMargin={8}
                             reversed={props.xAxisReversed}
                             tickFormatter={(value) => {
@@ -52,21 +52,21 @@ export function ChartLineDefault(props: ChartLineDefaultProps) {
                         {props.displayYAxis ? (
                             <YAxis
                                 dataKey={props.yAxisKey}
-                                tickLine={false}
-                                axisLine={false}
+                                tickLine={true}
+                                axisLine={true}
                                 tickMargin={8}
                                 tickFormatter={(value) => value}
                             />
                         ) : (
                             ''
                         )}
-                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                        <ChartTooltip cursor={true} content={<ChartTooltipContent hideLabel />} />
                         <Line
                             dataKey={props.yAxisKey}
-                            type="natural"
+                            type="linear"
                             stroke={`var(--color-${props.yAxisKey}`}
-                            strokeWidth={2}
-                            dot={false}
+                            strokeWidth={3}
+                            dot={true}
                         />
                     </LineChart>
                 </ChartContainer>

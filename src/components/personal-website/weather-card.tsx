@@ -20,6 +20,7 @@ interface WeatherCardProps {
     weatherDescription?: string;
     temperature: string;
     feelsLike?: string;
+    smallerCard?: boolean;
 }
 
 export default function WeatherCard(props: WeatherCardProps): JSX.Element {

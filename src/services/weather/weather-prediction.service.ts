@@ -158,7 +158,35 @@ export default class IWeatherPredictionService {
         return this.getWeatherForecast([
             this.currentWeatherData,
             this.historicalWeatherData[this.historyDataLength],
-            ...this.historicalWeatherData.slice(-15, -8)
+            ...this.historicalWeatherData.slice(-15, -3)
+        ]);
+    }
+
+    /**
+     * A function that gets the forecast for three days from now.
+     *
+     * @returns the forecasted condition and temperature for three days from now
+     */
+    public getFourDayForecast(): IWeatherForecast {
+        // Last two weeks up to last weeks' data, today's data, and current conditions.
+        return this.getWeatherForecast([
+            this.currentWeatherData,
+            this.historicalWeatherData[this.historyDataLength],
+            ...this.historicalWeatherData.slice(-22, -3)
+        ]);
+    }
+
+    /**
+     * A function that gets the forecast for three days from now.
+     *
+     * @returns the forecasted condition and temperature for three days from now
+     */
+    public getFiveDayForecast(): IWeatherForecast {
+        // Last two weeks up to last weeks' data, today's data, and current conditions.
+        return this.getWeatherForecast([
+            this.currentWeatherData,
+            this.historicalWeatherData[this.historyDataLength],
+            ...this.historicalWeatherData.slice(-29, -3)
         ]);
     }
 }
