@@ -10,7 +10,7 @@ describe('simple rendering test', () => {
             render(<Page />);
         });
 
-        const actual = screen.getByText('Quick Links');
+        const actual = screen.getByText('Our Mission');
 
         expect(actual).toBeInTheDocument();
     });

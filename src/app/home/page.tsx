@@ -1,154 +1,35 @@
 'use client';
 
 import { PaddingBar } from '@/components/personal-website/padding-bar';
-import { Button } from '@/components/ui/button';
 import { IAppConfig, loadAppConfig } from '@/services/configs/app-config.service';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 const config: IAppConfig = loadAppConfig();
-const BUTTON_SCALE = '1/4';
 
 export default function HomePage() {
-    const [imageSize, setImageSize] = useState<number>(220);
-    const [lastWindowSize, setLastWindowSize] = useState<number>();
-
-    useEffect(() => {
-        if (window.innerWidth != lastWindowSize) {
-            setImageSize((window.innerWidth / 1920) * imageSize);
-        }
-
-        setLastWindowSize(window.innerWidth);
-    }, [lastWindowSize]);
-
     return (
         <div>
-            <div className="p-2 text-3xl font-bold">{config.QUCIK_LINKS_SECTION}</div>
+            <div className="-m-3 h-80 border-3 border-blue-500 bg-blue-400">
+                <div className="m-12 flex flex-col">
+                    <div className="text-6xl font-bold text-white">{config.HOME_TITLE_TOP}</div>
+                    <div className="text-6xl font-bold text-blue-800">{config.HOME_TITLE_MID}</div>
+                    <div className="text-6xl font-bold text-orange-600">
+                        {config.HOME_TITLE_BTM}
+                    </div>
+                </div>
+            </div>
+            <br></br>
+            <div className="p-2 text-3xl font-bold">{config.HOME_TITLE}</div>
             <PaddingBar></PaddingBar>
             <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <Button
-                    onClick={() => window.open(config.STACK_OVERFLOW_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    <Image
-                        src={config.STACK_OVERFLOW_IMG_SRC}
-                        alt={config.STACK_OVERFLOW_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.GIT_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.GIT_IMG_SRC}
-                        alt={config.GIT_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.RIT_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.RIT_IMG_SRC}
-                        alt={config.RIT_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-            </div>
-            <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <Button
-                    onClick={() => window.open(config.LINKEDIN_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.LINKEDIN_IMG_SRC}
-                        alt={config.LINKEDIN_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.BING_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.BING_IMG_SRC}
-                        alt={config.BING_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.GOOGLE_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.GOOGLE_IMG_SRC}
-                        alt={config.GOOGLE_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-            </div>
-            <br></br>
-            <div className="flex flex-row flex-wrap place-content-around">
-                <Button
-                    onClick={() => window.open(config.FIRST_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.FIRST_IMG_SRC}
-                        alt={config.FIRST_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.AMBIENT_WEATHER_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.AMBIENT_WEATHER_IMG_SRC}
-                        alt={config.AMBIENT_WEATHER_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
-                <Button
-                    onClick={() => window.open(config.NEXT_JS_LINK, '_blank')}
-                    className={`h-${BUTTON_SCALE} w-${BUTTON_SCALE}`}
-                    variant={'outline'}
-                >
-                    {' '}
-                    <Image
-                        src={config.NEXT_JS_IMG_SRC}
-                        alt={config.NEXT_JS_ALT}
-                        width={imageSize}
-                        height={imageSize}
-                    ></Image>
-                </Button>
+            <div className="flex flex-row">
+                <div>
+                    <div>{config.HOME_TEXT_ONE}</div>
+                    <br></br>
+                    <div>{config.HOME_TEXT_TWO}</div>
+                </div>
+                <div>
+                    <div className="h-40 w-90"></div>
+                </div>
             </div>
         </div>
     );

@@ -1,39 +1,14 @@
 import weatherConfig from './json/weather-config.json';
 
 export interface IWeatherConfig {
-    // Data Configuration
+    /** Data Config */
     BASE_STATION_URL: string;
     BASE_SUN_URL: string;
 
-    // Cardinal Directions
-    NORTH: string;
-    SOUTH: string;
-    EAST: string;
-    WEST: string;
+    /** Live Radar */
+    LIVE_RADAR_URL: string;
 
-    // UV Risk Factors
-    LOW_UV_RISK: string;
-    MODERATE_UV_RISK: string;
-    HIGH_UV_RISK: string;
-    VERY_HIGH_UV_RISK: string;
-    EXTREME_UV_RISK: string;
-
-    // Warnings and Advisories
-    WIND_ADVISORY: string;
-    HIGH_WIND_WARNING: string;
-    HEAT_ADVISORY: string;
-    EXCESSIVE_HEAT_WARNING: string;
-    WIND_CHILL_WARNING: string;
-    WIND_CHILL_ADVISORY: string;
-    SEVERE_THUNDERSTORM_WARNING: string;
-    FLASH_FLOOD_WARNING: string;
-    BLIZZARD_WARNING: string;
-    NO_ALERTS: string;
-
-    // Conversions
-    INCHES_MERCURY_TO_MBAR_CONVERSION: number;
-
-    // Weather Conditions
+    /** Weather Conditions */
     WEATHER_SUNNY: string;
     WEATHER_CLOUDS: string;
     WEATHER_PARTLY_CLOUDS: string;
@@ -45,11 +20,41 @@ export interface IWeatherConfig {
     WEATHER_FOG: string;
     WEATHER_BREEZE: string;
 
-    // This value adjusts for the ground-level dampening effect
-    // that reduces apparent wind speeds, making the system more
-    // able to issue accurate alerts.
-    //
-    // Ideally, this number should be somewhere between 1.75 - 2.25
+    /** Cardinal Direction Text */
+    NORTH: string;
+    SOUTH: string;
+    EAST: string;
+    WEST: string;
+
+    /** UV Risk Factors */
+    LOW_UV_RISK: string;
+    MODERATE_UV_RISK: string;
+    HIGH_UV_RISK: string;
+    VERY_HIGH_UV_RISK: string;
+    EXTREME_UV_RISK: string;
+
+    /** Warnings and Advisories */
+    WIND_ADVISORY: string;
+    HIGH_WIND_WARNING: string;
+    HEAT_ADVISORY: string;
+    EXCESSIVE_HEAT_WARNING: string;
+    WIND_CHILL_WARNING: string;
+    WIND_CHILL_ADVISORY: string;
+    SEVERE_THUNDERSTORM_WARNING: string;
+    FLASH_FLOOD_WARNING: string;
+    BLIZZARD_WARNING: string;
+    NO_ALERTS: string;
+
+    /** Unit Conversions */
+    INCHES_MERCURY_TO_MBAR_CONVERSION: number;
+
+    /**
+     * This value adjusts for the ground-level dampening effect
+     * that reduces apparent wind speeds, making the system more
+     * able to issue accurate alerts.
+     *
+     * Ideally, this number should be somewhere between 1.75 - 2.25
+     */
     WIND_DAMPENING_EFFECT_SCALE_FACTOR: number;
 }
 

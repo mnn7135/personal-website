@@ -10,13 +10,18 @@ import {
     SelectTrigger,
     SelectValue
 } from '../ui/select';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IWeatherHelperService from '@/services/weather/weather-helper.service';
 import { ThinPaddingBar } from './padding-bar';
 
 interface WeatherChartProps {
-    chartData?: IWeatherData[];
+    liveData?: IWeatherData[];
+    historicalData?: IWeatherData[];
 }
+
+const LIVE_DATA = 'live';
+const HISTORICAL_DATA = 'historical';
+const TEMP_F = 'tempf';
 
 const chartConfig = {
     tempf: {
@@ -37,6 +42,10 @@ const chartConfig = {
     },
     hourlyrainin: {
         label: 'Hourly Rainfall (in.)',
+        color: 'var(--chart-5)'
+    },
+    dailyrainin: {
+        label: 'Daily Rainfall (in.)',
         color: 'var(--chart-5)'
     },
     baromabsin: {
@@ -74,15 +83,18 @@ const axisMapper = (value: any) => {
 };
 
 export function WeatherChart(props: WeatherChartProps) {
-    const [selectedGraph, setSelectedGraph] = useState<string>('tempf');
+    const [selectedGraph, setSelectedGraph] = useState<string>(TEMP_F);
+    const [selectedDataSet, setSelectedDataSet] = useState<string>(LIVE_DATA);
+    const [graphData, setGraphData] = useState<IWeatherData[]>();
     const helperService = new IWeatherHelperService();
-    const graphData = [];
+    const liveData: IWeatherData[] = [];
+    const historicalData: IWeatherData[] = [];
     let count = 0;
 
-    if (props.chartData) {
-        for (const row of props.chartData) {
+    if (props.liveData) {
+        for (const row of props.liveData) {
             if (count % 12 == 0) {
-                graphData.push({
+                liveData.push({
                     ...row,
                     baromabsin: helperService.getPressureInMbar(row.baromabsin)
                 });
@@ -91,16 +103,49 @@ export function WeatherChart(props: WeatherChartProps) {
         }
     }
 
-    graphData.sort((a, b) => {
+    count = 0;
+
+    if (props.historicalData) {
+        for (const row of props.historicalData) {
+            if (count % 2 == 0) {
+                historicalData.push({
+                    ...row,
+                    baromabsin: helperService.getPressureInMbar(row.baromabsin)
+                });
+            }
+            count++;
+        }
+    }
+
+    liveData.sort((a, b) => {
         if (a.date < b.date) {
             return 1;
         }
         return -1;
     });
 
+    historicalData.sort((a, b) => {
+        if (a.date < b.date) {
+            return 1;
+        }
+        return -1;
+    });
+
+    const handleWeatherData = async () => {
+        if (selectedDataSet == LIVE_DATA) {
+            setGraphData(liveData);
+        } else if (selectedDataSet == HISTORICAL_DATA) {
+            setGraphData(historicalData);
+        }
+    };
+
+    useEffect(() => {
+        handleWeatherData();
+    }, [selectedDataSet]);
+
     return (
         <div className="flex flex-col">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-row items-center">
                 <Select
                     onValueChange={(value) => {
                         setSelectedGraph(value);
@@ -114,10 +159,23 @@ export function WeatherChart(props: WeatherChartProps) {
                         <SelectGroup>
                             <SelectLabel>Conditions</SelectLabel>
                             <SelectItem value="tempf">Outdoor Temperature</SelectItem>
-                            <SelectItem value="feelsLike">Feels Like Temperature</SelectItem>
+                            {selectedDataSet == LIVE_DATA ? (
+                                <SelectItem value="feelsLike">Feels Like Temperature</SelectItem>
+                            ) : (
+                                <></>
+                            )}
                             <SelectItem value="dewPoint">Dew Point</SelectItem>
                             <SelectItem value="humidity">Humidity</SelectItem>
-                            <SelectItem value="hourlyrainin">Hourly Rainfall</SelectItem>
+                            {selectedDataSet == LIVE_DATA ? (
+                                <SelectItem value="hourlyrainin">Hourly Rainfall</SelectItem>
+                            ) : (
+                                <></>
+                            )}
+                            {selectedDataSet == HISTORICAL_DATA ? (
+                                <SelectItem value="dailyrainin">Daily Rainfall</SelectItem>
+                            ) : (
+                                <></>
+                            )}
                             <SelectItem value="baromabsin">Pressure</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
@@ -128,7 +186,11 @@ export function WeatherChart(props: WeatherChartProps) {
                             <SelectItem value="winddir_avg10m">
                                 {'Wind Direction (\u00B0 from N)'}
                             </SelectItem>
-                            <SelectItem value="windgustmph">{'Maximum Wind Gusts'}</SelectItem>
+                            {selectedDataSet == LIVE_DATA ? (
+                                <SelectItem value="windgustmph">{'Maximum Wind Gusts'}</SelectItem>
+                            ) : (
+                                <></>
+                            )}
                         </SelectGroup>
                         <SelectGroup>
                             <SelectLabel>Solar</SelectLabel>
@@ -137,8 +199,24 @@ export function WeatherChart(props: WeatherChartProps) {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <br></br>
+                <Select
+                    onValueChange={(value) => {
+                        setSelectedDataSet(value);
+                    }}
+                    defaultValue="live"
+                >
+                    <SelectTrigger className="w-[250px]">
+                        <SelectValue placeholder="Select a data element to view." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectItem value={LIVE_DATA}>Live (Last 24 Hours)</SelectItem>
+                            <SelectItem value={HISTORICAL_DATA}>Historical</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
             </div>
+            <br></br>
             <ThinPaddingBar></ThinPaddingBar>
             <br></br>
             <ChartLineDefault
